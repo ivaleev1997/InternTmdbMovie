@@ -1,0 +1,42 @@
+ext {
+	retrofit2_version = '2.6.1'
+	okhttp3_log_version = '3.9.1'
+	room_version = '2.2.3'
+	kotlin_coroutines_version = '1.3.2'
+	arch_core_testing_version = '2.0.1'
+	mockito_version = '2.25.0'
+	dagger2_version = '2.25.2'
+	lifecycle_ext_version = '2.2.0'
+	recyclerview_version = '1.1.0'
+	cardview_version = '1.0.0'
+	glide_version = '4.10.0'
+	material_version = '1.1.0'
+	constraintlayout_version = '1.1.3'
+	fragment_version = '1.2.0'
+	rxjava2 = '2.1.1'
+	rxAndroid = '2.1.1'
+
+	retrofit2 = "com.squareup.retrofit2:retrofit:$retrofit2_version"
+	retrofit2_converter_gson = "com.squareup.retrofit2:converter-gson:$retrofit2_version"
+	okhttp3_log = "com.squareup.okhttp3:logging-interceptor:$okhttp3_log_version"
+	room = "androidx.room:room-runtime:$room_version"
+	room_compiler = "androidx.room:room-compiler:$room_version"
+	kotlin_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
+	kotlin_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
+	kotlin_coroutines_test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlin_coroutines_version"
+	arch_core_testing = "androidx.arch.core:core-testing:$arch_core_testing_version"
+	mockito_core = "org.mockito:mockito-core:$mockito_version"
+	mockito_android = "org.mockito:mockito-android:$mockito_version"
+	dagger2 = "com.google.dagger:dagger:$dagger2_version"
+	dagger2_compiler = "com.google.dagger:dagger-compiler:$dagger2_version"
+	glide = "com.github.bumptech.glide:glide:$glide_version"
+	cardview = "androidx.cardview:cardview:$cardview_version"
+	recyclerview = "androidx.recyclerview:recyclerview:$recyclerview_version"
+	lifecycle_ext = "androidx.lifecycle:lifecycle-extensions:$lifecycle_ext_version"
+	material = "com.google.android.material:material:$material_version"
+	constraintlayout = "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+	fragment = "androidx.fragment:fragment-ktx:$fragment_version"
+	rxjava2 = "io.reactivex.rxjava2:rxjava:$rxjava2"
+	rxAndroid = "io.reactivex.rxjava2:rxandroid:$rxAndroid"
+
+}
