@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">login</string>
+
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="insert">Укажите логин и пароль, которые  вы использовали для входа</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="enter">Войти</string>
+
+    <string name="error_login">Неверный логин или пароль</string>
+    <string name="error_later">Что-то пошло не так, попробуйте войти позже</string>
 </resources>

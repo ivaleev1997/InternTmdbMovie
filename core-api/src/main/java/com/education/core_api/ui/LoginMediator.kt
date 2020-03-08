@@ -4,5 +4,5 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 
 interface LoginMediator {
-    fun startSongsListFragment(@IdRes containerId: Int, fragmentManager: FragmentManager)
+    fun startLoginScreen(@IdRes containerId: Int, fragmentManager: FragmentManager)
 }
