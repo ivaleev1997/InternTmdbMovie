@@ -23,7 +23,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -44,4 +46,5 @@ dependencies {
     implementation dagger2
     kapt dagger2_compiler
     implementation material
+    implementation fragment
 }

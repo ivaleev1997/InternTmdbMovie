@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="textColor">#E7EDFF</color>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="text_color">#E7EDFF</color>
+    <color name="stroke_color">#2A2E42</color>
+    <color name="gray">#656D8A</color>
+    <color name="purple">#6C63FF</color>
+    <color name="fill_button_color">#E6232636</color>
+    <color name="enabled_fill_button_color">#FE4E27</color>
+    <color name="error_msg">#E1172F</color>
+
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/gray</color>
 </resources>
