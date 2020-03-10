@@ -9,4 +9,7 @@
 
     <string name="error_login">Неверный логин или пароль</string>
     <string name="error_later">Что-то пошло не так,\nпопробуйте войти позже</string>
+    <string name="incorrect_login">Некорректный логин</string>
+    <string name="incorrect_passwd">Минимальная длина пароля 6 символов</string>
+
 </resources>

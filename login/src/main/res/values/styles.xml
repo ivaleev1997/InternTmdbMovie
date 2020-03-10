@@ -13,7 +13,7 @@
     </style>
 
     <style name="NotEnabledButtonStyle">
-        <item name="android:colorPrimary">@color/fill_button_color</item>
+        <item name="android:colorPrimary">@color/disabled_fill_button_color</item>
         <item name="android:textColor">@color/gray</item>
         <item name="android:background">@drawable/button_back</item>
     </style>

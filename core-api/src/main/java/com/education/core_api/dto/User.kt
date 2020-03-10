@@ -1,4 +1,6 @@
 package com.education.core_api.dto
 
-class User {
-}
+data class User(
+    val login: String,
+    val passwd: String
+)
