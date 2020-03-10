@@ -13,7 +13,7 @@ class LoginViewModel : ViewModel() {
     companion object {
         const val PASSWORD_MIN = 6
     }
-    //DI пока не стал делать
+    // DI пока не стал делать
     private val userUseCase = UserUseCase()
 
     private var currentLoginValidation = false
@@ -29,7 +29,7 @@ class LoginViewModel : ViewModel() {
 
     fun login(login: String, passwd: String) {
         userUseCase.login(login, passwd)
-        //_loginStatus.value = LoginResult.TRY_LATER
+        // _loginStatus.value = LoginResult.TRY_LATER
     }
 
     fun isLoginValid(login: String) {
@@ -44,7 +44,7 @@ class LoginViewModel : ViewModel() {
 
     private fun handleValidation(flag: Boolean, status: ValidationStatus) {
         setValidationValue(flag, status)
-        when(status) {
+        when (status) {
             ValidationStatus.PASSWD -> {
                 currentPasswdValidation = flag
                 checkAndSetValueIfAllSuccess()

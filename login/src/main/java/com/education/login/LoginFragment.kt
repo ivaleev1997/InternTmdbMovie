@@ -32,7 +32,8 @@ class LoginFragment : Fragment() {
     private lateinit var enterStatusTextView: TextView
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.login_fragment, container, false)
@@ -86,7 +87,7 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.validateStatus.observe(viewLifecycleOwner) { status ->
-            when(status.first) {
+            when (status.first) {
                 ValidationStatus.LOGIN -> {
                     loginTextInput.error =
                         if (status.second)
@@ -164,6 +165,3 @@ class LoginFragment : Fragment() {
 
     private fun TextInputLayout.getEditTextString(): String = this.editText?.text.toString()
 }
-
-
-

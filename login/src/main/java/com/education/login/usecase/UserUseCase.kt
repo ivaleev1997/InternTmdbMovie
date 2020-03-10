@@ -4,7 +4,7 @@ import com.education.core_api.dto.User
 import com.education.login.repository.LoginRepository
 
 class UserUseCase {
-    //DI пока не стал делать
+    // DI пока не стал делать
     private val loginRepository = LoginRepository()
 
     fun login(login: String, passwd: String) {

@@ -21,7 +21,7 @@ class TMDBApiImpl : NetworkContract {
 
     private val tmdbApi: TMDBApi by lazy {
         val okHttpClient = OkHttpClient.Builder().apply {
-            addInterceptor{chain ->
+            addInterceptor { chain ->
                 val original = chain.request()
                 val originalHttpUrl = original.url()
                 val url = originalHttpUrl
