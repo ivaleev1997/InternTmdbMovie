@@ -2,12 +2,14 @@ package com.education.login.usecase
 
 import com.education.core_api.dto.User
 import com.education.login.repository.LoginRepository
+import javax.inject.Inject
 
-class UserUseCase {
-    // DI пока не стал делать
-    private val loginRepository = LoginRepository()
+class UserUseCase
+@Inject constructor (
+    private val loginRepository: LoginRepository
+) {
 
-    fun login(login: String, passwd: String) {
-        loginRepository.login(User(login, passwd))
+    fun login(login: String, password: String) {
+        loginRepository.login(User(login, password))
     }
 }

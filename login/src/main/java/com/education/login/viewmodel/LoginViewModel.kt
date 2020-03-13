@@ -2,67 +2,70 @@ package com.education.login.viewmodel
 
 import android.util.Patterns
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.education.login.dto.LoginResult
-import com.education.login.dto.ValidationStatus
 import com.education.login.usecase.UserUseCase
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel
+@Inject constructor (
+    private val userUseCase: UserUseCase
+) : ViewModel() {
 
     companion object {
         const val PASSWORD_MIN = 6
     }
-    // DI пока не стал делать
-    private val userUseCase = UserUseCase()
-
-    private var currentLoginValidation = false
-    private var currentPasswdValidation = false
-
-    private val _validateStatus = MutableLiveData<Pair<ValidationStatus, Boolean>>()
-    val validateStatus: LiveData<Pair<ValidationStatus, Boolean>>
-        get() = _validateStatus
 
     private val _loginStatus = MutableLiveData<LoginResult>()
+    private val _validateButtonStatus = MediatorLiveData<Boolean>()
+    private val _validateLoginStatus = MutableLiveData<Boolean>()
+    private val _validatePasswordStatus = MutableLiveData<Boolean>()
+
+    val validateButtonStatus: LiveData<Boolean>
+        get() = _validateButtonStatus
+
     val login: LiveData<LoginResult>
         get() = _loginStatus
 
-    fun login(login: String, passwd: String) {
-        userUseCase.login(login, passwd)
-        // _loginStatus.value = LoginResult.TRY_LATER
+    val validateLoginStatus: LiveData<Boolean>
+        get() = _validateLoginStatus
+
+    val validatePasswordStatus: LiveData<Boolean>
+        get() = _validatePasswordStatus
+
+    fun onLoginClicked(login: String, password: String) {
+        if (isLoginValid(login) && isPasswordValid(password))
+            userUseCase.login(login, password)
     }
 
-    fun isLoginValid(login: String) {
+    fun onLoginEntered(login: String) {
+        isLoginValid(login)
+    }
+
+    fun onPasswordEntered(password: String) {
+        isPasswordValid(password)
+    }
+
+    private fun isLoginValid(login: String): Boolean {
         val result = login.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(login).matches()
-        handleValidation(result, ValidationStatus.LOGIN)
+        _validateLoginStatus.value = result
+        checkIfAllSuccess()
+
+        return result
     }
 
-    fun isPasswdValid(passwd: String) {
-        val result = passwd.isNotBlank() && passwd.length >= PASSWORD_MIN
-        handleValidation(result, ValidationStatus.PASSWD)
+    private fun isPasswordValid(password: String): Boolean {
+        val result = password.isNotBlank() && password.length >= PASSWORD_MIN
+        _validatePasswordStatus.value = result
+        checkIfAllSuccess()
+
+        return result
     }
 
-    private fun handleValidation(flag: Boolean, status: ValidationStatus) {
-        setValidationValue(flag, status)
-        when (status) {
-            ValidationStatus.PASSWD -> {
-                currentPasswdValidation = flag
-                checkAndSetValueIfAllSuccess()
-            }
-            ValidationStatus.LOGIN -> {
-                currentLoginValidation = flag
-                checkAndSetValueIfAllSuccess()
-            }
-            else -> {}
-        }
+    private fun checkIfAllSuccess() {
+        _validateButtonStatus.value = _validateLoginStatus.value ?: false && _validatePasswordStatus.value ?: false
     }
 
-    private fun checkAndSetValueIfAllSuccess() {
-        if (currentLoginValidation && currentPasswdValidation)
-            setValidationValue(true, ValidationStatus.SUCCESS)
-    }
-
-    private fun setValidationValue(flag: Boolean, status: ValidationStatus) {
-        _validateStatus.value = Pair(status, flag)
-    }
 }

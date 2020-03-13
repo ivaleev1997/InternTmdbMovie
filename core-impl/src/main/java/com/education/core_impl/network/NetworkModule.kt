@@ -1,4 +1,4 @@
-package com.education.core_impl
+package com.education.core_impl.network
 
 import com.education.core_api.network.NetworkContract
 import com.education.core_api.network.TMDBApi

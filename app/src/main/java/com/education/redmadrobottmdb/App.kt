@@ -1,23 +1,23 @@
 package com.education.redmadrobottmdb
 
 import android.app.Application
-import com.education.core_api.mediator.AppWithFacade
-import com.education.core_api.mediator.ProvidersFacade
-import com.education.redmadrobottmdb.di.FacadeComponent
+import com.education.core_api.mediator.AppWithComponent
+import com.education.core_api.mediator.CoreProvider
+import com.education.redmadrobottmdb.di.AppComponent
 
-class App : Application(), AppWithFacade {
+class App : Application(), AppWithComponent {
 
     companion object {
-        var facade: FacadeComponent? = null
+        var appComponent: AppComponent? = null
     }
 
-    override fun getFacade(): ProvidersFacade {
-        return facade
-            ?: FacadeComponent.init()
+    override fun getComponent(): CoreProvider {
+        return appComponent
+            ?: AppComponent.init()
     }
 
     override fun onCreate() {
         super.onCreate()
-        facade = (getFacade() as FacadeComponent)
+        appComponent = (getComponent() as AppComponent)
     }
 }

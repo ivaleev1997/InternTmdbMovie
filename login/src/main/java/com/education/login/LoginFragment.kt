@@ -1,68 +1,51 @@
 package com.education.login
 
 import android.content.Context
-import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import com.education.core_api.fragment.BaseFragment
+import com.education.core_api.mediator.AppWithComponent
+import com.education.core_api.viewmodel.ViewModelTrigger
+import com.education.login.di.LoginComponent
 import com.education.login.dto.LoginResult
-import com.education.login.dto.ValidationStatus
 import com.education.login.viewmodel.LoginViewModel
-import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.login_fragment.*
+import javax.inject.Inject
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment(R.layout.login_fragment) {
 
     companion object {
         fun newInstance() = LoginFragment()
     }
 
-    private val viewModel: LoginViewModel by viewModels()
-
-    private lateinit var enterBtn: Button
-    private lateinit var loginTextInput: TextInputLayout
-    private lateinit var passwdTextInput: TextInputLayout
-    private lateinit var enterStatusTextView: TextView
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.login_fragment, container, false)
+    @Inject
+    lateinit var appViewModelFactory: ViewModelProvider.Factory
+    private val viewModel: LoginViewModel by viewModels {
+        appViewModelFactory
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initViewElements(view)
+    @Inject
+    lateinit var viewModelTrigger: ViewModelTrigger
+
+    override fun onAttach(context: Context) {
+        LoginComponent.create((requireActivity().application as AppWithComponent).getComponent()).inject(this)
+        super.onAttach(context)
     }
 
-    private fun initViewElements(view: View) {
+    override fun initViewElements(view: View) {
         view.setOnClickListener {
             hideKeyboard()
+            checkFocus()
         }
 
-        // меняю бэк неактивного Button программно при инициализации, а не через xml,
-        // так как в библиотеке material есть баг с заливкой бэк'а
-        // через xml (https://github.com/material-components/material-components-android/issues/889)
-        enterBtn = view.findViewById(R.id.enterButton)
-        disableEnterButton()
-
-        loginTextInput = view.findViewById(R.id.loginTextInput)
-        passwdTextInput = view.findViewById(R.id.passwdTextInput)
-        enterStatusTextView = view.findViewById(R.id.enterStatusTextView)
-
-        enterBtn.setOnClickListener {
-            viewModel.login(
+        enterButton.setOnClickListener {
+            viewModel.onLoginClicked(
                 loginTextInput.getEditTextString(),
-                passwdTextInput.getEditTextString()
+                passwordTextInput.getEditTextString()
             )
         }
 
@@ -71,50 +54,50 @@ class LoginFragment : Fragment() {
                 validateLogin()
         }
 
-        passwdTextInput.editText?.setOnFocusChangeListener { _, hasFocus ->
+        passwordTextInput.editText?.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus)
-                validatePasswd()
+                validatePassword()
         }
 
-        passwdTextInput.editText?.setOnEditorActionListener { _, actionId, event ->
+        passwordTextInput.editText?.setOnEditorActionListener { _, actionId, event ->
             Log.d("LOGIN_FRAGMENT", "keyboard $actionId $event")
             hideKeyboard()
+            checkFocus()
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                passwdTextInput.editText?.clearFocus()
+                passwordTextInput.editText?.clearFocus()
             }
 
             false
         }
 
-        viewModel.validateStatus.observe(viewLifecycleOwner) { status ->
-            when (status.first) {
-                ValidationStatus.LOGIN -> {
-                    loginTextInput.error =
-                        if (status.second)
-                            null
-                        else {
-                            disableEnterButton()
-                            resources.getString(R.string.incorrect_login)
-                        }
+        viewModel.validateLoginStatus.observe(viewLifecycleOwner) { validateLogin ->
+            loginTextInput.error =
+                if (validateLogin)
+                    null
+                else {
+                    disableEnterButton()
+                    resources.getString(R.string.incorrect_login)
                 }
-                ValidationStatus.PASSWD -> {
-                    passwdTextInput.error =
-                        if (status.second)
-                            null
-                        else {
-                            disableEnterButton()
-                            resources.getString(R.string.incorrect_passwd)
-                        }
-                }
-                ValidationStatus.SUCCESS -> enableEnterButton()
+        }
 
-                else -> {}
-            }
+        viewModel.validateButtonStatus.observe(viewLifecycleOwner) { buttonEnabled ->
+            if (buttonEnabled)
+                enableEnterButton()
+        }
+
+        viewModel.validatePasswordStatus.observe(viewLifecycleOwner) { validatePassword ->
+            passwordTextInput.error =
+                if (validatePassword)
+                    null
+                else {
+                    disableEnterButton()
+                    resources.getString(R.string.incorrect_passwd)
+                }
         }
 
         viewModel.login.observe(viewLifecycleOwner) { resultStatus ->
             when (resultStatus) {
-                LoginResult.LOGIN_OR_PASSWD -> setMsgToEnterStatusTextView(R.string.error_login)
+                LoginResult.LOGIN_OR_PASSWORD -> setMsgToEnterStatusTextView(R.string.error_login)
                 LoginResult.TRY_LATER -> setMsgToEnterStatusTextView(R.string.error_later)
                 LoginResult.SUCCESS -> {
                     setEnterStatusTextViewGone()
@@ -134,34 +117,27 @@ class LoginFragment : Fragment() {
     }
 
     private fun enableEnterButton() {
-        enterBtn.setBackgroundColor(resources.getColor(R.color.enabled_fill_button_color))
-        enterBtn.setTextColor(resources.getColor(R.color.text_color))
-        enterBtn.isEnabled = true
+        enterButton.setBackgroundColor(resources.getColor(R.color.enabled_fill_button_color))
+        enterButton.setTextColor(resources.getColor(R.color.text_color))
+        enterButton.isEnabled = true
     }
 
     private fun disableEnterButton() {
-        enterBtn.setBackgroundColor(resources.getColor(R.color.disabled_fill_button_color))
-        enterBtn.setTextColor(resources.getColor(R.color.gray))
-        enterBtn.isEnabled = false
-    }
-
-    private fun hideKeyboard() {
-        val view = activity?.currentFocus
-        if (view != null) {
-            val inputMethodManager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-            inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
-        }
-        if (loginTextInput.editText?.isFocused == true) validateLogin()
-        if (passwdTextInput.editText?.isFocused == true) validatePasswd()
+        enterButton.setBackgroundColor(resources.getColor(R.color.disabled_fill_button_color))
+        enterButton.setTextColor(resources.getColor(R.color.gray))
+        enterButton.isEnabled = false
     }
 
     private fun validateLogin() {
-        viewModel.isLoginValid(loginTextInput.getEditTextString())
+        viewModel.onLoginEntered(loginTextInput.getEditTextString())
     }
 
-    private fun validatePasswd() {
-        viewModel.isPasswdValid(passwdTextInput.getEditTextString())
+    private fun validatePassword() {
+        viewModel.onPasswordEntered(passwordTextInput.getEditTextString())
     }
 
-    private fun TextInputLayout.getEditTextString(): String = this.editText?.text.toString()
+    private fun checkFocus() {
+        if (loginTextInput.editText?.isFocused == true) validateLogin()
+        if (passwordTextInput.editText?.isFocused == true) validatePassword()
+    }
 }
