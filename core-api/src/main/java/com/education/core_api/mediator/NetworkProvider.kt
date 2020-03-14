@@ -1,11 +1,8 @@
 package com.education.core_api.mediator
 
-import com.education.core_api.network.NetworkContract
-import com.education.core_api.network.TMDBApi
+import com.education.core_api.network.TmdbMovieApi
 
 interface NetworkProvider {
 
-    fun provideNetwork(): NetworkContract
-
-    fun provideTMDBApi(): TMDBApi
+    fun provideTMDBApi(): TmdbMovieApi
 }

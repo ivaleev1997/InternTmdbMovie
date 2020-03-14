@@ -33,4 +33,6 @@ dependencies {
     implementation androidx_core_ktx
 
     implementation material
+    implementation retrofit2
+    implementation rxjava2
 }
