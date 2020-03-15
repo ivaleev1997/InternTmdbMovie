@@ -22,7 +22,7 @@ interface TmdbMovieApi {
     fun markAsFavorite(
         @Path("account_id") accountId: Long,
         requestFavoriteBody: RequestFavoriteBody
-    ): Single<FavoriteResponse>
+    ): Single<StatusResponse>
 
 
 }

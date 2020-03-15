@@ -4,8 +4,12 @@ import android.content.SharedPreferences
 import com.education.core_api.SESSION
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
 
-class SessionIdInterceptor (private val sharedPrefs: SharedPreferences) : Interceptor {
+class SessionIdInterceptor
+    @Inject constructor (
+        private val sharedPrefs: SharedPreferences
+    ) : Interceptor {
 
     companion object {
         const val SESSION_PARAM = "session_id"

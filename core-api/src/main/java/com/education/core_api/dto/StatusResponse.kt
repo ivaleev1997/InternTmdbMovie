@@ -1,6 +1,6 @@
 package com.education.core_api.dto
 
-data class FavoriteResponse(
+data class StatusResponse(
     val statusCode: Long,
     val statusMessage: String
 )

@@ -2,7 +2,7 @@ package com.education.redmadrobottmdb.di.component
 
 import android.app.Application
 import android.content.Context
-import com.education.core_api.mediator.SharedProvider
+import com.education.core_api.mediator.AppProvider
 import com.education.redmadrobottmdb.di.module.AppModule
 import dagger.BindsInstance
 import dagger.Component
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @Component(
     modules = [AppModule::class]
 )
-interface AppComponent : SharedProvider {
+interface AppComponent : AppProvider {
 
     companion object {
         private var appComponent: AppComponent? = null

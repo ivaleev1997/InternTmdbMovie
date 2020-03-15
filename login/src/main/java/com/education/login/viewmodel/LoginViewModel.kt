@@ -5,9 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.education.core_api.network.UnAuthorizedException
+import com.education.core_api.network.exception.NoInternetConnectionException
+import com.education.core_api.network.exception.UnAuthorizedException
 import com.education.login.dto.LoginResult
 import com.education.login.usecase.UserUseCase
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class LoginViewModel
@@ -39,6 +42,8 @@ class LoginViewModel
     fun onLoginClicked(login: String, password: String) {
         if (isLoginValid(login) && isPasswordValid(password))
             userUseCase.login(login, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { success ->
                         _loginStatus.value =
@@ -53,6 +58,10 @@ class LoginViewModel
                             is UnAuthorizedException -> {
                                 error.printStackTrace()
                                 LoginResult.LOGIN_OR_PASSWORD
+                            }
+                            is NoInternetConnectionException -> {
+                                error.printStackTrace()
+                                LoginResult.NO_NETWORK_CONNECTION
                             }
                             else -> LoginResult.TRY_LATER
                         }
@@ -71,7 +80,7 @@ class LoginViewModel
     // Логин может быьть любым, поэтому не нужно проверять Patterns.EMAIL_ADDRESS
     private fun isLoginValid(login: String): Boolean {
         Patterns.EMAIL_ADDRESS
-        val result = login.isNotBlank() //login.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(login).matches()
+        val result = login.isNotBlank()
         _validateLoginStatus.value = result
         checkIfAllSuccess()
 

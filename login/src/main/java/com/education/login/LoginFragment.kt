@@ -1,7 +1,6 @@
 package com.education.login
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
@@ -43,6 +42,8 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
         }
 
         enterButton.setOnClickListener {
+            clearMsgFromEnterStatusTextView()
+            enterProgressBar.visibility = View.VISIBLE
             viewModel.onLoginClicked(
                 loginTextInput.getEditTextString(),
                 passwordTextInput.getEditTextString()
@@ -60,7 +61,6 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
         }
 
         passwordTextInput.editText?.setOnEditorActionListener { _, actionId, event ->
-            Log.d("LOGIN_FRAGMENT", "keyboard $actionId $event")
             hideKeyboard()
             checkFocus()
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -96,9 +96,11 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
         }
 
         viewModel.login.observe(viewLifecycleOwner) { resultStatus ->
+            enterProgressBar.visibility = View.GONE
             when (resultStatus) {
                 LoginResult.LOGIN_OR_PASSWORD -> setMsgToEnterStatusTextView(R.string.error_login)
                 LoginResult.TRY_LATER -> setMsgToEnterStatusTextView(R.string.error_later)
+                LoginResult.NO_NETWORK_CONNECTION -> showNoNetworkSnackBar(loginConstraintLayout)
                 LoginResult.SUCCESS -> {
                     setEnterStatusTextViewGone()
                     // Старт следующего события
@@ -110,6 +112,10 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
     private fun setMsgToEnterStatusTextView(stringId: Int) {
         enterStatusTextView.setText(stringId)
         enterStatusTextView.visibility = View.VISIBLE
+    }
+
+    private fun clearMsgFromEnterStatusTextView() {
+        enterStatusTextView.visibility = View.GONE
     }
 
     private fun setEnterStatusTextViewGone() {

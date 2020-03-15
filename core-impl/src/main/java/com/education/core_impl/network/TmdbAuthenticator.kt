@@ -1,6 +1,6 @@
 package com.education.core_impl.network
 
-import com.education.core_api.network.UnAuthorizedException
+import com.education.core_api.network.exception.UnAuthorizedException
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
@@ -12,7 +12,9 @@ class TmdbAuthenticator : Authenticator {
     override fun authenticate(route: Route?, response: Response?): Request? {
         if (response == null) return null
         if (response.code() == HTTP_UNAUTHORIZED) {
-            throw UnAuthorizedException("Unauthorized response code ${response.code()}")
+            throw UnAuthorizedException(
+                "Unauthorized response code ${response.code()}"
+            )
         }
 
         return null

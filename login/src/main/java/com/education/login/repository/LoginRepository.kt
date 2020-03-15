@@ -5,8 +5,6 @@ import com.education.core_api.SESSION
 import com.education.core_api.dto.*
 import com.education.core_api.network.TmdbAuthApi
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class LoginRepository
@@ -17,7 +15,6 @@ class LoginRepository
 
     fun login(user: User): Single<Boolean> {
         return tmdbAuthApi.createRequestToken()
-            .subscribeOn(Schedulers.io())
             .flatMap { requestToken: RequestToken ->
                 tmdbAuthApi.validateRequestTokenWithLogin(
                     RequestTokenBody(
@@ -33,7 +30,6 @@ class LoginRepository
                 if (session.success) saveSessionId(session)
                 session.success
             }
-            .observeOn(AndroidSchedulers.mainThread())
     }
 
     private fun saveSessionId(session: Session) {

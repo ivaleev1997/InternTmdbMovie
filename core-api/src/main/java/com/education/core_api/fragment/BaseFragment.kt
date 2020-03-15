@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import com.education.core_api.R
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 abstract class BaseFragment(private val layoutId: Int) : Fragment() {
@@ -31,6 +33,10 @@ abstract class BaseFragment(private val layoutId: Int) : Fragment() {
             val inputMethodManager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
             inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
         }
+    }
+
+    fun showNoNetworkSnackBar(rootView: View) {
+        Snackbar.make(rootView, resources.getString(R.string.no_internet), Snackbar.LENGTH_LONG).show()
     }
 
     fun TextInputLayout.getEditTextString(): String = this.editText?.text.toString()
