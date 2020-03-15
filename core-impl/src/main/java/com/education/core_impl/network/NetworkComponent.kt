@@ -7,5 +7,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [NetworkModule::class]
+    //dependencies = [SharedProvider::class]
 )
 interface NetworkComponent : NetworkProvider

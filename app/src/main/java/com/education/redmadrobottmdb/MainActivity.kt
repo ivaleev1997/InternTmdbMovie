@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.education.core_api.mediator.AppWithComponent
 import com.education.core_api.ui.LoginMediator
-import com.education.redmadrobottmdb.di.MainComponent
+import com.education.redmadrobottmdb.di.component.MainComponent
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {

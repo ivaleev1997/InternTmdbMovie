@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.education.core_api.network.UnAuthorizedException
 import com.education.login.dto.LoginResult
 import com.education.login.usecase.UserUseCase
 import javax.inject.Inject
@@ -15,7 +16,7 @@ class LoginViewModel
 ) : ViewModel() {
 
     companion object {
-        const val PASSWORD_MIN = 6
+        const val PASSWORD_MIN = 4
     }
 
     private val _loginStatus = MutableLiveData<LoginResult>()
@@ -38,6 +39,25 @@ class LoginViewModel
     fun onLoginClicked(login: String, password: String) {
         if (isLoginValid(login) && isPasswordValid(password))
             userUseCase.login(login, password)
+                .subscribe(
+                    { success ->
+                        _loginStatus.value =
+                            if (success)
+                                LoginResult.SUCCESS
+                            else
+                                LoginResult.TRY_LATER
+                    },
+                    { error ->
+                        _loginStatus.value =
+                        when (error) {
+                            is UnAuthorizedException -> {
+                                error.printStackTrace()
+                                LoginResult.LOGIN_OR_PASSWORD
+                            }
+                            else -> LoginResult.TRY_LATER
+                        }
+                    }
+                )
     }
 
     fun onLoginEntered(login: String) {
@@ -48,8 +68,10 @@ class LoginViewModel
         isPasswordValid(password)
     }
 
+    // Логин может быьть любым, поэтому не нужно проверять Patterns.EMAIL_ADDRESS
     private fun isLoginValid(login: String): Boolean {
-        val result = login.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(login).matches()
+        Patterns.EMAIL_ADDRESS
+        val result = login.isNotBlank() //login.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(login).matches()
         _validateLoginStatus.value = result
         checkIfAllSuccess()
 

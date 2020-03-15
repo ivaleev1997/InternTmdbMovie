@@ -37,6 +37,7 @@ dependencies {
     implementation retrofit2_converter_gson
     implementation okhttp3_log
     implementation retrofit2_converter_moshi
+    implementation retrofit2_rxjava2_adapter
 
     implementation lifecycle_viewmodel
 }

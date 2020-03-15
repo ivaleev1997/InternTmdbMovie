@@ -42,6 +42,7 @@ ext {
 	retrofit2 = "com.squareup.retrofit2:retrofit:$retrofit2_version"
 	retrofit2_converter_gson = "com.squareup.retrofit2:converter-gson:$retrofit2_version"
 	retrofit2_converter_moshi = "com.squareup.retrofit2:converter-moshi:$retrofit2_version"
+	retrofit2_rxjava2_adapter = "com.squareup.retrofit2:adapter-rxjava2:$retrofit2_version"
 	rxjava2 = "io.reactivex.rxjava2:rxjava:$rxjava2"
 	rxAndroid = "io.reactivex.rxjava2:rxandroid:$rxAndroid"
 	room = "androidx.room:room-runtime:$room_version"
@@ -55,4 +56,5 @@ ext {
 	junit = "junit:junit:$junit_version"
 	androidx_junit = "androidx.test.ext:junit:$androidx_junit_version"
 	androidx_espresso = "androidx.test.espresso:espresso-core:$androidx_espresso_version"
+	androidx_core = "androidx.test:core:1.0.0"
 }

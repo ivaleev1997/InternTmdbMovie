@@ -1,4 +1,4 @@
-package com.education.redmadrobottmdb.di
+package com.education.redmadrobottmdb.di.component
 
 import com.education.core_api.mediator.CoreProvider
 import com.education.redmadrobottmdb.MainActivity
@@ -11,8 +11,7 @@ interface MainComponent {
 
     companion object {
         fun create(coreProvider: CoreProvider): MainComponent {
-            return DaggerMainComponent
-                .builder()
+            return DaggerMainComponent.builder()
                 .coreProvider(coreProvider)
                 .build()
         }

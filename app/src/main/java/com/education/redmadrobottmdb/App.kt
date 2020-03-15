@@ -3,21 +3,21 @@ package com.education.redmadrobottmdb
 import android.app.Application
 import com.education.core_api.mediator.AppWithComponent
 import com.education.core_api.mediator.CoreProvider
-import com.education.redmadrobottmdb.di.AppComponent
+import com.education.redmadrobottmdb.di.component.CoreComponent
 
 class App : Application(), AppWithComponent {
 
     companion object {
-        var appComponent: AppComponent? = null
+        var coreComponent: CoreComponent? = null
     }
 
     override fun getComponent(): CoreProvider {
-        return appComponent
-            ?: AppComponent.init()
+        return coreComponent
+            ?: CoreComponent.init(this)
     }
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = (getComponent() as AppComponent)
+        coreComponent = (getComponent() as CoreComponent)
     }
 }

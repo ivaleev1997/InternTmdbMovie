@@ -1,11 +1,11 @@
-package com.education.core_impl.network
+package com.education.core_impl.network.interceptor
 
 import okhttp3.Interceptor
 import okhttp3.Response
 
-object ApiKeyInterceptor : Interceptor {
-    private const val TMDB_API_KEY = "aa7b2f0df06cb6ccf1cbcf705bcf9892"
-    private const val API_KEY_PARAM = "api_key"
+object LanguageInterceptor : Interceptor {
+    private const val LANGUAGE_PARAM = "language"
+    private const val LANGUAGE = "ru-RUS"
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val original = chain.request()
@@ -13,13 +13,14 @@ object ApiKeyInterceptor : Interceptor {
         val url = originalHttpUrl
             .newBuilder()
             .addQueryParameter(
-                API_KEY_PARAM,
-                TMDB_API_KEY
+                LANGUAGE_PARAM,
+                LANGUAGE
             )
             .build()
 
         val requestBuilder = original.newBuilder().url(url)
         val request = requestBuilder.build()
+
         return chain.proceed(request)
     }
 }
