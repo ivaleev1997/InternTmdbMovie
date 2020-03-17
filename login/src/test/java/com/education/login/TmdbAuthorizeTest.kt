@@ -9,6 +9,8 @@ import com.education.core_api.SESSION
 import com.education.core_api.dto.User
 import com.education.login.repository.LoginRepository
 import io.reactivex.schedulers.TestScheduler
+import java.net.HttpURLConnection.HTTP_OK
+import java.util.concurrent.TimeUnit
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -18,8 +20,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLog
-import java.net.HttpURLConnection.HTTP_OK
-import java.util.concurrent.TimeUnit
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.P])
@@ -70,7 +70,7 @@ class TmdbAuthorizeTest {
             .observeOn(testScheduler)
             .test()
 
-        testScheduler.advanceTimeBy(1L, TimeUnit.SECONDS);
+        testScheduler.advanceTimeBy(1L, TimeUnit.SECONDS)
         testObserver.assertValue(true)
         testObserver.dispose()
 
@@ -107,7 +107,7 @@ class TmdbAuthorizeTest {
             .observeOn(testScheduler)
             .test()
 
-        testScheduler.advanceTimeBy(1L, TimeUnit.SECONDS);
+        testScheduler.advanceTimeBy(1L, TimeUnit.SECONDS)
         testObserver.assertValue(false)
         testObserver.dispose()
     }

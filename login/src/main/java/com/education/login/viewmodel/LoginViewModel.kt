@@ -98,5 +98,4 @@ class LoginViewModel
     private fun checkIfAllSuccess() {
         _validateButtonStatus.value = _validateLoginStatus.value ?: false && _validatePasswordStatus.value ?: false
     }
-
 }

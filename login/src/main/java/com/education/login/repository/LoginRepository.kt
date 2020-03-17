@@ -44,7 +44,6 @@ class LoginRepository
         editor.commit()
     }
 
-
     private fun saveSessionId(session: Session) {
         val editor = sharedPrefs.edit()
         editor.putString(SESSION, session.sessionId)

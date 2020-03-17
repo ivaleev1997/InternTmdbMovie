@@ -23,6 +23,4 @@ interface TmdbMovieApi {
         @Path("account_id") accountId: Long,
         requestFavoriteBody: RequestFavoriteBody
     ): Single<StatusResponse>
-
-
 }

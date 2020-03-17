@@ -11,7 +11,7 @@ import javax.inject.Inject
 class MainViewModel
     @Inject constructor(
         private val sharedPrefs: SharedPreferences
-    ): ViewModel() {
+    ) : ViewModel() {
 
     fun isSessionExist(): Boolean =
         isSessionTokenExist() && isRequestTokenExist() && isTokenLifeTimeUp()

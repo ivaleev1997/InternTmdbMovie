@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactoryProvider
-@Inject constructor(private val creators: @JvmSuppressWildcards MutableMap<Class<out ViewModel>, ViewModel>)
-    : ViewModelProvider.Factory {
+@Inject constructor(private val creators: @JvmSuppressWildcards MutableMap<Class<out ViewModel>, ViewModel>) :
+    ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         val found = creators.entries.single {

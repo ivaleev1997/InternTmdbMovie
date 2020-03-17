@@ -1,11 +1,11 @@
 package com.education.core_impl.network
 
 import com.education.core_api.network.exception.UnAuthorizedException
+import java.net.HttpURLConnection.HTTP_UNAUTHORIZED
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
-import java.net.HttpURLConnection.HTTP_UNAUTHORIZED
 
 class TmdbAuthenticator : Authenticator {
     @Synchronized

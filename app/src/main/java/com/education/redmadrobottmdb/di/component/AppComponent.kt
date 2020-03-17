@@ -19,8 +19,7 @@ interface AppComponent : AppProvider {
 
         fun create(application: Application): AppComponent {
             return appComponent
-                ?:
-            DaggerAppComponent.builder()
+            ?: DaggerAppComponent.builder()
                 .application(application)
                 .build()
         }
