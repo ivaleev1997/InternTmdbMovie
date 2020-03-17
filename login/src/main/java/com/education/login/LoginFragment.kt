@@ -6,6 +6,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import com.education.core_api.activity.BaseActivity
 import com.education.core_api.fragment.BaseFragment
 import com.education.core_api.mediator.AppWithComponent
 import com.education.core_api.viewmodel.ViewModelTrigger
@@ -103,7 +104,7 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
                 LoginResult.NO_NETWORK_CONNECTION -> showNoNetworkSnackBar(loginConstraintLayout)
                 LoginResult.SUCCESS -> {
                     setEnterStatusTextViewGone()
-                    // Старт следующего события
+                    (requireActivity() as BaseActivity).startMainAppScreen()
                 }
             }
         }

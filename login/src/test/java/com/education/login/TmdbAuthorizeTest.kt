@@ -3,17 +3,14 @@ package com.education.login
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
-import com.education.core_api.TMDB_BASE_URL
+import com.education.core_api.REQUEST_LIFE
+import com.education.core_api.REQUEST_TOKEN
+import com.education.core_api.SESSION
 import com.education.core_api.dto.User
-import com.education.core_api.network.TmdbAuthApi
 import com.education.login.repository.LoginRepository
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.GsonBuilder
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Response
-import okhttp3.logging.HttpLoggingInterceptor
-import org.junit.Assert.assertTrue
+import io.reactivex.schedulers.TestScheduler
+import okhttp3.mockwebserver.MockResponse
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,75 +18,97 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLog
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import java.net.HttpURLConnection.HTTP_OK
+import java.util.concurrent.TimeUnit
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.P])
 class TmdbAuthorizeTest {
 
     lateinit var sharedPrefs: SharedPreferences
-    lateinit var tmdbAuthApi: TmdbAuthApi
     lateinit var loginRepository: LoginRepository
+    lateinit var mockTmdbAuthWebServer: MockTmdbAuthWebServer
     private val appContext = RuntimeEnvironment.application.applicationContext
 
     @Before
     fun setUp() {
         ShadowLog.setupLogging()
-        val client = OkHttpClient.Builder().apply {
-            addInterceptor(ApiKeyInterceptor)
-            addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
-        }.build()
-
-        tmdbAuthApi = Retrofit.Builder()
-            .baseUrl(TMDB_BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create(
-                GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                    .create()))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
-            .create(TmdbAuthApi::class.java)
-
+        mockTmdbAuthWebServer = MockTmdbAuthWebServer()
         sharedPrefs = appContext.getSharedPreferences("APP_SHARED", Context.MODE_PRIVATE)
 
         loginRepository = LoginRepository(
-            tmdbAuthApi,
+            mockTmdbAuthWebServer.tmdbAuthApi,
             sharedPrefs
         )
     }
 
     @Test
-    fun login_Test() {
-        val result = loginRepository
+    fun loginSuccess_Test() {
+        val expectedRequestToken = "f6dfeab156c7317faa24aee64360f9194b34018d"
+        val expectedSessionId = "f7a0c6e5f837f5c805581b4397c02b4f0b5f89cd"
+        val expectedRequestLifeTime = 1584471533000
+
+        mockTmdbAuthWebServer.enqueue(
+            MockResponse()
+                .setResponseCode(HTTP_OK)
+                .setBody(requestTokenResponseBody)
+        )
+        mockTmdbAuthWebServer.enqueue(
+            MockResponse()
+                .setResponseCode(HTTP_OK)
+                .setBody(createSessionWithLoginResponseBody)
+        )
+        mockTmdbAuthWebServer.enqueue(
+            MockResponse()
+                .setResponseCode(HTTP_OK)
+                .setBody(createSessionIdResponseBody)
+        )
+        val testScheduler = TestScheduler()
+        val testObserver = loginRepository
             .login(User("nekitpip@mail.ru", "q1w2e3r4"))
-            .blockingGet()
+            .subscribeOn(testScheduler)
+            .observeOn(testScheduler)
+            .test()
 
-        assertTrue(result)
+        testScheduler.advanceTimeBy(1L, TimeUnit.SECONDS);
+        testObserver.assertValue(true)
+        testObserver.dispose()
+
+        val actualRequestToken = sharedPrefs.getString(REQUEST_TOKEN, null)
+        val actualSessionId = sharedPrefs.getString(SESSION, null)
+        val actualRequestLifeTime = sharedPrefs.getLong(REQUEST_LIFE, 0L)
+
+        assertEquals(actualRequestToken, expectedRequestToken)
+        assertEquals(actualSessionId, expectedSessionId)
+        assertEquals(actualRequestLifeTime, expectedRequestLifeTime)
     }
-}
 
-object ApiKeyInterceptor : Interceptor {
-    private const val TMDB_API_KEY = "aa7b2f0df06cb6ccf1cbcf705bcf9892"
-    private const val API_KEY_PARAM = "api_key"
+    @Test
+    fun loginFalse_Test() {
+        mockTmdbAuthWebServer.enqueue(
+            MockResponse()
+                .setResponseCode(HTTP_OK)
+                .setBody(requestTokenResponseBody)
+        )
+        mockTmdbAuthWebServer.enqueue(
+            MockResponse()
+                .setResponseCode(HTTP_OK)
+                .setBody(createSessionWithLoginResponseBody)
+        )
+        mockTmdbAuthWebServer.enqueue(
+            MockResponse()
+                .setResponseCode(HTTP_OK)
+                .setBody(createSessionIdFalseResponseBoolean)
+        )
+        val testScheduler = TestScheduler()
+        val testObserver = loginRepository
+            .login(User("nekitpip@mail.ru", "q1w2e3r4"))
+            .subscribeOn(testScheduler)
+            .observeOn(testScheduler)
+            .test()
 
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val original = chain.request()
-        val originalHttpUrl = original.url()
-        val url = originalHttpUrl
-            .newBuilder()
-            .addQueryParameter(
-                API_KEY_PARAM,
-                TMDB_API_KEY
-            )
-            .build()
-
-        val requestBuilder = original.newBuilder().url(url)
-        val request = requestBuilder.build()
-        return chain.proceed(request)
+        testScheduler.advanceTimeBy(1L, TimeUnit.SECONDS);
+        testObserver.assertValue(false)
+        testObserver.dispose()
     }
 }

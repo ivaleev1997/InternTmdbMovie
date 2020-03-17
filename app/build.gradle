@@ -24,6 +24,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -32,6 +35,7 @@ dependencies {
     implementation androidx_appcompat
     implementation androidx_core_ktx
     implementation constraintlayout
+    implementation activity_ktx
 
     testImplementation junit
     androidTestImplementation androidx_junit
