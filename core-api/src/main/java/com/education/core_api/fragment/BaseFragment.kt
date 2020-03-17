@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import com.google.android.material.textfield.TextInputLayout
 
 abstract class BaseFragment(private val layoutId: Int) : Fragment() {
     override fun onCreateView(
@@ -32,6 +31,4 @@ abstract class BaseFragment(private val layoutId: Int) : Fragment() {
             inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
-
-    fun TextInputLayout.getEditTextString(): String = this.editText?.text.toString()
 }

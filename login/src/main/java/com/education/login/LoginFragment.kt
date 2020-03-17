@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import com.education.core_api.extension.getEditTextString
 import com.education.core_api.fragment.BaseFragment
 import com.education.core_api.mediator.AppWithComponent
 import com.education.core_api.viewmodel.ViewModelTrigger
@@ -75,7 +76,6 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
                 if (validateLogin)
                     null
                 else {
-                    disableEnterButton()
                     resources.getString(R.string.incorrect_login)
                 }
         }
@@ -83,6 +83,8 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
         viewModel.validateButtonStatus.observe(viewLifecycleOwner) { buttonEnabled ->
             if (buttonEnabled)
                 enableEnterButton()
+            else
+                disableEnterButton()
         }
 
         viewModel.validatePasswordStatus.observe(viewLifecycleOwner) { validatePassword ->
@@ -90,7 +92,6 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
                 if (validatePassword)
                     null
                 else {
-                    disableEnterButton()
                     resources.getString(R.string.incorrect_passwd)
                 }
         }
