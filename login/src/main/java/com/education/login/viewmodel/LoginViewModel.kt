@@ -11,6 +11,7 @@ import com.education.login.dto.LoginResult
 import com.education.login.usecase.UserUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 class LoginViewModel
@@ -56,11 +57,11 @@ class LoginViewModel
                         _loginStatus.value =
                         when (error) {
                             is UnAuthorizedException -> {
-                                error.printStackTrace()
+                                logThrow(error)
                                 LoginResult.LOGIN_OR_PASSWORD
                             }
                             is NoInternetConnectionException -> {
-                                error.printStackTrace()
+                                logThrow(error)
                                 LoginResult.NO_NETWORK_CONNECTION
                             }
                             else -> LoginResult.TRY_LATER
@@ -97,5 +98,9 @@ class LoginViewModel
 
     private fun checkIfAllSuccess() {
         _validateButtonStatus.value = _validateLoginStatus.value ?: false && _validatePasswordStatus.value ?: false
+    }
+
+    private fun logThrow(error: Throwable) {
+        Timber.d(error)
     }
 }

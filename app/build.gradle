@@ -48,4 +48,5 @@ dependencies {
     kapt dagger2_compiler
 
     implementation material
+    implementation timber
 }

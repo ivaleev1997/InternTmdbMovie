@@ -10,6 +10,7 @@ import com.education.core_api.ui.LoginMediator
 import com.education.core_api.viewmodel.ViewModelTrigger
 import com.education.redmadrobottmdb.di.component.MainComponent
 import com.education.redmadrobottmdb.viewmodel.MainViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), BaseActivity {
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity(), BaseActivity {
     }
 
     override fun startMainAppScreen() {
+        Timber.d("startMainAppScreen")
     }
 
     override fun startLoginScreen() {

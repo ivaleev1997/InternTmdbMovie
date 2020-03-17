@@ -58,7 +58,9 @@ dependencies {
     implementation rxjava2
     implementation rxAndroid
 
-    testImplementation "org.robolectric:robolectric:4.3"
+    implementation timber
+
+    testImplementation robolectric
     testImplementation retrofit2_converter_gson
     testImplementation retrofit2
     testImplementation retrofit2_rxjava2_adapter
