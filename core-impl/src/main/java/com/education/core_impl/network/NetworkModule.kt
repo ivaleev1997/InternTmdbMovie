@@ -13,13 +13,13 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
-import javax.inject.Named
-import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
 class NetworkModule {
@@ -51,45 +51,46 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideTmdbMovieOkHttpClient(
-        authenticator: TmdbAuthenticator,
-        apiKeyInterceptor: ApiKeyInterceptor,
-        loggingInterceptor: HttpLoggingInterceptor,
-        languageInterceptor: LanguageInterceptor,
-        networkErrorInterceptor: NetworkErrorInterceptor,
-        sessionIdInterceptor: SessionIdInterceptor
-    ): OkHttpClient {
-        return OkHttpClient.Builder().apply {
-            authenticator(authenticator)
-            addInterceptor(apiKeyInterceptor)
-            addInterceptor(languageInterceptor)
-            addInterceptor(networkErrorInterceptor)
-            addInterceptor(sessionIdInterceptor)
-            if (BuildConfig.DEBUG) addInterceptor(loggingInterceptor)
-        }.build()
-    }
-
-    @Provides
-    @Singleton
     fun provideTmdbAuthenticator(): TmdbAuthenticator {
         return TmdbAuthenticator()
     }
 
     @Provides
     @Singleton
-    @Named("okHttpAuth")
-    fun provideTmdbAuthOkHttpClient(
+    fun provideOkHttpClientBuilder(
         authenticator: TmdbAuthenticator,
         apiKeyInterceptor: ApiKeyInterceptor,
         loggingInterceptor: HttpLoggingInterceptor,
         networkErrorInterceptor: NetworkErrorInterceptor
-    ): OkHttpClient {
+    ): OkHttpClient.Builder {
         return OkHttpClient.Builder().apply {
             authenticator(authenticator)
             addInterceptor(apiKeyInterceptor)
             addInterceptor(networkErrorInterceptor)
             if (BuildConfig.DEBUG) addInterceptor(loggingInterceptor)
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideTmdbMovieOkHttpClient(
+        okHttpClientBuilder: OkHttpClient.Builder,
+        languageInterceptor: LanguageInterceptor,
+        sessionIdInterceptor: SessionIdInterceptor
+    ): OkHttpClient {
+        return okHttpClientBuilder.apply {
+            addInterceptor(languageInterceptor)
+            addInterceptor(sessionIdInterceptor)
         }.build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("okHttpAuth")
+    fun provideTmdbAuthOkHttpClient(
+        okHttpClientBuilder: OkHttpClient.Builder
+    ): OkHttpClient {
+        return okHttpClientBuilder.build()
     }
 
     @Provides

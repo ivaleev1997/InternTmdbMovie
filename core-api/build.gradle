@@ -35,4 +35,5 @@ dependencies {
     implementation material
     implementation retrofit2
     implementation rxjava2
+    implementation rxAndroid
 }

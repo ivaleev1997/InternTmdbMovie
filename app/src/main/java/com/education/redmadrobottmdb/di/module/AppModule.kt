@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
-import com.education.core_api.SHARED_PREFS
+import com.education.core_api.PREFS_SHARED_PREFS
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -15,7 +15,7 @@ class AppModule {
     @Provides
     @Singleton
     fun provideSharedPrefs(context: Context): SharedPreferences {
-        return context.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+        return context.getSharedPreferences(PREFS_SHARED_PREFS, MODE_PRIVATE)
     }
 
     @Provides

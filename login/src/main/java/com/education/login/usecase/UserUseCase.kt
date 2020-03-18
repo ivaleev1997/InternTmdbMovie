@@ -2,7 +2,7 @@ package com.education.login.usecase
 
 import com.education.core_api.dto.User
 import com.education.login.repository.LoginRepository
-import io.reactivex.Single
+import io.reactivex.Completable
 import javax.inject.Inject
 
 class UserUseCase
@@ -10,7 +10,7 @@ class UserUseCase
     private val loginRepository: LoginRepository
 ) {
 
-    fun login(login: String, password: String): Single<Boolean> {
+    fun login(login: String, password: String): Completable {
         return loginRepository.login(User(login, password))
     }
 }

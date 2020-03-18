@@ -4,20 +4,20 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.education.core_api.extension.SchedulersProviderImpl
+import com.education.core_api.extension.schedulersIoToMain
 import com.education.core_api.network.exception.NoInternetConnectionException
 import com.education.core_api.network.exception.UnAuthorizedException
+import com.education.core_api.viewmodel.BaseViewModel
 import com.education.login.dto.LoginResult
 import com.education.login.usecase.UserUseCase
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
 class LoginViewModel
 @Inject constructor (
     private val userUseCase: UserUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     companion object {
         const val PASSWORD_MIN = 4
@@ -43,18 +43,11 @@ class LoginViewModel
     fun onLoginClicked(login: String, password: String) {
         if (isLoginValid(login) && isPasswordValid(password))
             userUseCase.login(login, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { success ->
-                        _loginStatus.value =
-                            if (success)
-                                LoginResult.SUCCESS
-                            else
-                                LoginResult.TRY_LATER
-                    },
-                    { error ->
-                        _loginStatus.value =
+                .schedulersIoToMain(SchedulersProviderImpl)
+                .subscribe({
+                    _loginStatus.value = LoginResult.SUCCESS
+                }, { error ->
+                    _loginStatus.value =
                         when (error) {
                             is UnAuthorizedException -> {
                                 logThrow(error)
@@ -68,6 +61,7 @@ class LoginViewModel
                         }
                     }
                 )
+                .autoDispose()
     }
 
     fun onLoginEntered(login: String) {
