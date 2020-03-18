@@ -13,7 +13,7 @@ class LoginModule {
 
     @Provides
     @Singleton
-    fun provideSongsListViewModel(
+    fun provideLoginViewModel(
         map: @JvmSuppressWildcards MutableMap<Class<out ViewModel>, ViewModel>,
         userUseCase: UserUseCase
     ): ViewModel = LoginViewModel(userUseCase).also {
