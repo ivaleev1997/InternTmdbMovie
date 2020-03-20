@@ -2,9 +2,9 @@ package com.education.redmadrobottmdb.di.component
 
 import android.app.Application
 import com.education.core.CoreProviderFactory
-import com.education.core_api.mediator.AppProvider
-import com.education.core_api.mediator.CoreProvider
-import com.education.core_api.mediator.NetworkProvider
+import com.education.core_api.di.AppProvider
+import com.education.core_api.di.CoreProvider
+import com.education.core_api.di.NetworkProvider
 import com.education.redmadrobottmdb.di.module.MediatorBindings
 import dagger.Component
 import javax.inject.Singleton

@@ -1,8 +1,8 @@
 package com.education.redmadrobottmdb
 
 import android.app.Application
-import com.education.core_api.mediator.AppWithComponent
-import com.education.core_api.mediator.CoreProvider
+import com.education.core_api.di.AppWithComponent
+import com.education.core_api.di.CoreProvider
 import com.education.redmadrobottmdb.di.component.CoreComponent
 
 class App : Application(), AppWithComponent {

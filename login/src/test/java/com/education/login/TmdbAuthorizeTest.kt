@@ -6,9 +6,9 @@ import android.os.Build
 import com.education.core_api.PREFS_REQUEST_LIFE
 import com.education.core_api.PREFS_REQUEST_TOKEN
 import com.education.core_api.PREFS_SESSION
-import com.education.core_api.dto.User
-import com.education.core_api.network.exception.SessionTokenException
-import com.education.login.repository.LoginRepositoryImpl
+import com.education.login.domain.entity.User
+import com.education.core_api.data.network.exception.SessionTokenException
+import com.education.login.data.repository.LoginRepositoryImpl
 import io.reactivex.schedulers.TestScheduler
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.assertEquals
@@ -66,7 +66,12 @@ class TmdbAuthorizeTest {
         )
         val testScheduler = TestScheduler()
         val testObserver = loginRepository
-            .login(User("nekitpip@mail.ru", "q1w2e3r4"))
+            .login(
+                User(
+                    "nekitpip@mail.ru",
+                    "q1w2e3r4"
+                )
+            )
             .subscribeOn(testScheduler)
             .observeOn(testScheduler)
             .test()
@@ -103,7 +108,12 @@ class TmdbAuthorizeTest {
         )
         val testScheduler = TestScheduler()
         val testObserver = loginRepository
-            .login(User("nekitpip@mail.ru", "q1w2e3r4"))
+            .login(
+                User(
+                    "nekitpip@mail.ru",
+                    "q1w2e3r4"
+                )
+            )
             .subscribeOn(testScheduler)
             .observeOn(testScheduler)
             .test()

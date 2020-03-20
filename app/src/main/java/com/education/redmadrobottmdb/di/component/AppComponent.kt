@@ -2,7 +2,7 @@ package com.education.redmadrobottmdb.di.component
 
 import android.app.Application
 import android.content.Context
-import com.education.core_api.mediator.AppProvider
+import com.education.core_api.di.AppProvider
 import com.education.redmadrobottmdb.di.module.AppModule
 import dagger.BindsInstance
 import dagger.Component

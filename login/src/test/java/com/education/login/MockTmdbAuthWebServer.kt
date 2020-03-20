@@ -1,6 +1,6 @@
 package com.education.login
 
-import com.education.core_api.network.TmdbAuthApi
+import com.education.core_api.data.network.TmdbAuthApi
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor

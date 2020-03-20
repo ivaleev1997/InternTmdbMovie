@@ -1,11 +1,11 @@
 package com.education.login.di
 
 import androidx.lifecycle.ViewModel
-import com.education.core_api.viewmodel.ViewModelTrigger
-import com.education.login.repository.LoginRepository
-import com.education.login.repository.LoginRepositoryImpl
-import com.education.login.usecase.UserUseCase
-import com.education.login.viewmodel.LoginViewModel
+import com.education.core_api.presentation.viewmodel.ViewModelTrigger
+import com.education.login.data.repository.LoginRepository
+import com.education.login.data.repository.LoginRepositoryImpl
+import com.education.login.domain.UserUseCase
+import com.education.login.presentation.LoginViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -25,7 +25,9 @@ abstract class LoginModule {
         fun provideSongsListViewModel(
             map: @JvmSuppressWildcards MutableMap<Class<out ViewModel>, ViewModel>,
             userUseCase: UserUseCase
-        ): ViewModel = LoginViewModel(userUseCase).also {
+        ): ViewModel = LoginViewModel(
+            userUseCase
+        ).also {
             map[LoginViewModel::class.java] = it
         }
 

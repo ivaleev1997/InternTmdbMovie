@@ -32,8 +32,13 @@ dependencies {
     implementation androidx_appcompat
     implementation androidx_core_ktx
 
+    testImplementation junit
+    androidTestImplementation androidx_junit
+    androidTestImplementation androidx_espresso
+
     implementation material
     implementation retrofit2
+    implementation retrofit2_converter_gson
     implementation rxjava2
     implementation rxAndroid
 }

@@ -1,9 +1,9 @@
 package com.education.login.di
 
 import com.education.core.CoreProviderFactory
-import com.education.core_api.mediator.CoreProvider
-import com.education.core_api.viewmodel.ViewModelsProvider
-import com.education.login.LoginFragment
+import com.education.core_api.di.CoreProvider
+import com.education.core_api.presentation.viewmodel.ViewModelsProvider
+import com.education.login.presentation.LoginFragment
 import dagger.Component
 import javax.inject.Singleton
 
