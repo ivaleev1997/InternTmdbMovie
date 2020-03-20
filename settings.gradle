@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':login', ':core-api', ':core-impl', ':core'
 rootProject.name='RedMadRobotTMDB'
