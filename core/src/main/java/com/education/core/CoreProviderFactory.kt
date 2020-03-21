@@ -3,8 +3,8 @@ package com.education.core
 import com.education.core_api.di.AppProvider
 import com.education.core_api.di.NetworkProvider
 import com.education.core_api.presentation.viewmodel.ViewModelsProvider
-import com.education.core_impl.di.DaggerNetworkComponent
-import com.education.core_impl.di.DaggerViewModelComponent
+import com.education.core_impl.di.component.DaggerNetworkComponent
+import com.education.core_impl.di.component.DaggerViewModelComponent
 
 object CoreProviderFactory {
 

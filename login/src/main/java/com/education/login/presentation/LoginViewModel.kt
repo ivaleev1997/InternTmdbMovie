@@ -4,9 +4,9 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.education.core_api.data.network.exception.NoInternetConnectionException
 import com.education.core_api.data.network.exception.UnAuthorizedException
 import com.education.core_api.extension.SchedulersProviderImpl
+import com.education.core_api.extension.isNetworkException
 import com.education.core_api.extension.schedulersIoToMain
 import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.login.domain.UserUseCase
@@ -48,16 +48,19 @@ class LoginViewModel
                     _loginStatus.value = LoginResult.SUCCESS
                 }, { error ->
                     _loginStatus.value =
-                        when (error) {
-                            is UnAuthorizedException -> {
-                                logThrow(error)
-                                LoginResult.LOGIN_OR_PASSWORD
-                            }
-                            is NoInternetConnectionException -> {
+                        when {
+                            error.isNetworkException() -> {
                                 logThrow(error)
                                 LoginResult.NO_NETWORK_CONNECTION
                             }
-                            else -> LoginResult.TRY_LATER
+                            error is UnAuthorizedException -> {
+                                logThrow(error)
+                                LoginResult.LOGIN_OR_PASSWORD
+                            }
+                            else -> {
+                                logThrow(error)
+                                LoginResult.TRY_LATER
+                            }
                         }
                     }
                 )

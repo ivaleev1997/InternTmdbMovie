@@ -1,13 +1,13 @@
-package com.education.core_impl.data.network
+package com.education.core_impl.di.module
 
 import com.education.core_api.data.network.TmdbAuthApi
 import com.education.core_api.data.network.TmdbMovieApi
 import com.education.core_impl.BuildConfig
+import com.education.core_impl.data.network.TmdbAuthenticator
 import com.education.core_impl.data.network.interceptor.ApiKeyInterceptor
 import com.education.core_impl.data.network.interceptor.LanguageInterceptor
 import com.education.core_impl.data.network.interceptor.NetworkErrorInterceptor
 import com.education.core_impl.data.network.interceptor.SessionIdInterceptor
-import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -26,7 +26,6 @@ class NetworkModule {
     @Singleton
     fun provideGson(): Gson {
         return GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .create()
     }
 

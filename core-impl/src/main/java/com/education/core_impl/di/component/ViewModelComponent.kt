@@ -1,7 +1,7 @@
-package com.education.core_impl.di
+package com.education.core_impl.di.component
 
 import com.education.core_api.presentation.viewmodel.ViewModelsProvider
-import com.education.core_impl.presentation.viewmodel.ViewModelModule
+import com.education.core_impl.di.module.ViewModelModule
 import dagger.Component
 import javax.inject.Singleton
 
