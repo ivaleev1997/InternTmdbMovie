@@ -11,7 +11,7 @@ class UtilTest {
     @Test
     fun timeConvert_Test() {
         val expectedTimeLong = 1584223133000 // 2020-03-14 21:58:53
-        val timeStr = "2020-03-14 21:58:53"
+        val timeStr = "2020-03-14 21:58:53 UTC"
 
         val actualTimeLong = convertTime(timeStr)
 

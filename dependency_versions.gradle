@@ -42,7 +42,6 @@ ext {
 	mockito_core = "org.mockito:mockito-core:$mockito_version"
 	mockito_android = "org.mockito:mockito-android:$mockito_version"
 	okhttp3_log = "com.squareup.okhttp3:logging-interceptor:$okhttp3_log_version"
-	okhttp_mockwebserver = "com.squareup.okhttp3:mockwebserver:$okhttp3_log_version"
 	recyclerview = "androidx.recyclerview:recyclerview:$recyclerview_version"
 	retrofit2 = "com.squareup.retrofit2:retrofit:$retrofit2_version"
 	retrofit2_converter_gson = "com.squareup.retrofit2:converter-gson:$retrofit2_version"
@@ -59,10 +58,22 @@ ext {
 	androidx_junit_version = '1.1.1'
 	androidx_espresso_version = '3.2.0'
 	robolectric_version = '4.3'
+	mockito_kotlin2_version = '2.2.0'
+	okhttp3_mockwebserver_version = '4.4.0'
+	assertj_version = '3.15.0'
+	junit5_verion = '5.5.1'
+	spek_version = '2.0.7'
 
-	junit = "junit:junit:$junit_version"
 	androidx_junit = "androidx.test.ext:junit:$androidx_junit_version"
 	androidx_espresso = "androidx.test.espresso:espresso-core:$androidx_espresso_version"
 	androidx_core = "androidx.test:core:1.0.0"
+	assertj = "org.assertj:assertj-core:$assertj_version"
+	junit = "junit:junit:$junit_version"
+	mockito_kotlin2 = "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin2_version"
+	okhttp_mockwebserver = "com.squareup.okhttp3:mockwebserver:$okhttp3_mockwebserver_version"
 	robolectric = "org.robolectric:robolectric:$robolectric_version"
+	junit_jupiter_api = "org.junit.jupiter:junit-jupiter-api:$junit5_verion"
+	junit_jupiter_engine = "org.junit.jupiter:junit-jupiter-engine:$junit5_verion"
+	spek_dsl_jvm = "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
+	spek_runner_junit5 ="org.spekframework.spek2:spek-runner-junit5:$spek_version"
 }

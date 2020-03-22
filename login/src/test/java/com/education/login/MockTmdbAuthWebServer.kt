@@ -3,9 +3,7 @@ package com.education.login
 import com.education.core_api.data.network.TmdbAuthApi
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -19,7 +17,7 @@ class MockTmdbAuthWebServer {
 
     init {
         val client = OkHttpClient.Builder().apply {
-            addInterceptor(ApiKeyInterceptor)
+            //addInterceptor(ApiKeyInterceptor)
             addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
@@ -43,7 +41,7 @@ class MockTmdbAuthWebServer {
     }
 }
 
-object ApiKeyInterceptor : Interceptor {
+/*object ApiKeyInterceptor : Interceptor {
     private const val TMDB_API_KEY = "aa7b2f0df06cb6ccf1cbcf705bcf9892"
     private const val API_KEY_PARAM = "api_key"
 
@@ -62,4 +60,4 @@ object ApiKeyInterceptor : Interceptor {
         val request = requestBuilder.build()
         return chain.proceed(request)
     }
-}
+}*/

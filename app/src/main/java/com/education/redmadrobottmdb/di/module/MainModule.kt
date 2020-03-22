@@ -1,7 +1,7 @@
 package com.education.redmadrobottmdb.di.module
 
-import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
+import com.education.core_api.data.LocalDataSource
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.redmadrobottmdb.presentation.MainViewModel
 import dagger.Module
@@ -15,9 +15,9 @@ class MainModule {
     @Singleton
     fun provideSongsListViewModel(
         map: @JvmSuppressWildcards MutableMap<Class<out ViewModel>, ViewModel>,
-        sharedPreferences: SharedPreferences
+        localDataSource: LocalDataSource
     ): ViewModel = MainViewModel(
-        sharedPreferences
+        localDataSource
     ).also {
         map[MainViewModel::class.java] = it
     }

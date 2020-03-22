@@ -1,15 +1,13 @@
 package com.education.core_impl.data.network.interceptor
 
-import android.content.SharedPreferences
-import com.education.core_api.BLANK_STR
-import com.education.core_api.PREFS_SESSION
+import com.education.core_api.data.LocalDataSource
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
 class SessionIdInterceptor
     @Inject constructor (
-        private val sharedPrefs: SharedPreferences
+        private val localDataSource: LocalDataSource
     ) : Interceptor {
 
     companion object {
@@ -34,6 +32,6 @@ class SessionIdInterceptor
     }
 
     private fun getCurrentSessionId(): String {
-        return sharedPrefs.getString(PREFS_SESSION, BLANK_STR) ?: BLANK_STR
+        return localDataSource.getSessionId()
     }
 }
