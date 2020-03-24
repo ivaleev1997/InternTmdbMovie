@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.education.core_api.data.network.exception.UnAuthorizedException
-import com.education.core_api.extension.SchedulersProviderImpl
 import com.education.core_api.extension.isNetworkException
-import com.education.core_api.extension.schedulersIoToMain
 import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.login.domain.UserUseCase
 import com.education.login.domain.entity.LoginResult
@@ -43,7 +41,6 @@ class LoginViewModel
     fun onLoginClicked(login: String, password: String) {
         if (isLoginValid(login) && isPasswordValid(password))
             userUseCase.login(login, password)
-                .schedulersIoToMain(SchedulersProviderImpl)
                 .subscribe({
                     _loginStatus.value = LoginResult.SUCCESS
                 }, { error ->

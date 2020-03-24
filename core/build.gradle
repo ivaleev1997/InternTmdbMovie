@@ -30,4 +30,9 @@ dependencies {
 
     api project(':core-api')
     implementation project(':core-impl')
+
+    testImplementation okhttp_mockwebserver
+    testImplementation retrofit2
+    testImplementation retrofit2_converter_gson
+    testImplementation retrofit2_rxjava2_adapter
 }

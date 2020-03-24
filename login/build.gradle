@@ -22,6 +22,9 @@ android {
     sourceSets.each {
         it.java.srcDirs += "src/$it.name/kotlin"
     }
+    sourceSets {
+        test.java.srcDirs += ["${project(':core').projectDir}/src/test/java"]
+    }
 
     testOptions {
         junitPlatform {
@@ -61,8 +64,11 @@ dependencies {
     androidTestImplementation androidx_junit
     androidTestImplementation androidx_espresso
 
-    implementation project(':core')
+    testImplementation project(':core')
+    testImplementation project(':core-api')
+    testImplementation project(':core-impl')
 
+    implementation project(':core')
     implementation dagger2
     kapt dagger2_compiler
     
