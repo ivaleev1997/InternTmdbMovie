@@ -34,6 +34,7 @@ object LoginRepositoryTest : Spek({
             ))
         }
         val mockLocalDataSource: LocalDataSource = Mockito.mock(LocalDataSource::class.java)
+
         var testObserver: TestObserver<Void>? = null
         val loginRepository: LoginRepository? = LoginRepositoryImpl(mockTmdbAuthApi, mockLocalDataSource)
 
@@ -52,10 +53,16 @@ object LoginRepositoryTest : Spek({
                     ?.test()
             }
 
-            Then("should complete"){
+            Then("Should complete"){
                 testScheduler.advanceTimeBy(1L, TimeUnit.SECONDS)
                 testObserver?.assertComplete()
                 testObserver?.dispose()
+            }
+
+            And("Verify save request token, session id and token lifetime") {
+                Mockito.verify(mockLocalDataSource).saveRequestToken(request_token)
+                Mockito.verify(mockLocalDataSource).saveSessionId(session_id)
+                Mockito.verify(mockLocalDataSource).saveTokenLifeTime(expires_at)
             }
         }
 
@@ -64,8 +71,6 @@ object LoginRepositoryTest : Spek({
                 Mockito.`when`(mockTmdbAuthApi.createSessionId(any())).thenReturn(just(
                     Session(success = false, sessionId = "")
                 ))
-
-                //loginRepository = LoginRepositoryImpl(mockTmdbAuthApi, mockLocalDataSource)
             }
 
             When("Subscribe on login method with User instance object") {
@@ -76,7 +81,7 @@ object LoginRepositoryTest : Spek({
                     ?.test()
             }
 
-            Then("should throw SessionTokenException"){
+            Then("Should throw SessionTokenException"){
                 testScheduler.advanceTimeBy(1L, TimeUnit.SECONDS)
                 testObserver?.assertError(SessionTokenException::class.java)
                 testObserver?.dispose()
@@ -98,7 +103,7 @@ object LoginRepositoryTest : Spek({
                     ?.test()
             }
 
-            Then("should throw ConnectException") {
+            Then("Should throw ConnectException") {
                 testScheduler.advanceTimeBy(1L, TimeUnit.SECONDS)
                 testObserver?.assertError(ConnectException::class.java)
                 testObserver?.dispose()

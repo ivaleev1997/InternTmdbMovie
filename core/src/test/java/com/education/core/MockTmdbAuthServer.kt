@@ -12,7 +12,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.HttpURLConnection
-import java.net.SocketException
 
 class MockTmdbAuthWebServer {
     val mockWebServer = MockWebServer()
@@ -66,27 +65,4 @@ object ErrorUnAuthorizeDispatcher : Dispatcher() {
             else -> MockResponse().setResponseCode(HttpURLConnection.HTTP_NOT_FOUND)
         }
     }
-}
-
-object NoConnectionExceptionDispatcher : Dispatcher() {
-    override fun dispatch(request: RecordedRequest): MockResponse {
-        if (request.path == "/authentication/token/new")
-            throw SocketException()
-
-        return MockResponse().setResponseCode(HttpURLConnection.HTTP_NOT_FOUND)
-    }
-}
-
-object ErrorValidateLoginDispatcher : Dispatcher() {
-    override fun dispatch(request: RecordedRequest): MockResponse {
-        return when(request.path) {
-            "/authentication/token/new" -> MockResponse().setResponseCode(HttpURLConnection.HTTP_OK).setBody(requestTokenResponseBody)
-            "/authentication/token/validate_with_login" -> MockResponse().setResponseCode(
-                HttpURLConnection.HTTP_UNAUTHORIZED
-            ).setBody(errorResponseBody)
-
-            else -> MockResponse().setResponseCode(HttpURLConnection.HTTP_NOT_FOUND)
-        }
-    }
-
 }

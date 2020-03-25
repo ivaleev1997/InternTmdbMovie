@@ -38,7 +38,7 @@ class LoginViewModel
     val validatePasswordStatus: LiveData<Boolean>
         get() = _validatePasswordStatus
 
-    fun onLoginClicked(login: String, password: String) {
+    fun onLoginButtonClicked(login: String, password: String) {
         if (isLoginValid(login) && isPasswordValid(password))
             userUseCase.login(login, password)
                 .subscribe({

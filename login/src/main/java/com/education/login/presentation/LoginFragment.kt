@@ -45,7 +45,7 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
         enterButton.setOnClickListener {
             clearMsgFromEnterStatusTextView()
             enterProgressBar.visibility = View.VISIBLE
-            viewModel.onLoginClicked(
+            viewModel.onLoginButtonClicked(
                 loginTextInput.getEditTextString(),
                 passwordTextInput.getEditTextString()
             )
