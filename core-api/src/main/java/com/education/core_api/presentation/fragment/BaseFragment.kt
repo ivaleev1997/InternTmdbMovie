@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import com.education.core_api.R
+import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseFragment(private val layoutId: Int) : Fragment() {
     override fun onCreateView(
