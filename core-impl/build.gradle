@@ -20,6 +20,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "SERVER_API_KEY", "\"${tmdb_api_key}\""
+            buildConfigField "String", "SERVER_ADDR", "\"${tmdb_url}\""
+        }
+        debug {
+            buildConfigField "String", "SERVER_API_KEY", "\"${tmdb_api_key}\""
+            buildConfigField "String", "SERVER_ADDR", "\"${tmdb_url}\""
         }
     }
 }
@@ -37,6 +44,7 @@ dependencies {
     implementation retrofit2_converter_gson
     implementation okhttp3_log
     implementation retrofit2_converter_moshi
+    implementation retrofit2_rxjava2_adapter
 
     implementation lifecycle_viewmodel
 }
