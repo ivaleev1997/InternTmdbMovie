@@ -22,6 +22,7 @@ android {
     sourceSets.each {
         it.java.srcDirs += "src/$it.name/kotlin"
     }
+
     sourceSets {
         test.java.srcDirs += ["${project(':core').projectDir}/src/test/java"]
     }
@@ -51,6 +52,11 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -100,4 +106,5 @@ dependencies {
     // spek
     testImplementation spek_dsl_jvm
     testImplementation spek_runner_junit5
+
 }

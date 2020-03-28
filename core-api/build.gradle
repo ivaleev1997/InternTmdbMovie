@@ -69,6 +69,7 @@ dependencies {
 
     testImplementation junit_jupiter_api
     testRuntimeOnly junit_jupiter_engine
+    testImplementation junit_jupiter_params
 
     // spek
     testImplementation spek_dsl_jvm

@@ -12,31 +12,37 @@ import com.education.login.data.repository.LoginRepository
 import com.education.login.data.repository.LoginRepositoryImpl
 import com.education.login.domain.entity.User
 import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.Single
 import io.reactivex.Single.just
 import io.reactivex.observers.TestObserver
-import io.reactivex.schedulers.TestScheduler
 import org.mockito.Mockito
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import java.net.ConnectException
-import java.util.concurrent.TimeUnit
 
 object LoginRepositoryTest : Spek({
-    Feature("Check login(user: User) method") {
-        val testScheduler = TestScheduler()
-        val mockTmdbAuthApi: TmdbAuthApi = Mockito.mock(TmdbAuthApi::class.java).also {
-            Mockito.`when`(it.createRequestToken()).thenReturn(just(
-                RequestToken(success = true, expiresAt = expires_at, requestToken = request_token)
-            ))
-            Mockito.`when`(it.validateRequestTokenWithLogin(any())).thenReturn(just(
-                RequestToken(success = true, expiresAt = expires_at, requestToken = request_token)
-            ))
-        }
-        val mockLocalDataSource: LocalDataSource = Mockito.mock(LocalDataSource::class.java)
+    // region Fields
+    val mockTmdbAuthApi = mock<TmdbAuthApi> {
+        on { createRequestToken() } doReturn just(
+            RequestToken(success = true, expiresAt = expires_at, requestToken = request_token)
+        )
 
-        var testObserver: TestObserver<Void>? = null
-        val loginRepository: LoginRepository? = LoginRepositoryImpl(mockTmdbAuthApi, mockLocalDataSource)
+        on { validateRequestTokenWithLogin(any()) } doReturn just(
+            RequestToken(success = true, expiresAt = expires_at, requestToken = request_token)
+        )
+    }
+    val mockLocalDataSource: LocalDataSource = Mockito.mock(LocalDataSource::class.java)
+
+    var testObserver: TestObserver<Void> = TestObserver()
+
+    val loginRepository: LoginRepository by memoized {
+        LoginRepositoryImpl(mockTmdbAuthApi, mockLocalDataSource)
+    }
+    // endregion Fields
+
+    Feature("Check login(user: User) method") {
 
         Scenario("Check login result if create session true") {
             Given("Create success data flow from TmdbAuthApi by mocking") {
@@ -47,16 +53,13 @@ object LoginRepositoryTest : Spek({
 
             When("Subscribe on login method with User instance object") {
                 testObserver = loginRepository
-                    ?.login(User("login", "passwd"))
-                    ?.subscribeOn(testScheduler)
-                    ?.observeOn(testScheduler)
-                    ?.test()
+                    .login(User("login", "passwd"))
+                    .test()
             }
 
             Then("Should complete"){
-                testScheduler.advanceTimeBy(1L, TimeUnit.SECONDS)
-                testObserver?.assertComplete()
-                testObserver?.dispose()
+                testObserver.assertComplete()
+                testObserver.dispose()
             }
 
             And("Verify save request token, session id and token lifetime") {
@@ -75,16 +78,13 @@ object LoginRepositoryTest : Spek({
 
             When("Subscribe on login method with User instance object") {
                 testObserver = loginRepository
-                    ?.login(User("login", "passwd"))
-                    ?.subscribeOn(testScheduler)
-                    ?.observeOn(testScheduler)
-                    ?.test()
+                    .login(User("login", "passwd"))
+                    .test()
             }
 
             Then("Should throw SessionTokenException"){
-                testScheduler.advanceTimeBy(1L, TimeUnit.SECONDS)
-                testObserver?.assertError(SessionTokenException::class.java)
-                testObserver?.dispose()
+                testObserver.assertError(SessionTokenException::class.java)
+                testObserver.dispose()
             }
         }
 
@@ -97,16 +97,13 @@ object LoginRepositoryTest : Spek({
 
             When("Subscribe on login method with User instance object") {
                 testObserver = loginRepository
-                    ?.login(User("login", "passwd"))
-                    ?.subscribeOn(testScheduler)
-                    ?.observeOn(testScheduler)
-                    ?.test()
+                    .login(User("login", "passwd"))
+                    .test()
             }
 
             Then("Should throw ConnectException") {
-                testScheduler.advanceTimeBy(1L, TimeUnit.SECONDS)
-                testObserver?.assertError(ConnectException::class.java)
-                testObserver?.dispose()
+                testObserver.assertError(ConnectException::class.java)
+                testObserver.dispose()
             }
         }
     }

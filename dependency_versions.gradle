@@ -61,7 +61,7 @@ ext {
 	mockito_kotlin2_version = '2.2.0'
 	okhttp3_mockwebserver_version = '4.4.0'
 	assertj_version = '3.15.0'
-	junit5_verion = '5.5.1'
+	junit5_version = '5.5.1'
 	spek_version = '2.0.7'
 
 	androidx_junit = "androidx.test.ext:junit:$androidx_junit_version"
@@ -72,8 +72,9 @@ ext {
 	mockito_kotlin2 = "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin2_version"
 	okhttp_mockwebserver = "com.squareup.okhttp3:mockwebserver:$okhttp3_mockwebserver_version"
 	robolectric = "org.robolectric:robolectric:$robolectric_version"
-	junit_jupiter_api = "org.junit.jupiter:junit-jupiter-api:$junit5_verion"
-	junit_jupiter_engine = "org.junit.jupiter:junit-jupiter-engine:$junit5_verion"
+	junit_jupiter_api = "org.junit.jupiter:junit-jupiter-api:$junit5_version"
+	junit_jupiter_engine = "org.junit.jupiter:junit-jupiter-engine:$junit5_version"
+	junit_jupiter_params = "org.junit.jupiter:junit-jupiter-params:$junit5_version"
 	spek_dsl_jvm = "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
 	spek_runner_junit5 ="org.spekframework.spek2:spek-runner-junit5:$spek_version"
 }
