@@ -27,6 +27,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+// To inline the bytecode built with JVM target 1.8 into
+// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -37,16 +43,28 @@ dependencies {
     implementation constraintlayout
     implementation activity_ktx
 
+    implementation navigation_fragment
+    implementation navigation_ui
+    implementation navigation_ui_ktx
+    implementation navigation_fragment_ktx
+
     testImplementation junit
     androidTestImplementation androidx_junit
     androidTestImplementation androidx_espresso
 
     implementation project(':core')
     implementation project(':login')
+    implementation project(':user-profile')
+    implementation project(':favorite')
+    implementation project(':movies')
 
     implementation dagger2
     kapt dagger2_compiler
 
     implementation material
     implementation timber
+
+    implementation fragment
+    implementation lifecycle_ext
+    implementation lifecycle_viewmodel
 }

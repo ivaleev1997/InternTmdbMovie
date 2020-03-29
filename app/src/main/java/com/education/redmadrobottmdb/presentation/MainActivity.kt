@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.education.core_api.presentation.activity.BaseActivity
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.education.core_api.di.AppWithComponent
+import com.education.core_api.presentation.activity.BaseActivity
 import com.education.core_api.presentation.ui.LoginMediator
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.redmadrobottmdb.R
@@ -22,6 +24,8 @@ class MainActivity : AppCompatActivity(), BaseActivity {
     @Inject
     lateinit var loginMediator: LoginMediator
 
+    lateinit var rootNavController: NavController
+
     private val viewModel: MainViewModel by viewModels {
         appViewModelFactory
     }
@@ -30,6 +34,9 @@ class MainActivity : AppCompatActivity(), BaseActivity {
         super.onCreate(savedInstanceState)
         MainComponent.create((application as AppWithComponent).getComponent()).inject(this)
         setContentView(R.layout.activity_main)
+
+        setupBottomNavigationWithNavComponent()
+
         if (!viewModel.isSessionExist())
             startLoginScreen()
         else {
@@ -37,11 +44,17 @@ class MainActivity : AppCompatActivity(), BaseActivity {
         }
     }
 
+    private fun setupBottomNavigationWithNavComponent() {
+        rootNavController = findNavController(R.id.nav_host_fragment)
+        supportActionBar?.hide()
+    }
+
     override fun startMainAppScreen() {
         Timber.d("startMainAppScreen")
     }
 
     override fun startLoginScreen() {
-        loginMediator.startLoginScreen(R.id.fragment_container, supportFragmentManager)
+        //loginMediator.startLoginScreen(R.id.fragment_container, supportFragmentManager)
+        rootNavController.navigate(R.id.login_fragment)
     }
 }

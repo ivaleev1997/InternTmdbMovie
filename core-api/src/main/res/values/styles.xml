@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="NotEnabledButtonStyle">
+        <item name="android:colorPrimary">@color/disabled_fill_button_color</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+</resources>
