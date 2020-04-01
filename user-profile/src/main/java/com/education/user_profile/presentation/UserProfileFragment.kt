@@ -12,9 +12,8 @@ import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.user_profile.R
 import com.education.user_profile.di.ProfileComponent
 import com.education.user_profile.domain.entity.UserProfileViewState
-import kotlinx.android.synthetic.main.user_profile_fragment.*
 import javax.inject.Inject
-
+import kotlinx.android.synthetic.main.user_profile_fragment.*
 
 class UserProfileFragment : BaseFragment(R.layout.user_profile_fragment) {
 

@@ -15,8 +15,8 @@ import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.login.presentation.LoginFragmentDirections
 import com.education.redmadrobottmdb.R
 import com.education.redmadrobottmdb.di.component.MainComponent
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity(), BaseActivity {
 

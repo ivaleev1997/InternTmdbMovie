@@ -19,9 +19,8 @@ import com.education.movies.domain.entity.MoviesViewState
 import com.education.search.MovieAdapter
 import com.education.search.RxSearchFlowable
 import com.education.search.entity.Movie
-import kotlinx.android.synthetic.main.movies_fragment.*
 import javax.inject.Inject
-
+import kotlinx.android.synthetic.main.movies_fragment.*
 
 class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
 

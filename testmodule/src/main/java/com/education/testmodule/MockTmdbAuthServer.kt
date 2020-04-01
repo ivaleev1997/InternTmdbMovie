@@ -1,8 +1,9 @@
-package com.education.core
+package com.education.testmodule
 
 import com.education.core_api.data.network.TmdbAuthApi
 import com.education.core_impl.data.network.interceptor.NetworkErrorInterceptor
 import com.education.core_impl.di.module.NetworkModule
+import java.net.HttpURLConnection
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
@@ -11,7 +12,6 @@ import okhttp3.mockwebserver.RecordedRequest
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.HttpURLConnection
 
 class MockTmdbAuthWebServer {
     val mockWebServer = MockWebServer()
@@ -46,9 +46,13 @@ class MockTmdbAuthWebServer {
 
 object SuccessDispatcher : Dispatcher() {
     override fun dispatch(request: RecordedRequest): MockResponse {
-        return when(request.path) {
-            "/authentication/token/new" -> MockResponse().setResponseCode(HttpURLConnection.HTTP_OK).setBody(requestTokenResponseBody)
-            "/authentication/session/new" -> MockResponse().setResponseCode(HttpURLConnection.HTTP_OK).setBody(createSessionIdResponseBody)
+        return when (request.path) {
+            "/authentication/token/new" -> MockResponse().setResponseCode(HttpURLConnection.HTTP_OK).setBody(
+                requestTokenResponseBody
+            )
+            "/authentication/session/new" -> MockResponse().setResponseCode(HttpURLConnection.HTTP_OK).setBody(
+                createSessionIdResponseBody
+            )
             "/authentication/token/validate_with_login" -> MockResponse().setResponseCode(
                 HttpURLConnection.HTTP_OK
             ).setBody(createSessionWithLoginResponseBody)
@@ -60,8 +64,10 @@ object SuccessDispatcher : Dispatcher() {
 
 object ErrorUnAuthorizeDispatcher : Dispatcher() {
     override fun dispatch(request: RecordedRequest): MockResponse {
-        return when(request.path) {
-            "/authentication/token/new" -> MockResponse().setResponseCode(HttpURLConnection.HTTP_UNAUTHORIZED).setBody(errorResponseBody)
+        return when (request.path) {
+            "/authentication/token/new" -> MockResponse().setResponseCode(HttpURLConnection.HTTP_UNAUTHORIZED).setBody(
+                errorResponseBody
+            )
             else -> MockResponse().setResponseCode(HttpURLConnection.HTTP_NOT_FOUND)
         }
     }

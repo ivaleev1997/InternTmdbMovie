@@ -5,7 +5,6 @@ import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import com.education.core_api.presentation.fragment.BaseFragment
 
-
 class FavoriteFragment : BaseFragment(R.layout.favorite_fragment) {
 
     companion object {

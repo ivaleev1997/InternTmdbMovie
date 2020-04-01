@@ -39,4 +39,3 @@ fun convertTime(timeString: String): Long {
 
         diff.dispatchUpdatesTo(this)
     }
-

@@ -5,10 +5,10 @@ import com.education.core_api.di.module.SchedulersProviderModule
 import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.SchedulersProviderImpl
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
-import com.education.movies.presentation.MoviesViewModel
 import com.education.movies.data.repository.MoviesRepository
 import com.education.movies.data.repository.MoviesRepositoryImpl
 import com.education.movies.domain.MoviesUseCase
+import com.education.movies.presentation.MoviesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

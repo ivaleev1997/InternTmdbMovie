@@ -1,12 +1,11 @@
-package com.education.core
+package com.education.testmodule
 
 import com.education.core_api.extension.SchedulersProvider
 import io.reactivex.Scheduler
 
-class TestSchedulersProvider (
+class TestSchedulersProvider(
     private val scheduler: Scheduler
-) : SchedulersProvider
-{
+) : SchedulersProvider {
     override fun io(): Scheduler = scheduler
 
     override fun mainThread(): Scheduler = scheduler

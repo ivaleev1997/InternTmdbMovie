@@ -1,4 +1,4 @@
-package com.education.core
+package com.education.testmodule
 
 const val request_token = "f6dfeab156c7317faa24aee64360f9194b34018d"
 const val expires_at = "2020-03-14 21:58:53 UTC"

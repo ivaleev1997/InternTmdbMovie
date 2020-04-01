@@ -29,5 +29,4 @@ class MainViewModel @Inject constructor(
     fun onLogoutClicked() {
         localDataSource.cleanTokens()
     }
-
 }

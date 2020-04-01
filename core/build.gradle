@@ -35,4 +35,7 @@ dependencies {
     testImplementation retrofit2
     testImplementation retrofit2_converter_gson
     testImplementation retrofit2_rxjava2_adapter
+
+    implementation androidx_core
+    implementation arch_core_testing
 }

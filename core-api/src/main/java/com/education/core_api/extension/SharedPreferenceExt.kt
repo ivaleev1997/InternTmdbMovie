@@ -2,7 +2,6 @@ package com.education.core_api.extension
 
 import android.content.SharedPreferences
 
-
 fun SharedPreferences.putString(key: String, value: String): Boolean {
     val editor = this.edit()
     editor.putString(key, value)

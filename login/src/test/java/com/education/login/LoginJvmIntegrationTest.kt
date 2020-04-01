@@ -1,26 +1,28 @@
 package com.education.login
 
-import com.education.core.*
 import com.education.core_api.data.LocalDataSource
 import com.education.login.data.repository.LoginRepository
 import com.education.login.data.repository.LoginRepositoryImpl
 import com.education.login.domain.UserUseCase
 import com.education.login.domain.entity.LoginResult
 import com.education.login.presentation.LoginViewModel
+import com.education.testmodule.MockTmdbAuthWebServer
+import com.education.testmodule.TestSchedulersProvider
 import io.reactivex.schedulers.Schedulers
+import java.net.HttpURLConnection
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.QueueDispatcher
 import org.assertj.core.api.Assertions.assertThat
 import org.mockito.Mockito
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
-import java.net.HttpURLConnection
 
 object LoginJvmIntegrationTest : Spek({
     beforeGroup { enableTestMode() }
     afterGroup { disableTestMode() }
 
     Feature("Login: ViewModel + UserUseCase + ... + MockWebServer") {
+        // region Fields
         val testScheduler = Schedulers.trampoline()
         val mockLocalDataSource: LocalDataSource = Mockito.mock(LocalDataSource::class.java)
         val schedulersProvider = TestSchedulersProvider(testScheduler)
@@ -29,7 +31,7 @@ object LoginJvmIntegrationTest : Spek({
         var mockTmdbServer: MockTmdbAuthWebServer
         var userUseCase: UserUseCase
         var loginViewModel: LoginViewModel
-
+        // endregion Fields
         Scenario("User insert valid login and password and click enter button") {
             mockTmdbServer = MockTmdbAuthWebServer()
             loginRepository = LoginRepositoryImpl(mockTmdbServer.tmdbAuthApi, mockLocalDataSource)
@@ -42,7 +44,7 @@ object LoginJvmIntegrationTest : Spek({
             Given("Set correct password and set success dispatcher") {
                 login = "login"
                 password = "password"
-                mockTmdbServer.setDispatcher(SuccessDispatcher)
+                mockTmdbServer.setDispatcher(com.education.testmodule.SuccessDispatcher)
             }
 
             When("Enter correct login") {
@@ -62,7 +64,7 @@ object LoginJvmIntegrationTest : Spek({
             }
 
             And("Login result should be SUCCESS") {
-                //testScheduler.triggerActions()
+                // testScheduler.triggerActions()
                 assertThat(loginViewModel.login.value).isEqualTo(expectedLoginResult)
             }
         }
@@ -79,7 +81,7 @@ object LoginJvmIntegrationTest : Spek({
             Given("Set correct password and set error unauthorized dispatcher") {
                 login = "login"
                 password = "password"
-                mockTmdbServer.setDispatcher(ErrorUnAuthorizeDispatcher)
+                mockTmdbServer.setDispatcher(com.education.testmodule.ErrorUnAuthorizeDispatcher)
             }
 
             When("Clicked enter button with correct login and password") {
@@ -87,7 +89,7 @@ object LoginJvmIntegrationTest : Spek({
             }
 
             Then("Login result should be LOGIN_OR_PASSWORD") {
-                //testScheduler.triggerActions()
+                // testScheduler.triggerActions()
                 assertThat(loginViewModel.login.value).isEqualTo(expectedLoginResult)
             }
         }
@@ -113,7 +115,7 @@ object LoginJvmIntegrationTest : Spek({
             }
 
             Then("Login result should be LOGIN_OR_PASSWORD") {
-                //testScheduler.triggerActions()
+                // testScheduler.triggerActions()
                 assertThat(loginViewModel.login.value).isEqualTo(expectedLoginResult)
             }
         }
@@ -138,10 +140,9 @@ object LoginJvmIntegrationTest : Spek({
             }
 
             Then("Login result should be LOGIN_OR_PASSWORD") {
-                //testScheduler.triggerActions()
+                // testScheduler.triggerActions()
                 assertThat(loginViewModel.login.value).isEqualTo(expectedLoginResult)
             }
         }
     }
 })
-

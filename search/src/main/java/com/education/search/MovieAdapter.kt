@@ -8,10 +8,10 @@ import com.bumptech.glide.Glide
 import com.education.core_api.GREEN_MIN_VOTE_AVERAGE
 import com.education.core_api.autoNotify
 import com.education.search.entity.Movie
+import kotlin.properties.Delegates
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.movie_item.*
 import timber.log.Timber
-import kotlin.properties.Delegates
 
 class MovieAdapter(
     private val greenTextColorId: Int,

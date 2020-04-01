@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(
     private val tmdbMovieApi: TmdbMovieApi
-): MoviesRepository {
+) : MoviesRepository {
 
     override fun search(query: String): Flowable<MovieApiResponse<SearchMovie>> {
         return tmdbMovieApi.searchMovies(query)

@@ -16,9 +16,9 @@ import com.education.movies.domain.entity.MoviesListState
 import com.education.movies.domain.entity.MoviesViewState
 import com.education.search.entity.Movie
 import io.reactivex.Flowable
-import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
+import timber.log.Timber
 
 class MoviesViewModel(
     private val moviesUseCase: MoviesUseCase,

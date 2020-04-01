@@ -76,6 +76,5 @@ abstract class BaseFragment(private val layoutId: Int) : Fragment() {
 
     private fun showTryLaterSnackBar(rootView: View, anchorView: View?) {
         showSnackBar(rootView, resources.getString(R.string.try_later), anchorView)
-
     }
 }

@@ -23,10 +23,6 @@ android {
         it.java.srcDirs += "src/$it.name/kotlin"
     }
 
-    sourceSets {
-        test.java.srcDirs += ["${project(':core').projectDir}/src/test/java"]
-    }
-
     testOptions {
         junitPlatform {
             filters {
@@ -39,7 +35,7 @@ android {
             testLogging.events = ["passed", "skipped", "failed"]
         }
         unitTests {
-            includeAndroidResources = true
+            includeAndroidResources = false
         }
     }
 
@@ -70,9 +66,7 @@ dependencies {
     androidTestImplementation androidx_junit
     androidTestImplementation androidx_espresso
 
-    testImplementation project(':core')
-    testImplementation project(':core-api')
-    testImplementation project(':core-impl')
+    testImplementation project(':testmodule')
 
     implementation project(':core')
     implementation dagger2
@@ -89,7 +83,6 @@ dependencies {
 
     implementation timber
 
-    testImplementation robolectric
     testImplementation retrofit2_converter_gson
     testImplementation retrofit2
     testImplementation retrofit2_rxjava2_adapter

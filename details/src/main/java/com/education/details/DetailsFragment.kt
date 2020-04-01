@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.education.core_api.presentation.fragment.BaseFragment
 import kotlinx.android.synthetic.main.details_fragment.*
 
-
 class DetailsFragment : BaseFragment(R.layout.details_fragment) {
 
     companion object {
@@ -24,5 +23,4 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
         val movieTitle = arguments?.getString("movieTitle")
         MovieTitle.text = movieTitle
     }
-
 }
