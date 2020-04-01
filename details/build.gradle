@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: "androidx.navigation.safeargs.kotlin"
 android {
     compileSdkVersion compile_sdk_version
     buildToolsVersion build_tools_version
@@ -37,4 +37,7 @@ dependencies {
     implementation fragment
     implementation lifecycle_ext
     implementation lifecycle_viewmodel
+
+    implementation navigation_fragment
+    implementation navigation_fragment_ktx
 }

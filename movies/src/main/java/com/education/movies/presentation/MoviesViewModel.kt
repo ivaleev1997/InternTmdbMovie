@@ -1,9 +1,15 @@
 package com.education.movies.presentation
 
 import androidx.lifecycle.MutableLiveData
+import com.education.core_api.data.network.exception.UnAuthorizedException
 import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.delegate
+import com.education.core_api.extension.isNetworkException
 import com.education.core_api.extension.schedulersComputationToMain
+import com.education.core_api.presentation.uievent.AnotherEvent
+import com.education.core_api.presentation.uievent.EventsQueue
+import com.education.core_api.presentation.uievent.NoNetworkEvent
+import com.education.core_api.presentation.uievent.UnAuthorizedEvent
 import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.movies.domain.MoviesUseCase
 import com.education.movies.domain.entity.MoviesListState
@@ -25,6 +31,8 @@ class MoviesViewModel(
 
     private var state: MoviesViewState by liveState.delegate()
 
+    val eventsQueue = EventsQueue()
+
     fun initSearchMovies(observableQuery: Flowable<String>) {
         observableQuery
             .debounce(500, TimeUnit.MILLISECONDS)
@@ -32,7 +40,7 @@ class MoviesViewModel(
             .observeOn(schedulersProvider.io())
             .switchMap { query -> moviesUseCase.searchQuery(query) }
             .schedulersComputationToMain(schedulersProvider)
-            .subscribe (
+            .subscribe(
                 { queryAndMovies ->
                     when {
                         queryAndMovies.first.isBlank() -> {
@@ -46,8 +54,21 @@ class MoviesViewModel(
                         }
                     }
                 },
-                { t ->
-                    Timber.e(t)
+                { error ->
+                    when {
+                        error.isNetworkException() -> eventsQueue.offer(
+                            object : NoNetworkEvent {}
+                        )
+
+                        error is UnAuthorizedException -> eventsQueue.offer(
+                            object : UnAuthorizedEvent {}
+                        )
+
+                        else -> eventsQueue.offer(
+                            object : AnotherEvent {}
+                        )
+                    }
+                    Timber.e(error)
                 }
             ).autoDispose()
     }

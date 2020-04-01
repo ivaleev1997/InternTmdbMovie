@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion compile_sdk_version
@@ -51,4 +52,7 @@ dependencies {
     implementation rxAndroid
 
     implementation timber
+
+    implementation navigation_fragment
+    implementation navigation_fragment_ktx
 }

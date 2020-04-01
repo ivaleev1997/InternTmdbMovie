@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.education.core_api.di.AppWithComponent
 import com.education.core_api.extension.observe
 import com.education.core_api.presentation.fragment.BaseFragment
+import com.education.core_api.presentation.uievent.Event
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.movies.R
 import com.education.movies.di.MoviesComponent
@@ -56,11 +57,13 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
 
         moviesRecyclerView.layoutManager = LinearLayoutManager(context)
         adapter = MovieAdapter(resources.getColor(R.color.green_color)) {
-            // TODO start details fragment
+            navigateTo(MoviesFragmentDirections.actionFilmsToDetails(it.title))
         }
+
         moviesRecyclerView.adapter = adapter
 
         observe(viewModel.liveState, ::renderView)
+        observe(viewModel.eventsQueue, ::onEvent)
 
         moviesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -72,6 +75,10 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         moviesConstrainContainer.setOnClickListener {
             hideKeyboard()
         }
+    }
+
+    private fun onEvent(event: Event) {
+        onFragmentEvent(event, moviesConstrainContainer)
     }
 
     private fun renderView(moviesViewState: MoviesViewState) {

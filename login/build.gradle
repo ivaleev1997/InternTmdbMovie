@@ -107,4 +107,6 @@ dependencies {
     testImplementation spek_dsl_jvm
     testImplementation spek_runner_junit5
 
+    implementation navigation_fragment
+    implementation navigation_fragment_ktx
 }

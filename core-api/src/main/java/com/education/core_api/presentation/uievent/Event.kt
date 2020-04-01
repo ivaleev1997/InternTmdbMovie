@@ -11,3 +11,7 @@ data class MessageEvent(
 ) : Event
 
 interface NoNetworkEvent : Event
+
+interface UnAuthorizedEvent: Event
+
+interface AnotherEvent: Event

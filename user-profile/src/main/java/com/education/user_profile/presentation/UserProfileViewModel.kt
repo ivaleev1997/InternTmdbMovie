@@ -1,12 +1,15 @@
 package com.education.user_profile.presentation
 
 import androidx.lifecycle.MutableLiveData
+import com.education.core_api.data.network.exception.UnAuthorizedException
 import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.delegate
 import com.education.core_api.extension.isNetworkException
 import com.education.core_api.extension.schedulersIoToMain
+import com.education.core_api.presentation.uievent.AnotherEvent
 import com.education.core_api.presentation.uievent.EventsQueue
 import com.education.core_api.presentation.uievent.NoNetworkEvent
+import com.education.core_api.presentation.uievent.UnAuthorizedEvent
 import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.user_profile.domain.ProfileUseCase
 import com.education.user_profile.domain.entity.UserProfileViewState
@@ -31,9 +34,17 @@ class UserProfileViewModel(
             },
             { error ->
                 when {
-                    error.isNetworkException() -> {
-                        eventsQueue.offer(object : NoNetworkEvent{})
-                    }
+                    error.isNetworkException() -> eventsQueue.offer(
+                        object : NoNetworkEvent {}
+                    )
+
+                    error is UnAuthorizedException -> eventsQueue.offer(
+                        object : UnAuthorizedEvent {}
+                    )
+
+                    else -> eventsQueue.offer(
+                        object : AnotherEvent {}
+                    )
                 }
                 Timber.d(error)
             }

@@ -8,7 +8,6 @@ import com.education.core_api.di.AppWithComponent
 import com.education.core_api.extension.observe
 import com.education.core_api.presentation.fragment.BaseFragment
 import com.education.core_api.presentation.uievent.Event
-import com.education.core_api.presentation.uievent.NoNetworkEvent
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.user_profile.R
 import com.education.user_profile.di.ProfileComponent
@@ -48,12 +47,8 @@ class UserProfileFragment : BaseFragment(R.layout.user_profile_fragment) {
         observe(viewModel.eventsQueue, ::onEvent)
     }
 
-    override fun onEvent(event: Event) {
-        when (event) {
-            is NoNetworkEvent -> {
-                showNoNetworkSnackBar(userProfileConstraintLayout, logoutButton)
-            }
-        }
+    private fun onEvent(event: Event) {
+        onFragmentEvent(event, userProfileConstraintLayout, logoutButton)
     }
 
     private fun renderState(state: UserProfileViewState) {

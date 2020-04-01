@@ -58,6 +58,7 @@ dependencies {
     implementation project(':user-profile')
     implementation project(':favorite')
     implementation project(':movies')
+    implementation project(':details')
 
     implementation dagger2
     kapt dagger2_compiler

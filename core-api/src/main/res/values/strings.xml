@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="no_internet">"Отсутсвует соединение с интернетом"</string>
+    <string name="no_internet">Отсутсвует соединение с интернетом</string>
+    <string name="name_details_argument">movieTitle</string>
+    <string name="try_later">Непредвиденная ошибка. Попробуйте позже</string>
 </resources>
