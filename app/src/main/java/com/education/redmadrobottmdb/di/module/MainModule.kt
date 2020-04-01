@@ -3,7 +3,7 @@ package com.education.redmadrobottmdb.di.module
 import androidx.lifecycle.ViewModel
 import com.education.core_api.data.LocalDataSource
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
-import com.education.redmadrobottmdb.presentation.MainViewModel
+import com.education.redmadrobottmdb.presentation.activity.MainViewModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

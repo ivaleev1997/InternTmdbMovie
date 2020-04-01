@@ -6,6 +6,7 @@ import com.education.core_api.data.network.entity.RequestSessionBody
 import com.education.core_api.data.network.entity.RequestToken
 import com.education.core_api.data.network.entity.RequestTokenBody
 import com.education.core_api.data.network.exception.SessionTokenException
+import com.education.core_api.extension.flatMapCompletableAction
 import com.education.login.domain.entity.User
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -31,13 +32,12 @@ class LoginRepositoryImpl
                     tmdbAuthApi.createSessionId(RequestSessionBody(validatedRequestToken.requestToken))
                 }
             }
-            .doOnSuccess { session ->
+            .flatMapCompletableAction { session ->
                 if (session.success)
                     saveSessionId(session.sessionId)
                 else
                     throw SessionTokenException()
             }
-            .ignoreElement()
     }
 
     private fun saveRequestToken(token: String) {

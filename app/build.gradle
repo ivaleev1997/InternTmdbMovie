@@ -43,6 +43,7 @@ dependencies {
     implementation constraintlayout
     implementation activity_ktx
 
+    // navigation component
     implementation navigation_fragment
     implementation navigation_ui
     implementation navigation_ui_ktx

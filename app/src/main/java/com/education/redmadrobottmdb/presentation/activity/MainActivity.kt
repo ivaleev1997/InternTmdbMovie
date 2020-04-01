@@ -1,15 +1,18 @@
-package com.education.redmadrobottmdb.presentation
+package com.education.redmadrobottmdb.presentation.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
+import com.education.core_api.RootNavigationGraphDirections
 import com.education.core_api.di.AppWithComponent
 import com.education.core_api.presentation.activity.BaseActivity
 import com.education.core_api.presentation.ui.LoginMediator
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
+import com.education.login.presentation.LoginFragmentDirections
 import com.education.redmadrobottmdb.R
 import com.education.redmadrobottmdb.di.component.MainComponent
 import timber.log.Timber
@@ -51,10 +54,19 @@ class MainActivity : AppCompatActivity(), BaseActivity {
 
     override fun startMainAppScreen() {
         Timber.d("startMainAppScreen")
+        navigateTo(RootNavigationGraphDirections.toStartGraph())
     }
 
     override fun startLoginScreen() {
-        //loginMediator.startLoginScreen(R.id.fragment_container, supportFragmentManager)
-        rootNavController.navigate(R.id.login_fragment)
+        rootNavController.navigate(LoginFragmentDirections.toLoginFragment())
+    }
+
+    override fun logout() {
+        viewModel.onLogoutClicked()
+        startLoginScreen()
+    }
+
+    override fun navigateTo(navDirection: NavDirections) {
+        rootNavController.navigate(navDirection)
     }
 }

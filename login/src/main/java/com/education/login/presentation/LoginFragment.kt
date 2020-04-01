@@ -6,9 +6,9 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import com.education.core_api.di.AppWithComponent
 import com.education.core_api.presentation.activity.BaseActivity
 import com.education.core_api.presentation.fragment.BaseFragment
-import com.education.core_api.di.AppWithComponent
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.login.R
 import com.education.login.di.LoginComponent
@@ -32,7 +32,8 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
     lateinit var viewModelTrigger: ViewModelTrigger
 
     override fun onAttach(context: Context) {
-        LoginComponent.create((requireActivity().application as AppWithComponent).getComponent()).inject(this)
+        LoginComponent.create((requireActivity().application as AppWithComponent).getComponent())
+            .inject(this)
         super.onAttach(context)
     }
 
@@ -101,7 +102,7 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
             when (resultStatus) {
                 LoginResult.LOGIN_OR_PASSWORD -> setMsgToEnterStatusTextView(R.string.error_login)
                 LoginResult.TRY_LATER -> setMsgToEnterStatusTextView(R.string.error_later)
-                LoginResult.NO_NETWORK_CONNECTION -> showNoNetworkSnackBar(loginConstraintLayout)
+                LoginResult.NO_NETWORK_CONNECTION -> showNoNetworkSnackBar(loginConstraintLayout, null)
                 LoginResult.SUCCESS -> {
                     setEnterStatusTextViewGone()
                     (requireActivity() as BaseActivity).startMainAppScreen()

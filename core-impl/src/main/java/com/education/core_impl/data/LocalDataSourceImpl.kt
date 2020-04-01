@@ -3,6 +3,7 @@ package com.education.core_impl.data
 import android.content.SharedPreferences
 import com.education.core_api.*
 import com.education.core_api.data.LocalDataSource
+import com.education.core_api.extension.clear
 import com.education.core_api.extension.putLong
 import com.education.core_api.extension.putString
 import javax.inject.Inject
@@ -32,5 +33,9 @@ class LocalDataSourceImpl @Inject constructor(
 
     override fun getTokenLifeTime(): Long {
         return sharedPrefs.getLong(PREFS_REQUEST_LIFE, 0L)
+    }
+
+    override fun cleanTokens() {
+        sharedPrefs.clear()
     }
 }

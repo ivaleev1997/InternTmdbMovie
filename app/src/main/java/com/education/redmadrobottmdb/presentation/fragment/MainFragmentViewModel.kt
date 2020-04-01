@@ -1,4 +1,4 @@
-package com.education.redmadrobottmdb.presentation
+package com.education.redmadrobottmdb.presentation.fragment
 
 import androidx.lifecycle.ViewModel
 

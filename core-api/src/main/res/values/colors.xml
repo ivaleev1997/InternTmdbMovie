@@ -4,4 +4,6 @@
     <color name="disabled_fill_button_color">#E6232636</color>
     <color name="gray">#656D8A</color>
     <color name="purple">#6C63FF</color>
+    <color name="title_gray">#E7EDFF</color>
+    <color name="green_color">#17B913</color>
 </resources>

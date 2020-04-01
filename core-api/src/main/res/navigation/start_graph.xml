@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/main_fragment"
-        android:name="com.education.redmadrobottmdb.presentation.MainFragment" />
+        android:name="com.education.redmadrobottmdb.presentation.fragment.MainFragment" />
 
 </navigation>

@@ -1,6 +1,7 @@
 package com.education.login.di
 
 import androidx.lifecycle.ViewModel
+import com.education.core_api.di.module.SchedulersProviderModule
 import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.SchedulersProviderImpl
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
@@ -13,7 +14,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [SchedulersProviderModule::class])
 abstract class LoginModule {
 
     @Binds
@@ -24,17 +25,10 @@ abstract class LoginModule {
 
     @Module
     companion object {
-
-        @Provides
-        @JvmStatic
-        fun provideSchedulersProviderImpl(): SchedulersProviderImpl {
-            return SchedulersProviderImpl
-        }
-
         @Provides
         @JvmStatic
         @Singleton
-        fun provideSongsListViewModel(
+        fun provideLoginViewModel(
             map: @JvmSuppressWildcards MutableMap<Class<out ViewModel>, ViewModel>,
             userUseCase: UserUseCase,
             schedulersProvider: SchedulersProvider

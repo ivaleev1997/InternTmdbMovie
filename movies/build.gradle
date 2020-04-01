@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion compile_sdk_version
@@ -23,6 +24,9 @@ android {
         }
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -32,10 +36,19 @@ dependencies {
     implementation androidx_core_ktx
 
     implementation project(':core')
+    implementation project(':search')
 
     implementation material
     implementation constraintlayout
     implementation fragment
     implementation lifecycle_ext
     implementation lifecycle_viewmodel
+
+    implementation dagger2
+    kapt dagger2_compiler
+
+    implementation rxjava2
+    implementation rxAndroid
+
+    implementation timber
 }

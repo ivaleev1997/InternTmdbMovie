@@ -16,3 +16,10 @@ fun SharedPreferences.putLong(key: String, value: Long): Boolean {
 
     return editor.commit()
 }
+
+fun SharedPreferences.clear(): Boolean {
+    val editor = this.edit()
+    editor.clear()
+
+    return editor.commit()
+}

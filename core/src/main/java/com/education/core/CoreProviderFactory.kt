@@ -10,6 +10,8 @@ import com.education.core_impl.di.component.DaggerViewModelComponent
 
 object CoreProviderFactory {
 
+    private var viewModelsProvider: ViewModelsProvider? = null
+
     fun createNetworkProvider(localDataSourceProvider: LocalDataSourceProvider): NetworkProvider {
         return DaggerNetworkComponent
             .builder()
@@ -18,7 +20,7 @@ object CoreProviderFactory {
     }
 
     fun createViewModelProvider(): ViewModelsProvider {
-        return DaggerViewModelComponent.create()
+        return viewModelsProvider ?: DaggerViewModelComponent.create().also { viewModelsProvider = it }
     }
 
     fun createLocalDataSourceProvider(appProvider: AppProvider): LocalDataSourceProvider {

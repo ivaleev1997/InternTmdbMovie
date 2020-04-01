@@ -1,4 +1,4 @@
-package com.education.redmadrobottmdb.presentation
+package com.education.redmadrobottmdb.presentation.activity
 
 import androidx.lifecycle.ViewModel
 import com.education.core_api.data.LocalDataSource
@@ -25,4 +25,9 @@ class MainViewModel @Inject constructor(
         val calendar = Calendar.getInstance()
         return calendar.time.time
     }
+
+    fun onLogoutClicked() {
+        localDataSource.cleanTokens()
+    }
+
 }

@@ -22,7 +22,6 @@ ext {
 	timber_version = '4.7.1'
 	navigation_component_version = '2.2.1'
 
-
 	activity_ktx = "androidx.activity:activity-ktx:$activity_ktx_version"
 	androidx_appcompat = "androidx.appcompat:appcompat:$androidx_appcompat_version"
 	androidx_core_ktx = "androidx.core:core-ktx:$androidx_core_ktx_version"

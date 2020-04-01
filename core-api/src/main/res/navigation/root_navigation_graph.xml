@@ -2,14 +2,23 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_navigation_graph"
-    app:startDestination="@id/start_graph">
+    app:startDestination="@id/login_fragment">
 
     <include app:graph="@navigation/start_graph"/>
 
     <fragment
         android:id="@+id/login_fragment"
         android:name="com.education.login.presentation.LoginFragment" />
+
     <action
         android:id="@+id/to_login_fragment"
-        app:destination="@id/login_fragment" />
+        app:destination="@id/login_fragment"
+        app:popUpTo="@id/login_fragment"
+        app:popUpToInclusive="true"/>
+
+    <action android:id="@+id/to_start_graph"
+        app:destination="@id/start_graph"
+        app:popUpTo="@id/login_fragment"
+        app:popUpToInclusive="true" />
+
 </navigation>

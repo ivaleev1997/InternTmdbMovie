@@ -13,4 +13,6 @@ interface LocalDataSource {
     fun getRequestToken(): String
 
     fun getTokenLifeTime(): Long
+
+    fun cleanTokens()
 }
