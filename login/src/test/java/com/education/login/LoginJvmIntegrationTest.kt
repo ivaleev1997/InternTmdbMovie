@@ -21,6 +21,7 @@ object LoginJvmIntegrationTest : Spek({
     afterGroup { disableTestMode() }
 
     Feature("Login: ViewModel + UserUseCase + ... + MockWebServer") {
+        // region Fields
         val testScheduler = Schedulers.trampoline()
         val mockLocalDataSource: LocalDataSource = Mockito.mock(LocalDataSource::class.java)
         val schedulersProvider = TestSchedulersProvider(testScheduler)
@@ -29,12 +30,14 @@ object LoginJvmIntegrationTest : Spek({
         var mockTmdbServer: MockTmdbAuthWebServer
         var userUseCase: UserUseCase
         var loginViewModel: LoginViewModel
-
+        // endregion Fields
         Scenario("User insert valid login and password and click enter button") {
+            // region Fields
             mockTmdbServer = MockTmdbAuthWebServer()
             loginRepository = LoginRepositoryImpl(mockTmdbServer.tmdbAuthApi, mockLocalDataSource)
             userUseCase = UserUseCase(loginRepository)
             loginViewModel = LoginViewModel(userUseCase, schedulersProvider)
+            // endregion Fields
             var login = ""
             var password = ""
             val expectedButtonStatus = true
@@ -68,11 +71,12 @@ object LoginJvmIntegrationTest : Spek({
         }
 
         Scenario("User insert valid login and password and click enter button but server send 401 error") {
+            // region Fields
             mockTmdbServer = MockTmdbAuthWebServer()
             loginRepository = LoginRepositoryImpl(mockTmdbServer.tmdbAuthApi, mockLocalDataSource)
             userUseCase = UserUseCase(loginRepository)
             loginViewModel = LoginViewModel(userUseCase, schedulersProvider)
-
+            // endregion Fields
             var login = ""
             var password = ""
             val expectedLoginResult = LoginResult.LOGIN_OR_PASSWORD
@@ -93,11 +97,12 @@ object LoginJvmIntegrationTest : Spek({
         }
 
         Scenario("User insert valid login and password and click enter button but server send 404 error") {
+            // region Fields
             mockTmdbServer = MockTmdbAuthWebServer()
             loginRepository = LoginRepositoryImpl(mockTmdbServer.tmdbAuthApi, mockLocalDataSource)
             userUseCase = UserUseCase(loginRepository)
             loginViewModel = LoginViewModel(userUseCase, schedulersProvider)
-
+            // endregion Fields
             var login = ""
             var password = ""
             val expectedLoginResult = LoginResult.TRY_LATER
@@ -119,11 +124,12 @@ object LoginJvmIntegrationTest : Spek({
         }
 
         Scenario("User insert valid login and password and click enter button but server shutdown") {
+            // region Fields
             mockTmdbServer = MockTmdbAuthWebServer()
             loginRepository = LoginRepositoryImpl(mockTmdbServer.tmdbAuthApi, mockLocalDataSource)
             userUseCase = UserUseCase(loginRepository)
             loginViewModel = LoginViewModel(userUseCase, schedulersProvider)
-
+            // endregion Fields
             var login = ""
             var password = ""
             val expectedLoginResult = LoginResult.NO_NETWORK_CONNECTION
