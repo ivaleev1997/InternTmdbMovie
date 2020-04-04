@@ -37,13 +37,13 @@ object MoviesJvmIntegrationTest : Spek({
             moviesViewModel = MoviesViewModel(useCase, schedulersProvider)
             // endregion Fields
             var query = ""
-            val expectedMovieViewState = MoviesViewState(listOf(), MoviesListState.CREATED)
+            val expectedMovieViewState = MoviesViewState(listOf(), MoviesListState.CLEAN)
             Given("Set query as blank string ") {
                 query = " "
             }
 
             When("Give viewModel queryFlowable") {
-                val queryFlowable = Flowable.just(query)
+                val queryFlowable = Flowable.just("", query)
                 moviesViewModel.initSearchMovies(queryFlowable)
             }
 
@@ -63,21 +63,22 @@ object MoviesJvmIntegrationTest : Spek({
             moviesViewModel = MoviesViewModel(useCase, schedulersProvider)
             // endregion Fields
             var query = "Avengers"
-
             val expectedMovieViewState = MoviesListState.NONE_EMPTY
-            val expectedMoviesListSize = 3
+            val expectedMoviesListSize = 2
             Given("Set query as blank string and avengers dispatcher") {
                 query = "Avengers"
                 mockTmdbMovieWebServer.setDispatcher(AvengersDispatcher)
             }
 
             When("Give viewModel queryFlowable") {
-                val queryFlowable = Flowable.just(query)
+                val queryFlowable = Flowable.just("", query)
                 moviesViewModel.initSearchMovies(queryFlowable)
             }
 
-            Then("Should be not empty list with 3 elements and NONE_EMPTY MoviesListState") {
+            Then("Should be not empty list with 2 elements and NONE_EMPTY MoviesListState") {
                 assertSoftly {
+                    //testScheduler.triggerActions()
+                    assertThat(moviesViewModel.liveState.value?.moviesListState).isEqualTo(expectedMovieViewState)
                     assertThat(moviesViewModel.liveState.value?.moviesListState).isEqualTo(expectedMovieViewState)
                     assertThat(moviesViewModel.liveState.value?.movies?.size).isEqualTo(expectedMoviesListSize)
                 }
@@ -101,7 +102,7 @@ object MoviesJvmIntegrationTest : Spek({
             }
 
             When("Give viewModel queryFlowable") {
-                val queryFlowable = Flowable.just(query)
+                val queryFlowable = Flowable.just("", query)
                 moviesViewModel.initSearchMovies(queryFlowable)
             }
 

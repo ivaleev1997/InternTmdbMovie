@@ -1,7 +1,6 @@
 package com.education.core_api.data.network
 
 import com.education.core_api.data.network.entity.*
-import io.reactivex.Flowable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -11,7 +10,7 @@ import retrofit2.http.Query
 interface TmdbMovieApi {
 
     @GET("search/movie")
-    fun searchMovies(@Query("query") query: String): Flowable<MovieApiResponse<SearchMovie>>
+    fun searchMovies(@Query("query") query: String): Single<MovieApiResponse<SearchMovie>>
 
     @GET("account")
     fun getAccountInfo(): Single<Account>
@@ -26,8 +25,8 @@ interface TmdbMovieApi {
     ): Single<StatusResponse>
 
     @GET("movie/{movie_id}")
-    fun getDetailsMovie(@Path("movie_id") movieId: Long): Single<MovieApiResponse<DetailsMovie>>
+    fun getDetailsMovie(@Path("movie_id") movieId: Long): Single<DetailsMovie>
 
     @GET("genre/movie/list")
-    fun getGenres(): Flowable<GenresResponse>
+    fun getGenres(): Single<GenresResponse>
 }

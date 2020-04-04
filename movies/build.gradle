@@ -100,4 +100,7 @@ dependencies {
     testImplementation spek_runner_junit5
 
     testImplementation project(':testmodule')
+
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
+    implementation 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
 }

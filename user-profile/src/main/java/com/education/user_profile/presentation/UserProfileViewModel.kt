@@ -7,7 +7,6 @@ import com.education.core_api.extension.delegate
 import com.education.core_api.extension.isNetworkException
 import com.education.core_api.extension.schedulersIoToMain
 import com.education.core_api.presentation.uievent.AnotherEvent
-import com.education.core_api.presentation.uievent.EventsQueue
 import com.education.core_api.presentation.uievent.NoNetworkEvent
 import com.education.core_api.presentation.uievent.UnAuthorizedEvent
 import com.education.core_api.presentation.viewmodel.BaseViewModel
@@ -23,8 +22,6 @@ class UserProfileViewModel(
     val liveState = MutableLiveData(createInitialState())
     private var state: UserProfileViewState by liveState.delegate()
 
-    val eventsQueue = EventsQueue()
-
     private fun createInitialState() = UserProfileViewState("", "")
 
     fun loadUserProfile() {
@@ -34,15 +31,15 @@ class UserProfileViewModel(
             },
             { error ->
                 when {
-                    error.isNetworkException() -> eventsQueue.offer(
+                    error.isNetworkException() -> sendEvent(
                         object : NoNetworkEvent {}
                     )
 
-                    error is UnAuthorizedException -> eventsQueue.offer(
+                    error is UnAuthorizedException -> sendEvent(
                         object : UnAuthorizedEvent {}
                     )
 
-                    else -> eventsQueue.offer(
+                    else -> sendEvent(
                         object : AnotherEvent {}
                     )
                 }

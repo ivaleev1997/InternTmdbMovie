@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 interface BaseMovie {
     val id: Long
-    val posterPath: String
+    val posterPath: String?
     val voteCount: Long
     val originalTitle: String
     val title: String
@@ -19,7 +19,7 @@ data class DetailsMovie(
     @SerializedName("original_title")
     override val originalTitle: String,
     @SerializedName("poster_path")
-    override val posterPath: String,
+    override val posterPath: String?,
     @SerializedName("overview")
     override val overview: String,
     @SerializedName("release_date")

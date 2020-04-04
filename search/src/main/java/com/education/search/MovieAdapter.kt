@@ -8,13 +8,14 @@ import com.bumptech.glide.Glide
 import com.education.core_api.GREEN_MIN_VOTE_AVERAGE
 import com.education.core_api.autoNotify
 import com.education.search.entity.Movie
-import kotlin.properties.Delegates
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.movie_item.*
 import timber.log.Timber
+import kotlin.properties.Delegates
 
 class MovieAdapter(
     private val greenTextColorId: Int,
+    private val minWord: String,
     private val onClickCallBack: (Movie) -> Unit
 ) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
@@ -27,7 +28,7 @@ class MovieAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
 
-        return ViewHolder(onClickCallBack, view, greenTextColorId)
+        return ViewHolder(onClickCallBack, view, greenTextColorId, minWord)
     }
 
     override fun getItemCount(): Int {
@@ -42,7 +43,8 @@ class MovieAdapter(
     class ViewHolder(
         private val clickCallback: (Movie) -> Unit,
         override val containerView: View,
-        private val greenId: Int
+        private val greenId: Int,
+        private val minWord: String
     ) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
@@ -60,6 +62,9 @@ class MovieAdapter(
                 movieItemContainer.setOnClickListener {
                     clickCallback.invoke(this)
                 }
+
+                if (runTime.isNotBlank())
+                    runTimeTextView.text = "$runTime $minWord"
             }
         }
 

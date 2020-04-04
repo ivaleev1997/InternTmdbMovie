@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/dark_blue</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowBackground">@color/dark_blue</item>
+    </style>
+
     <style name="NotEnabledButtonStyle">
         <item name="android:colorPrimary">@color/disabled_fill_button_color</item>
         <item name="android:textColor">@color/gray</item>
@@ -10,6 +20,12 @@
 
     <style name="TextInputEditText" >
         <item name="android:textColor">@color/text_color</item>
+    </style>
+
+    <style name="ProgressBarStyle" parent="AppTheme">
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateTint">@color/gray</item>
+        <item name="android:visibility">gone</item>
     </style>
 
 </resources>

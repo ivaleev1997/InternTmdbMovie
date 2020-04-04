@@ -2,7 +2,8 @@ package com.education.movies.presentation
 
 import android.content.Context
 import android.view.View
-import android.widget.EditText
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,10 +18,12 @@ import com.education.movies.di.MoviesComponent
 import com.education.movies.domain.entity.MoviesListState
 import com.education.movies.domain.entity.MoviesViewState
 import com.education.search.MovieAdapter
-import com.education.search.RxSearchFlowable
 import com.education.search.entity.Movie
-import javax.inject.Inject
+import com.jakewharton.rxbinding2.widget.textChanges
+import io.reactivex.BackpressureStrategy
 import kotlinx.android.synthetic.main.movies_fragment.*
+import timber.log.Timber
+import javax.inject.Inject
 
 class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
 
@@ -46,17 +49,27 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     }
 
     override fun initViewElements(view: View) {
-        val editText = searchInputLayout.editText as EditText
-        viewModel.initSearchMovies(RxSearchFlowable.fromView(editText) { hideKeyboard() })
+        viewModel.initSearchMovies(
+            loginTextEdit.textChanges()
+                .map { it.toString() }
+                .toFlowable(
+                    BackpressureStrategy.LATEST
+                )
+        )
 
         searchInputLayout.setEndIconOnClickListener {
             searchInputLayout.editText?.setText("")
             viewModel.onClearTextIconClick()
+            Timber.d("changeVisibilityForView for progress bar")
+            changeVisibilityForView(progressBar, View.GONE)
         }
 
         moviesRecyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = MovieAdapter(resources.getColor(R.color.green_color)) {
-            navigateTo(MoviesFragmentDirections.actionFilmsToDetails(it.title))
+        adapter = MovieAdapter(
+            resources.getColor(R.color.green_color),
+            resources.getString(R.string.ru_locale_min)
+        ) { movie ->
+            navigateTo(MoviesFragmentDirections.actionFilmsToDetails(movie.title))
         }
 
         moviesRecyclerView.adapter = adapter
@@ -83,13 +96,21 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     private fun renderView(moviesViewState: MoviesViewState) {
         when (moviesViewState.moviesListState) {
             MoviesListState.EMPTY -> {
+                Timber.d("Visible EMPTY")
                 renderNotFoundScreen()
             }
             MoviesListState.NONE_EMPTY -> {
+                Timber.d("Visible NONE_EMPTY")
                 renderRecyclerView(moviesViewState.movies)
             }
-            MoviesListState.CREATED -> {
-                initialState()
+            MoviesListState.CLEAN -> {
+                Timber.d("Visible CLEAN")
+                cleanState()
+            }
+            MoviesListState.ON_SEARCH -> {
+                Timber.d("Visible ON_SEARCH")
+                //progressBar.visibility = View.VISIBLE
+                changeVisibilityForView(progressBar, View.VISIBLE)
             }
         }
     }
@@ -97,32 +118,45 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     private fun renderRecyclerView(moviesList: List<Movie>) {
         adapter.listMovies = moviesList
 
-        if (notfoundImageView.visibility != View.GONE)
-            notfoundImageView.visibility = View.GONE
+        changeVisibilityForView(progressBar, View.GONE)
 
-        if (notfoundTextView.visibility != View.GONE)
-            notfoundTextView.visibility = View.GONE
+        changeVisibilityForView(notfoundImageView, View.GONE)
 
-        if (moviesRecyclerView.visibility != View.VISIBLE)
-            moviesRecyclerView.visibility = View.VISIBLE
+        changeVisibilityForView(notfoundTextView, View.GONE)
+
+        changeVisibilityForView(moviesRecyclerView, View.VISIBLE)
+    }
+
+    private fun changeVisibilityForView(view: View, visibleFlag: Int) {
+        when (visibleFlag) {
+            View.GONE -> {
+                if (!view.isGone)
+                    view.visibility = View.GONE
+            }
+            View.VISIBLE -> {
+                if (!view.isVisible)
+                    view.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun renderNotFoundScreen() {
-        if (moviesRecyclerView.visibility != View.GONE)
-            moviesRecyclerView.visibility = View.GONE
+        changeVisibilityForView(progressBar, View.GONE)
 
-        notfoundTextView.visibility = View.VISIBLE
-        notfoundImageView.visibility = View.VISIBLE
+        changeVisibilityForView(moviesRecyclerView, View.GONE)
+
+        changeVisibilityForView(notfoundImageView, View.VISIBLE)
+
+        changeVisibilityForView(notfoundTextView, View.VISIBLE)
     }
 
-    private fun initialState() {
-        if (notfoundImageView.visibility != View.GONE)
-            notfoundImageView.visibility = View.GONE
+    private fun cleanState() {
+        changeVisibilityForView(progressBar, View.GONE)
 
-        if (notfoundTextView.visibility != View.GONE)
-            notfoundTextView.visibility = View.GONE
+        changeVisibilityForView(moviesRecyclerView, View.GONE)
 
-        if (moviesRecyclerView.visibility != View.GONE)
-            moviesRecyclerView.visibility = View.GONE
+        changeVisibilityForView(notfoundImageView, View.GONE)
+
+        changeVisibilityForView(notfoundTextView, View.GONE)
     }
 }
