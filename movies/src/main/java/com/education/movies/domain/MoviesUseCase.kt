@@ -4,8 +4,10 @@ import com.education.core_api.TMDB_IMAGE_URL
 import com.education.core_api.data.network.entity.DetailsMovie
 import com.education.core_api.data.network.entity.Genre
 import com.education.core_api.data.network.entity.SearchMovie
+import com.education.core_api.joinGenreArrayToString
+import com.education.core_api.toTmdbPosterPath
 import com.education.movies.data.repository.MoviesRepository
-import com.education.search.entity.Movie
+import com.education.search.domain.entity.Movie
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -20,7 +22,7 @@ class MoviesUseCase @Inject constructor(
                 .flattenAsObservable { movieResponse -> movieResponse.movies }
                 .flatMapSingle { searchMovie -> moviesRepository.loadDetails(searchMovie.id) }
                 .toList()
-                .map { listDetailsMovie -> detailsMapToPAir(query, listDetailsMovie) }
+                .map { listDetailsMovie -> detailsMapToPair(query, listDetailsMovie) }
 
 /*            Flowable.combineLatest<MovieApiResponse<SearchMovie>, GenresResponse, Pair<String, List<Movie>>>(
                 moviesRepository.search(query),
@@ -31,7 +33,7 @@ class MoviesUseCase @Inject constructor(
         }
     }
 
-    private fun detailsMapToPAir(
+    private fun detailsMapToPair(
         query: String,
         listDetailsMovie: List<DetailsMovie>
     ): Pair<String, List<Movie>> {
@@ -39,12 +41,10 @@ class MoviesUseCase @Inject constructor(
             listDetailsMovie.map { detailsMovie ->
                 Movie(
                     detailsMovie.id,
-                    TMDB_IMAGE_URL + detailsMovie.posterPath ?: "",
+                    detailsMovie.posterPath.toTmdbPosterPath(),
                     detailsMovie.title,
                     detailsMovie.originalTitle,
-                    detailsMovie.genres.joinToString { genre ->
-                        genre.genre
-                    },
+                    detailsMovie.genres.joinGenreArrayToString(),
                     detailsMovie.voteAverage,
                     detailsMovie.voteCount,
                     detailsMovie.runTime.toString()

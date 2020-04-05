@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion compile_sdk_version
@@ -44,9 +45,12 @@ dependencies {
     implementation constraintlayout
     implementation recyclerview
     implementation glide
+    kapt glide_compiler
 
     implementation rxjava2
 
     implementation timber
 
+    implementation 'com.xwray:groupie:2.3.0'
+    implementation 'com.xwray:groupie-kotlin-android-extensions:2.3.0'
 }

@@ -17,9 +17,11 @@ import com.education.movies.R
 import com.education.movies.di.MoviesComponent
 import com.education.movies.domain.entity.MoviesListState
 import com.education.movies.domain.entity.MoviesViewState
-import com.education.search.MovieAdapter
-import com.education.search.entity.Movie
+import com.education.search.domain.entity.Movie
+import com.education.search.presentation.recycleritem.MovieListItem
 import com.jakewharton.rxbinding2.widget.textChanges
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import io.reactivex.BackpressureStrategy
 import kotlinx.android.synthetic.main.movies_fragment.*
 import timber.log.Timber
@@ -36,7 +38,7 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var adapter: MovieAdapter
+    private lateinit var groupAdapter: GroupAdapter<ViewHolder>
 
     private val viewModel: MoviesViewModel by viewModels {
         viewModelFactory
@@ -49,6 +51,8 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     }
 
     override fun initViewElements(view: View) {
+        Timber.d("initViewElements")
+
         viewModel.initSearchMovies(
             loginTextEdit.textChanges()
                 .map { it.toString() }
@@ -64,15 +68,11 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
             changeVisibilityForView(progressBar, View.GONE)
         }
 
-        moviesRecyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = MovieAdapter(
-            resources.getColor(R.color.green_color),
-            resources.getString(R.string.ru_locale_min)
-        ) { movie ->
-            navigateTo(MoviesFragmentDirections.actionFilmsToDetails(movie.title))
+        groupAdapter = GroupAdapter()
+        moviesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = groupAdapter
         }
-
-        moviesRecyclerView.adapter = adapter
 
         observe(viewModel.liveState, ::renderView)
         observe(viewModel.eventsQueue, ::onEvent)
@@ -116,7 +116,16 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     }
 
     private fun renderRecyclerView(moviesList: List<Movie>) {
-        adapter.listMovies = moviesList
+        val greenColor = resources.getColor(R.color.green_color)
+        val localeMinWord = resources.getString(R.string.ru_locale_min)
+        groupAdapter.update(moviesList.map { movie ->
+            MovieListItem(
+                greenColor,
+                localeMinWord,
+                ::navigateToDetails,
+                movie
+            )
+        })
 
         changeVisibilityForView(progressBar, View.GONE)
 
@@ -125,6 +134,10 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         changeVisibilityForView(notfoundTextView, View.GONE)
 
         changeVisibilityForView(moviesRecyclerView, View.VISIBLE)
+    }
+
+    private fun navigateToDetails(movie: Movie) {
+        navigateTo(MoviesFragmentDirections.actionFilmsToDetails(movie.id))
     }
 
     private fun changeVisibilityForView(view: View, visibleFlag: Int) {

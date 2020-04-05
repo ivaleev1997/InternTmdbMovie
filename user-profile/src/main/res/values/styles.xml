@@ -1,7 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="ExitButton" parent="NotEnabledButtonStyle">
-        <item name="android:textColor">@color/purple</item>
-        <item name="backgroundTint">@color/exit_button_color</item>
-    </style>
 </resources>

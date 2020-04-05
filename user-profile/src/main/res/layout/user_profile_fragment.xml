@@ -9,7 +9,7 @@
 
     <Button
         android:id="@+id/logoutButton"
-        style="@style/ExitButton"
+        style="@style/LogoutButton"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginStart="16dp"

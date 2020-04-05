@@ -1,4 +1,4 @@
-package com.education.search.entity
+package com.education.search.domain.entity
 
 data class Movie(
     val id: Long,

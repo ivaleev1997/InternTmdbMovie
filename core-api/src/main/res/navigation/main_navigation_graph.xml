@@ -13,17 +13,18 @@
 
         <action
             android:id="@+id/action_films_to_details"
-            app:destination="@id/details">
-            <argument
-                android:name="movieTitle"
-                app:argType="string" />
-        </action>
+            app:destination="@id/details" />
 
     </fragment>
 
     <fragment android:id="@+id/details"
         android:name="com.education.details.DetailsFragment"
-        tools:layout="@layout/details_fragment" />
+        tools:layout="@layout/details_fragment" >
+        <argument
+            android:name="movieId"
+            app:argType="long"
+            app:nullable="false" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_favorite"

@@ -1,31 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/dark_blue</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="android:windowBackground">@color/dark_blue</item>
-    </style>
-
-    <style name="NotEnabledButtonStyle">
+    <style name="NotEnabledButtonStyle" parent="@style/ThemeOverlay.MaterialComponents.Light">
         <item name="android:colorPrimary">@color/disabled_fill_button_color</item>
         <item name="android:textColor">@color/gray</item>
         <item name="android:background">@drawable/button_background</item>
         <item name="android:textSize">16sp</item>
+        <item name="backgroundTint">@color/disabled_fill_button_color</item>
     </style>
 
-    <style name="TextInputEditText" >
+    <style name="InputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextColor">@color/gray</item>
+        <item name="boxStrokeColor">@color/purple</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="passwordToggleTint">@color/gray</item>
+    </style>
+
+    <style name="TextInputEditStyle" >
         <item name="android:textColor">@color/text_color</item>
     </style>
 
-    <style name="ProgressBarStyle" parent="AppTheme">
-        <item name="android:indeterminate">true</item>
-        <item name="android:indeterminateTint">@color/gray</item>
-        <item name="android:visibility">gone</item>
+    <style name="SearchTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">@color/search_edit_color</item>
+        <item name="boxBackgroundColor">@color/search_edit_color</item>
+    </style>
+
+    <style name="SearchEditTextLayout">
+        <item name="android:textColor">@color/search_main_color</item>
+    </style>
+
+    <style name="LogoutButton" parent="NotEnabledButtonStyle">
+        <item name="android:textColor">@color/purple</item>
+        <item name="backgroundTint">@color/exit_button_color</item>
+    </style>
+
+    <style name="TitleTextViewStyle">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="OriginalTitleTextViewStyle">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="GenresTextViewStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
 </resources>

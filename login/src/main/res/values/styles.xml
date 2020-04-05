@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextColor">@color/gray</item>
-        <item name="boxStrokeColor">@color/purple</item>
-        <item name="boxStrokeWidth">2dp</item>
-        <item name="android:textColorHint">@color/gray</item>
-        <item name="passwordToggleTint">@color/gray</item>
-    </style>
 
-    <style name="NotEnabledButtonStyle">
-        <item name="android:colorPrimary">@color/disabled_fill_button_color</item>
-        <item name="android:textColor">@color/gray</item>
-        <item name="android:background">@drawable/button_back</item>
+    <style name="LoginTextInputLayoutStyle" parent="@style/InputLayoutStyle">
     </style>
-
 </resources>

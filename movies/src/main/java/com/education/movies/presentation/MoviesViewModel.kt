@@ -14,7 +14,7 @@ import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.movies.domain.MoviesUseCase
 import com.education.movies.domain.entity.MoviesListState
 import com.education.movies.domain.entity.MoviesViewState
-import com.education.search.entity.Movie
+import com.education.search.domain.entity.Movie
 import io.reactivex.Flowable
 import timber.log.Timber
 import java.util.*
@@ -31,10 +31,14 @@ class MoviesViewModel(
 
     private var state: MoviesViewState by liveState.delegate()
 
+    private var lastFetchedQuery: String = ""
+
     fun initSearchMovies(observableQuery: Flowable<String>) {
         observableQuery
+            .distinctUntilChanged()
             .skip(1)
             .observeOn(schedulersProvider.mainThread())
+            .filter { query -> query != lastFetchedQuery }
             .doOnEach {
                 setState(listOf(), MoviesListState.ON_SEARCH)
             }
@@ -48,6 +52,7 @@ class MoviesViewModel(
             .retry()
             .subscribe(
                 { queryAndMovies ->
+                    lastFetchedQuery = queryAndMovies.first
                     when {
                         queryAndMovies.first.isBlank() -> {
                             setState(queryAndMovies.second, MoviesListState.CLEAN)
