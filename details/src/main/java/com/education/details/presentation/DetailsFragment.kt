@@ -6,6 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -13,14 +14,19 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.education.core_api.di.AppWithComponent
+import com.education.core_api.extension.makeGone
+import com.education.core_api.extension.makeVisible
 import com.education.core_api.extension.observe
 import com.education.core_api.presentation.fragment.BaseFragment
+import com.education.core_api.presentation.uievent.Event
+import com.education.core_api.presentation.uievent.NoNetworkEvent
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.details.R
 import com.education.details.di.DetailsComponent
 import com.education.details.domain.entity.DetailsViewState
 import com.education.details.domain.entity.LoadStatus
 import kotlinx.android.synthetic.main.details_fragment.*
+import kotlinx.android.synthetic.main.details_main_content.*
 import javax.inject.Inject
 
 class DetailsFragment : BaseFragment(R.layout.details_fragment) {
@@ -48,13 +54,23 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
     }
 
     override fun initViewElements(view: View) {
+        loadAnimation.makeVisible()
         setupToolBar()
         viewModel.loadDetails(args.movieId, resources.getString(R.string.ru_locale_min))
-        observe(viewModel.liveState, ::renderView)
 
+        observe(viewModel.liveState, ::renderView)
+        observe(viewModel.eventsQueue, ::onEvent)
         toolbar.setNavigationOnClickListener {
             navigateUp()
         }
+    }
+
+    private fun onEvent(event: Event) {
+        if (event is NoNetworkEvent && !detailsMainContent.isVisible) {
+            loadAnimation.makeGone()
+            networkErrorView.makeVisible()
+        } else
+            onFragmentEvent(event, detailsFragment)
     }
 
     private fun setupToolBar() {
@@ -88,6 +104,8 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
                         overViewTextView.text = overView
                     }
                 }
+                loadAnimation.makeGone()
+                detailsMainContent.makeVisible()
             }
 
             LoadStatus.FAVORITE -> {
@@ -103,6 +121,8 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
             favoriteItem.setIcon(R.drawable.ic_favorite_clicked)
         else
             favoriteItem.setIcon(R.drawable.ic_favorite_not_clicked)
+
+        favoriteItem.isVisible = true
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

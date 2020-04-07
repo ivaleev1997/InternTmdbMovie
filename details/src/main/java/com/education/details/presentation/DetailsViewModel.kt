@@ -25,8 +25,9 @@ class DetailsViewModel(
             .schedulersIoToMain(schedulersProvider)
             .subscribe({ movieOverView ->
                 state = state.copy(movieOverView = listOf(movieOverView), loadStatus = LoadStatus.SUCCESS)
-            }, {
-                Timber.e(it)
+            }, { error ->
+                Timber.e(error)
+                handleError(error)
             }).autoDispose()
     }
 

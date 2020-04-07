@@ -6,5 +6,6 @@
         android:title="@string/favorite_string"
         android:icon="@drawable/ic_favorite_not_clicked"
         android:checkable="true"
+        android:visible="false"
         app:showAsAction="always"/>
 </menu>
