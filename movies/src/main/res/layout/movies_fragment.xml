@@ -44,44 +44,30 @@
         app:layout_constraintStart_toEndOf="@+id/searchInputLayout"
         app:layout_constraintTop_toTopOf="@+id/searchInputLayout" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/moviesRecyclerView"
+    <include
+        android:id="@+id/mainContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        layout="@layout/movies_main_content"
         android:visibility="gone"
 
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchInputLayout"
-        tools:listitem="@layout/movie_item" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <TextView
-        android:id="@+id/notfoundTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/not_found"
-        android:gravity="center"
-        android:textColor="@color/text_color"
+    <com.education.core_api.presentation.view.UnexpectedNetworkErrorView
+        android:id="@+id/networkErrorView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:visibility="gone"
-        android:layout_marginTop="28dp"
+        app:animationView="@raw/alert_animation"
+        app:retryButtonText="@string/repeat_string"
 
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchInputLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchInputLayout" />
-
-    <ImageView
-        android:id="@+id/notfoundImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_not_found_12"
-        android:layout_marginTop="28dp"
-        android:visibility="gone"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notfoundTextView" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

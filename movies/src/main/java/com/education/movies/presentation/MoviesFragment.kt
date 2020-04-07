@@ -2,8 +2,6 @@ package com.education.movies.presentation
 
 import android.content.Context
 import android.view.View
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,9 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.education.core_api.GRID_LAYOUT_ITEM_COUNT
 import com.education.core_api.di.AppWithComponent
+import com.education.core_api.extension.makeGone
+import com.education.core_api.extension.makeVisible
 import com.education.core_api.extension.observe
 import com.education.core_api.presentation.fragment.BaseFragment
 import com.education.core_api.presentation.uievent.Event
+import com.education.core_api.presentation.uievent.NoNetworkEvent
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.movies.R
 import com.education.movies.di.MoviesComponent
@@ -24,6 +25,7 @@ import com.xwray.groupie.ViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import io.reactivex.BackpressureStrategy
 import kotlinx.android.synthetic.main.movies_fragment.*
+import kotlinx.android.synthetic.main.movies_main_content.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -34,9 +36,9 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     }
 
     @Inject
-    lateinit var viewModelTrigger: ViewModelTrigger
+    internal lateinit var viewModelTrigger: ViewModelTrigger
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel: MoviesViewModel by viewModels {
         viewModelFactory
@@ -51,11 +53,13 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     }
 
     override fun initViewElements(view: View) {
-        Timber.d("initViewElements")
+        mainContent.makeVisible()
+
         viewModel.initResources(
             resources.getColor(R.color.green_color),
             resources.getString(R.string.ru_locale_min),
             resources.getDrawable(R.drawable.image_placeholder))
+
         viewModel.initSearchMovies(
             loginTextEdit.textChanges()
                 .map { it.toString() }
@@ -67,8 +71,7 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         searchInputLayout.setEndIconOnClickListener {
             searchInputLayout.editText?.setText("")
             viewModel.onClearTextIconClick()
-            Timber.d("changeVisibilityForView for progress bar")
-            changeVisibilityForView(progressBar, View.GONE)
+            progressBar.makeGone()
         }
 
         groupAdapter = viewModel.adapter
@@ -97,10 +100,31 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         }
 
         setRecyclerChangeMapListener()
+
+        setOnErrorRepeatListener()
+    }
+
+    private fun setOnErrorRepeatListener() {
+        networkErrorView.setOnRepeatClickListener {
+            networkErrorView.makeGone()
+            mainContent.makeVisible()
+            // TODO retry request
+            //val currentQuery = "${loginTextEdit.text} "
+            //loginTextEdit.setText(currentQuery)
+            //loginTextEdit.setText(loginTextEdit.text?.trim())
+        }
     }
 
     private fun onEvent(event: Event) {
-        onFragmentEvent(event, moviesConstrainContainer)
+        Timber.d("onEvent")
+        if (event is NoNetworkEvent) {
+            progressBar.makeGone()
+            mainContent.makeGone()
+            cleanState()
+            networkErrorView.makeVisible()
+            hideKeyboard()
+        } else
+            onFragmentEvent(event, moviesConstrainContainer)
     }
 
     private fun renderView(moviesScreenState: MoviesScreenState) {
@@ -119,53 +143,30 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
             }
             MoviesScreenState.ON_SEARCH -> {
                 Timber.d("ON_SEARCH")
-                changeVisibilityForView(progressBar, View.VISIBLE)
+                progressBar.makeVisible()
             }
         }
     }
 
     private fun renderRecyclerView() {
-
-        changeVisibilityForView(progressBar, View.GONE)
-
-        changeVisibilityForView(notfoundImageView, View.GONE)
-
-        changeVisibilityForView(notfoundTextView, View.GONE)
-
-        changeVisibilityForView(moviesRecyclerView, View.VISIBLE)
-    }
-
-    private fun changeVisibilityForView(view: View, visibleFlag: Int) {
-        when (visibleFlag) {
-            View.GONE -> {
-                if (!view.isGone)
-                    view.visibility = View.GONE
-            }
-            View.VISIBLE -> {
-                if (!view.isVisible)
-                    view.visibility = View.VISIBLE
-            }
-        }
+        progressBar.makeGone()
+        notfoundImageView.makeGone()
+        notfoundTextView.makeGone()
+        moviesRecyclerView.makeVisible()
     }
 
     private fun renderNotFoundScreen() {
-        changeVisibilityForView(progressBar, View.GONE)
-
-        changeVisibilityForView(moviesRecyclerView, View.GONE)
-
-        changeVisibilityForView(notfoundImageView, View.VISIBLE)
-
-        changeVisibilityForView(notfoundTextView, View.VISIBLE)
+        progressBar.makeGone()
+        moviesRecyclerView.makeGone()
+        notfoundImageView.makeVisible()
+        notfoundTextView.makeVisible()
     }
 
     private fun cleanState() {
-        changeVisibilityForView(progressBar, View.GONE)
-
-        changeVisibilityForView(moviesRecyclerView, View.GONE)
-
-        changeVisibilityForView(notfoundImageView, View.GONE)
-
-        changeVisibilityForView(notfoundTextView, View.GONE)
+        progressBar.makeGone()
+        moviesRecyclerView.makeGone()
+        notfoundImageView.makeGone()
+        notfoundTextView.makeGone()
     }
 
     private fun setRecyclerChangeMapListener() {
@@ -204,18 +205,6 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         }
         else {
             recyclerMap.setImageResource(R.drawable.ic_to_tile_map)
-        }
-    }
-
-    private fun changeRecyclerMap() {
-        if (moviesRecyclerView.layoutManager is GridLayoutManager) {
-            val position = (moviesRecyclerView.layoutManager as GridLayoutManager).findFirstCompletelyVisibleItemPosition()
-            moviesRecyclerView.layoutManager = LinearLayoutManager(context)
-            (moviesRecyclerView.layoutManager as LinearLayoutManager).scrollToPosition(position)
-        } else {
-            val position = (moviesRecyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
-            moviesRecyclerView.layoutManager = GridLayoutManager(context, GRID_LAYOUT_ITEM_COUNT)
-            (moviesRecyclerView.layoutManager as GridLayoutManager).scrollToPosition(position)
         }
     }
 

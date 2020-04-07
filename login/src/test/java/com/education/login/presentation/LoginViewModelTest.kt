@@ -31,10 +31,10 @@ object LoginViewModelTest : Spek({
             }
         }
 
-        Scenario("User insert empty login") {
+        Scenario("User insert empty_animation login") {
             var login = ""
             val expectedValidateStatus = false
-            Given("Set empty login") {
+            Given("Set empty_animation login") {
                 login = ""
             }
 
@@ -47,7 +47,7 @@ object LoginViewModelTest : Spek({
             }
         }
 
-        Scenario("User insert empty password") {
+        Scenario("User insert empty_animation password") {
             val password = ""
             val expectedValidateStatus = false
 

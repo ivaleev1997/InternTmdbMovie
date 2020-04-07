@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MyView">
+        <attr name="animationView" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="NoContentView" parent="MyView">
+        <attr name="animationView" />
+        <attr name="descriptionText" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="UnexpectedNetworkErrorView" parent="MyView">
+        <attr name="animationView" />
+        <attr name="noConnectionMessage" format="string"/>
+        <attr name="retryButtonText" format="string" />
+    </declare-styleable>
+</resources>

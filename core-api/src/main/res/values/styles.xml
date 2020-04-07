@@ -54,4 +54,11 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="ClickableTextView">
+        <item name="android:textColor">@color/purple</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
 </resources>

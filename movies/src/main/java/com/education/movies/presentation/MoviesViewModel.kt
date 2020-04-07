@@ -77,7 +77,9 @@ class MoviesViewModel(
                         }
                     }
                 },
-                { error -> Timber.e(error) }
+                {
+                        error -> Timber.e(error)
+                }
             ).autoDispose()
     }
 

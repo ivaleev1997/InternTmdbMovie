@@ -82,7 +82,7 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
                     voteCountTextView.text = voteCount
                     changeFavoriteIcon(isFavorite)
                     if (overView.isBlank()) {
-                        emptyAnimation.visibility = View.VISIBLE
+                        noContentView.visibility = View.VISIBLE
                     } else {
                         overViewContainer.visibility = View.VISIBLE
                         overViewTextView.text = overView

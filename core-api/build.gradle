@@ -62,6 +62,7 @@ dependencies {
     implementation androidx_appcompat
     implementation androidx_core_ktx
     implementation fragment
+    implementation constraintlayout
 
     implementation lifecycle_livedata_ktx
 
@@ -95,4 +96,6 @@ dependencies {
     kapt dagger2_compiler
 
     implementation timber
+
+    implementation lottie
 }
