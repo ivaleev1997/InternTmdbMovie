@@ -1,9 +1,7 @@
 package com.education.details.data
 
 import com.education.core_api.data.network.TmdbMovieApi
-import com.education.core_api.data.network.entity.DetailsMovie
-import com.education.core_api.data.network.entity.RequestFavoriteBody
-import com.education.core_api.data.network.entity.StatusResponse
+import com.education.core_api.data.network.entity.*
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -18,6 +16,13 @@ class DetailsRepositoryImpl @Inject constructor(
         return tmdbMovieApi.getAccountInfo()
             .flatMap { account ->
                 tmdbMovieApi.markAsFavorite(account.id, RequestFavoriteBody(movieId, flag))
+            }
+    }
+
+    override fun loadFavorites(): Single<MovieApiResponse<SearchMovie>> {
+        return tmdbMovieApi.getAccountInfo()
+            .flatMap { account ->
+                tmdbMovieApi.getFavoriteMovies(account.id)
             }
     }
 }

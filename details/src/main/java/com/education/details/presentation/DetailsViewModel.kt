@@ -1,4 +1,4 @@
-package com.education.details
+package com.education.details.presentation
 
 import androidx.lifecycle.MutableLiveData
 import com.education.core_api.extension.SchedulersProvider

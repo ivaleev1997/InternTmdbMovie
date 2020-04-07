@@ -5,7 +5,7 @@ import com.education.core_api.di.module.SchedulersProviderModule
 import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.SchedulersProviderImpl
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
-import com.education.details.DetailsViewModel
+import com.education.details.presentation.DetailsViewModel
 import com.education.details.data.DetailsRepository
 import com.education.details.data.DetailsRepositoryImpl
 import com.education.details.domain.DetailsUseCase

@@ -1,4 +1,4 @@
-package com.education.details
+package com.education.details.presentation
 
 import android.content.Context
 import android.view.Menu
@@ -16,6 +16,7 @@ import com.education.core_api.di.AppWithComponent
 import com.education.core_api.extension.observe
 import com.education.core_api.presentation.fragment.BaseFragment
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
+import com.education.details.R
 import com.education.details.di.DetailsComponent
 import com.education.details.domain.entity.DetailsViewState
 import com.education.details.domain.entity.LoadStatus
