@@ -32,10 +32,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/recyclerMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_widgets_24px_outlined"
+        app:srcCompat="@drawable/ic_to_tile_map"
+        android:clickable="true"
+        android:focusable="true"
+
         app:layout_constraintBottom_toBottomOf="@+id/searchInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/searchInputLayout"
@@ -47,6 +50,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:visibility="gone"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +66,7 @@
         android:textColor="@color/text_color"
         android:visibility="gone"
         android:layout_marginTop="28dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchInputLayout" />
@@ -73,6 +78,7 @@
         android:src="@drawable/ic_not_found_12"
         android:layout_marginTop="28dp"
         android:visibility="gone"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notfoundTextView" />
@@ -85,6 +91,7 @@
         android:layout_marginTop="2dp"
         android:indeterminate="true"
         android:indeterminateTint="@color/gray"
+
         app:layout_constraintEnd_toEndOf="@+id/searchInputLayout"
         app:layout_constraintStart_toStartOf="@+id/searchInputLayout"
         app:layout_constraintTop_toBottomOf="@+id/searchInputLayout" />

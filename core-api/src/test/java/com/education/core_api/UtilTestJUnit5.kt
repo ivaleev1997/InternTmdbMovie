@@ -22,4 +22,18 @@ class UtilTestJUnit5 {
 
         assertThat(actualValue).isEqualTo(expected)
     }
+
+    @DisplayName("Convert Time to year string")
+    @ParameterizedTest(name = "\"{0}\" should be {1}")
+    @CsvSource(value = [
+        "'2020-03-14', ' (2020)'", // Success
+        "'1982-04-25',' (1982)'",
+        "'', ''", // wrong format
+        "'ff-03-14', ''" // wrong format
+    ])
+    fun convertTimeToYearOnlyString(input: String, expected: String) {
+        val actualValue = input.toOriginalTitleYear()
+
+        assertThat(actualValue).isEqualTo(expected)
+    }
 }

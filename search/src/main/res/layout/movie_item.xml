@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/movieItemContainer"
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/movieItemContainer"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools" >
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/posterImageViewCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/posterImageView"
+        android:layout_width="96dp"
+        android:layout_height="128dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@android:drawable/screen_background_dark_transparent"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
@@ -17,15 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="8dp">
-
-        <ImageView
-            android:id="@+id/posterImageView"
-            android:layout_width="64dp"
-            android:layout_height="96dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@android:drawable/screen_background_dark_transparent" />
-    </androidx.cardview.widget.CardView>
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/descriptionContainer"
@@ -33,10 +27,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
 
-        app:layout_constraintBottom_toBottomOf="@id/posterImageViewCard"
+        app:layout_constraintBottom_toBottomOf="@id/posterImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/posterImageViewCard"
-        app:layout_constraintTop_toTopOf="@id/posterImageViewCard">
+        app:layout_constraintStart_toEndOf="@id/posterImageView"
+        app:layout_constraintTop_toTopOf="@id/posterImageView">
 
         <TextView
             android:id="@+id/titleTextView"
@@ -46,7 +40,8 @@
             android:maxLines="1"
 
             app:layout_constraintStart_toStartOf="@+id/descriptionContainer"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Джентльмены" />
 
         <TextView
             android:id="@+id/originalTitleTextView"
@@ -57,7 +52,8 @@
             style="@style/OriginalTitleTextViewStyle"
 
             app:layout_constraintStart_toStartOf="@+id/descriptionContainer"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            tools:text="The Gentelmen (2020)" />
 
         <TextView
             android:id="@+id/genreTextView"
@@ -68,7 +64,8 @@
             style="@style/GenresTextViewStyle"
 
             app:layout_constraintStart_toStartOf="@id/descriptionContainer"
-            app:layout_constraintTop_toBottomOf="@id/originalTitleTextView" />
+            app:layout_constraintTop_toBottomOf="@id/originalTitleTextView"
+            tools:text="боевик, комедия, криминал" />
 
         <TextView
             android:id="@+id/averageTextView"
@@ -78,7 +75,8 @@
             android:layout_marginTop="6dp"
 
             app:layout_constraintStart_toStartOf="@id/descriptionContainer"
-            app:layout_constraintTop_toBottomOf="@id/genreTextView" />
+            app:layout_constraintTop_toBottomOf="@id/genreTextView"
+            tools:text="8.7" />
 
         <TextView
             android:id="@+id/votesCountTextView"
@@ -88,7 +86,9 @@
             android:layout_marginStart="4dp"
 
             app:layout_constraintBottom_toBottomOf="@+id/averageTextView"
-            app:layout_constraintStart_toEndOf="@id/averageTextView" />
+            app:layout_constraintStart_toEndOf="@id/averageTextView"
+            app:layout_constraintTop_toTopOf="@+id/averageTextView"
+            tools:text="52742" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -105,10 +105,11 @@
             style="@style/GenresTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="8dp"
 
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintStart_toEndOf="@+id/imageView" />
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            tools:text="103 мин" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

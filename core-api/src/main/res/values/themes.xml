@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/dark_blue</item>
         <item name="colorSecondary">@color/gray</item>
         <item name="android:colorBackground">@color/dark_blue</item>
+    </style>
+
+    <style name="ThemeOverlay.MyApp" parent="@style/ThemeOverlay.MaterialComponents.Light">
+        <item name="colorPrimary">@color/dark_blue</item>
     </style>
 </resources>

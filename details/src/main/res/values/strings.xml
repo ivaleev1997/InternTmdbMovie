@@ -2,4 +2,5 @@
 <resources>
     <string name="details_time_title">Время</string>
     <string name="films_rating">Рейтинг фильма</string>
+    <string name="favorite_string">favorite</string>
 </resources>

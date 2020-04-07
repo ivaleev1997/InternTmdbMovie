@@ -15,3 +15,7 @@ interface NoNetworkEvent : Event
 interface UnAuthorizedEvent : Event
 
 interface AnotherEvent : Event
+
+interface NavigateToDetailsEvent: Event {
+    val movieId: Long
+}

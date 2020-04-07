@@ -51,6 +51,6 @@ dependencies {
 
     implementation timber
 
-    implementation 'com.xwray:groupie:2.3.0'
-    implementation 'com.xwray:groupie-kotlin-android-extensions:2.3.0'
+    implementation groupie
+    implementation groupie_ktx
 }

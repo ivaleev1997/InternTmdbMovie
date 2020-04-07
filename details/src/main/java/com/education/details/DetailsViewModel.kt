@@ -20,13 +20,32 @@ class DetailsViewModel(
 
     private fun createInitialState(): DetailsViewState = DetailsViewState(listOf(), LoadStatus.LOAD)
 
-    fun loadDetails(id: Long) {
-        detailsUseCase.loadDetails(id)
+    fun loadDetails(id: Long, minWord: String) {
+        detailsUseCase.loadDetails(id, minWord)
             .schedulersIoToMain(schedulersProvider)
             .subscribe({ movieOverView ->
                 state = state.copy(movieOverView = listOf(movieOverView), loadStatus = LoadStatus.SUCCESS)
             }, {
                 Timber.e(it)
             }).autoDispose()
+    }
+
+    fun onFavoriteClicked() {
+        Timber.d("favorite - 1")
+        val favoriteFlag = !state.movieOverView.first().isFavorite
+        state = state.copy(
+            movieOverView = listOf(state.movieOverView.first().copy(isFavorite = favoriteFlag)),
+            loadStatus = LoadStatus.FAVORITE
+        )
+        detailsUseCase.changeFavorite(state.movieOverView.first().id, favoriteFlag)
+            .schedulersIoToMain(schedulersProvider)
+            .subscribe({},{ error ->
+                state = state.copy(
+                    movieOverView = listOf(state.movieOverView.first().copy(isFavorite = !favoriteFlag)),
+                    loadStatus = LoadStatus.FAVORITE
+                )
+                handleError(error)
+            })
+            .autoDispose()
     }
 }

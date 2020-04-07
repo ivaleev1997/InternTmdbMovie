@@ -3,13 +3,13 @@ package com.education.movies
 import com.education.movies.data.repository.MoviesRepository
 import com.education.movies.data.repository.MoviesRepositoryImpl
 import com.education.movies.domain.MoviesUseCase
-import com.education.movies.domain.entity.MoviesListState
+import com.education.movies.domain.entity.MoviesScreenState
 import com.education.movies.domain.entity.MoviesViewState
 import com.education.movies.presentation.MoviesViewModel
 import com.education.testmodule.MockTmdbMovieWebServer
 import com.education.testmodule.TestSchedulersProvider
 import io.reactivex.Flowable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.TestScheduler
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.SoftAssertions.assertSoftly
 import org.spekframework.spek2.Spek
@@ -21,7 +21,7 @@ object MoviesJvmIntegrationTest : Spek({
 
     Feature("User insert query in search edit text") {
         // region Fields
-        val testScheduler = Schedulers.trampoline()
+        val testScheduler = TestScheduler()
         val schedulersProvider = TestSchedulersProvider(testScheduler)
 
         var repository: MoviesRepository
@@ -37,7 +37,12 @@ object MoviesJvmIntegrationTest : Spek({
             moviesViewModel = MoviesViewModel(useCase, schedulersProvider)
             // endregion Fields
             var query = ""
-            val expectedMovieViewState = MoviesViewState(listOf(), MoviesListState.CLEAN)
+            val isListRecyclerMap = true
+            val expectedMovieViewState = MoviesViewState(
+                MoviesScreenState.CLEAN,
+                listOf(),
+                isListRecyclerMap
+            )
             Given("Set query as blank string ") {
                 query = " "
             }
@@ -49,8 +54,8 @@ object MoviesJvmIntegrationTest : Spek({
 
             Then("Empty list and CREATED MoviesListState") {
                 assertSoftly {
-                    assertThat(moviesViewModel.liveState.value?.moviesListState).isEqualTo(expectedMovieViewState.moviesListState)
-                    assertThat(moviesViewModel.liveState.value?.movies?.size).isEqualTo(expectedMovieViewState.movies.size)
+                    assertThat(moviesViewModel.liveState.value?.moviesScreenState).isEqualTo(expectedMovieViewState.moviesScreenState)
+                    assertThat(moviesViewModel.liveState.value?.listItems?.size).isEqualTo(expectedMovieViewState.listItems.size)
                 }
             }
         }
@@ -63,7 +68,7 @@ object MoviesJvmIntegrationTest : Spek({
             moviesViewModel = MoviesViewModel(useCase, schedulersProvider)
             // endregion Fields
             var query = "Avengers"
-            val expectedMovieViewState = MoviesListState.NONE_EMPTY
+            val expectedMovieViewState = MoviesScreenState.NONE_EMPTY
             val expectedMoviesListSize = 2
             Given("Set query as blank string and avengers dispatcher") {
                 query = "Avengers"
@@ -73,14 +78,13 @@ object MoviesJvmIntegrationTest : Spek({
             When("Give viewModel queryFlowable") {
                 val queryFlowable = Flowable.just("", query)
                 moviesViewModel.initSearchMovies(queryFlowable)
+                testScheduler.triggerActions()
             }
 
             Then("Should be not empty list with 2 elements and NONE_EMPTY MoviesListState") {
                 assertSoftly {
-                    //testScheduler.triggerActions()
-                    assertThat(moviesViewModel.liveState.value?.moviesListState).isEqualTo(expectedMovieViewState)
-                    assertThat(moviesViewModel.liveState.value?.moviesListState).isEqualTo(expectedMovieViewState)
-                    assertThat(moviesViewModel.liveState.value?.movies?.size).isEqualTo(expectedMoviesListSize)
+                    assertThat(moviesViewModel.liveState.value?.moviesScreenState).isEqualTo(expectedMovieViewState)
+                    assertThat(moviesViewModel.liveState.value?.listItems?.size).isEqualTo(expectedMoviesListSize)
                 }
             }
         }
@@ -94,7 +98,7 @@ object MoviesJvmIntegrationTest : Spek({
             // endregion Fields
             var query = ""
 
-            val expectedMovieViewState = MoviesListState.EMPTY
+            val expectedMovieViewState = MoviesScreenState.EMPTY
             val expectedMoviesListSize = 0
             Given("Set query as blank string and avengers dispatcher") {
                 query = "qwertyu"
@@ -104,12 +108,13 @@ object MoviesJvmIntegrationTest : Spek({
             When("Give viewModel queryFlowable") {
                 val queryFlowable = Flowable.just("", query)
                 moviesViewModel.initSearchMovies(queryFlowable)
+                testScheduler.triggerActions()
             }
 
             Then("Should be empty list and EMPTY MoviesListState") {
                 assertSoftly {
-                    assertThat(moviesViewModel.liveState.value?.moviesListState).isEqualTo(expectedMovieViewState)
-                    assertThat(moviesViewModel.liveState.value?.movies?.size).isEqualTo(expectedMoviesListSize)
+                    assertThat(moviesViewModel.liveState.value?.moviesScreenState).isEqualTo(expectedMovieViewState)
+                    assertThat(moviesViewModel.liveState.value?.listItems?.size).isEqualTo(expectedMoviesListSize)
                 }
             }
         }

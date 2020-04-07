@@ -9,25 +9,27 @@ import com.education.search.R
 import com.education.search.domain.entity.Movie
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
-import kotlinx.android.synthetic.main.movie_item.*
+import kotlinx.android.synthetic.main.movie_item_tile.*
 
-data class MovieListItem(
+
+data class MovieTileItem(
     private val greenTextColorId: Int,
     private val minWord: String,
     private val onClickCallBack: (Movie) -> Unit,
     private val movie: Movie,
     private val placeHolder: Drawable?
 ): Item() {
+
     override fun bind(
         viewHolder: ViewHolder,
         position: Int
     ) {
         with(viewHolder) {
-            Glide.with(posterImageView)
-                .load(movie.posterPath)
-                .placeholder(placeHolder)
-                .transform(CenterCrop(), RoundedCorners(8))
-                .into(posterImageView)
+                Glide.with(posterImageView)
+                    .load(movie.posterPath)
+                    .placeholder(placeHolder)
+                    .transform(CenterCrop(), RoundedCorners(8))
+                    .into(posterImageView)
 
             titleTextView.text = movie.title
             originalTitleTextView.text = movie.originalTitle
@@ -45,7 +47,8 @@ data class MovieListItem(
         }
     }
 
-    override fun getLayout(): Int = R.layout.movie_item
+    override fun getLayout(): Int = R.layout.movie_item_tile
 
     override fun getId(): Long = movie.hashCode().toLong()
 }
+

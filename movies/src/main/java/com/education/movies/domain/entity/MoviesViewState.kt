@@ -1,8 +1,9 @@
 package com.education.movies.domain.entity
 
-import com.education.search.domain.entity.Movie
+import com.xwray.groupie.kotlinandroidextensions.Item
 
 data class MoviesViewState(
-    val movies: List<Movie>,
-    val moviesListState: MoviesListState
+    val moviesScreenState: MoviesScreenState,
+    val listItems: List<Item>,
+    val isLineRecyclerMap: Boolean
 )

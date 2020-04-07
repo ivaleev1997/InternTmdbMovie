@@ -15,8 +15,8 @@ import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.login.presentation.LoginFragmentDirections
 import com.education.redmadrobottmdb.R
 import com.education.redmadrobottmdb.di.component.MainComponent
-import javax.inject.Inject
 import timber.log.Timber
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), BaseActivity {
 
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), BaseActivity {
         MainComponent.create((application as AppWithComponent).getComponent()).inject(this)
         setContentView(R.layout.activity_main)
 
-        setupBottomNavigationWithNavComponent()
+        setupRootNavComponent()
 
         if (!viewModel.isSessionExist())
             startLoginScreen()
@@ -47,9 +47,9 @@ class MainActivity : AppCompatActivity(), BaseActivity {
         }
     }
 
-    private fun setupBottomNavigationWithNavComponent() {
+    private fun setupRootNavComponent() {
         rootNavController = findNavController(R.id.nav_host_fragment)
-        supportActionBar?.hide()
+        //supportActionBar?.hide()
     }
 
     override fun startMainAppScreen() {

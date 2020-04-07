@@ -47,8 +47,12 @@ android {
             testLogging.events = ["passed", "skipped", "failed"]
         }
         unitTests {
-            includeAndroidResources = true
+            includeAndroidResources = false
         }
+    }
+    // 4) JUnit 5 will bundle in files with identical paths; exclude them
+    packagingOptions {
+        exclude "META-INF/LICENSE*"
     }
 }
 
@@ -58,6 +62,8 @@ dependencies {
     implementation androidx_appcompat
     implementation androidx_core_ktx
     implementation fragment
+
+    implementation lifecycle_livedata_ktx
 
     testImplementation junit
     androidTestImplementation androidx_junit
@@ -87,4 +93,6 @@ dependencies {
 
     implementation dagger2
     kapt dagger2_compiler
+
+    implementation timber
 }

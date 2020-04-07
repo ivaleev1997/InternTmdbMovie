@@ -1,9 +1,7 @@
 package com.education.core_api.extension
 
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.observe
+import androidx.lifecycle.*
 import com.education.core_api.presentation.uievent.Event
 import com.education.core_api.presentation.uievent.EventsQueue
 import java.util.*
@@ -41,4 +39,9 @@ fun Fragment.observe(eventsQueue: EventsQueue, eventHandler: (Event) -> Unit) {
             eventHandler(queue.remove())
         }
     }
+}
+
+/** Последовательныйвызов[map]и[distinctUntilChanged], воднойфункции. */
+inline fun <X, Y> LiveData<X>.mapDistinct(crossinline transform: (X) -> Y): LiveData<Y> {
+    return map(transform).distinctUntilChanged()
 }

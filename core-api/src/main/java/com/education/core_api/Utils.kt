@@ -52,3 +52,18 @@ fun List<Genre>.joinGenreArrayToString(): String {
 }
 
 fun String?.toTmdbPosterPath(): String = TMDB_IMAGE_URL + (this ?: "")
+
+fun isShouldBeGreen(voteAverage: Double): Boolean = voteAverage >= GREEN_MIN_VOTE_AVERAGE
+
+fun String.toOriginalTitleYear(): String {
+    return try {
+        val timeFormat = "yyyy-MM-dd"
+        val sdf = SimpleDateFormat(timeFormat)
+        val date = sdf.parse(this)
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = date.time
+        " (${calendar.get(Calendar.YEAR)})"
+    } catch (e: Exception) {
+        ""
+    }
+}

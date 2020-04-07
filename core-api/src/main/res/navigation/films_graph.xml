@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/navigation_films"
         android:name="com.education.movies.presentation.MoviesFragment"
-        android:label="@string/title_films"
         tools:layout="@layout/movies_fragment" >
 
         <action

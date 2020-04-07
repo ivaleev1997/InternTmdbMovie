@@ -1,7 +1,11 @@
 package com.education.details
 
 import android.content.Context
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -29,11 +33,13 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
     @Inject
     internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    private lateinit var favoriteItem: MenuItem
+
     private val viewModel: DetailsViewModel by viewModels {
         viewModelFactory
     }
 
-    private val args by navArgs<DetailsFragmentArgs>()
+    private val args: DetailsFragmentArgs by navArgs()
 
     override fun onAttach(context: Context) {
         DetailsComponent.create((requireActivity().application as AppWithComponent).getComponent()).inject(this)
@@ -41,8 +47,20 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
     }
 
     override fun initViewElements(view: View) {
-        viewModel.loadDetails(args.movieId)
+        setupToolBar()
+        viewModel.loadDetails(args.movieId, resources.getString(R.string.ru_locale_min))
         observe(viewModel.liveState, ::renderView)
+
+        toolbar.setNavigationOnClickListener {
+            navigateUp()
+        }
+    }
+
+    private fun setupToolBar() {
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        (requireActivity() as AppCompatActivity).title = " "
+        setHasOptionsMenu(true)
+
     }
 
     private fun renderView(detailsViewState: DetailsViewState) {
@@ -51,6 +69,7 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
                 with(detailsViewState.movieOverView.first()) {
                     Glide.with(requireContext())
                         .load(posterPath)
+                        .placeholder(resources.getDrawable(R.drawable.image_placeholder))
                         .transform(CenterCrop(), RoundedCorners(8))
                         .into(posterImageView)
 
@@ -60,12 +79,44 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
                     runTimeTextView.text = runTime
                     voteAverageTextView.text = voteAverage
                     voteCountTextView.text = voteCount
-                    overViewTextView.text = overView
+                    changeFavoriteIcon(isFavorite)
+                    if (overView.isBlank()) {
+                        emptyAnimation.visibility = View.VISIBLE
+                    } else {
+                        overViewContainer.visibility = View.VISIBLE
+                        overViewTextView.text = overView
+                    }
                 }
             }
-            LoadStatus.LOAD -> {
 
+            LoadStatus.FAVORITE -> {
+                changeFavoriteIcon(detailsViewState.movieOverView.first().isFavorite)
+            }
+            LoadStatus.LOAD -> {
             }
         }
+    }
+
+    private fun changeFavoriteIcon(flag: Boolean) {
+        if (flag)
+            favoriteItem.setIcon(R.drawable.ic_favorite_clicked)
+        else
+            favoriteItem.setIcon(R.drawable.ic_favorite_not_clicked)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.favorite, menu)
+        favoriteItem = menu.findItem(R.id.favorite)
+        favoriteItem.setIcon(R.drawable.ic_favorite_not_clicked)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.favorite -> {
+                viewModel.onFavoriteClicked()
+            }
+        }
+
+        return true
     }
 }

@@ -73,6 +73,7 @@ dependencies {
     implementation fragment
     implementation lifecycle_ext
     implementation lifecycle_viewmodel
+    implementation lifecycle_livedata_ktx
 
     implementation dagger2
     kapt dagger2_compiler
@@ -104,9 +105,9 @@ dependencies {
 
     testImplementation project(':testmodule')
 
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
-    implementation 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
+    implementation rxBinding
+    implementation rxBindng_kotlin
 
-    implementation 'com.xwray:groupie:2.3.0'
-    implementation 'com.xwray:groupie-kotlin-android-extensions:2.3.0'
+    implementation groupie
+    implementation groupie_ktx
 }

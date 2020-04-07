@@ -5,6 +5,7 @@ import com.education.core_api.data.network.entity.DetailsMovie
 import com.education.core_api.data.network.entity.Genre
 import com.education.core_api.data.network.entity.SearchMovie
 import com.education.core_api.joinGenreArrayToString
+import com.education.core_api.toOriginalTitleYear
 import com.education.core_api.toTmdbPosterPath
 import com.education.movies.data.repository.MoviesRepository
 import com.education.search.domain.entity.Movie
@@ -43,7 +44,7 @@ class MoviesUseCase @Inject constructor(
                     detailsMovie.id,
                     detailsMovie.posterPath.toTmdbPosterPath(),
                     detailsMovie.title,
-                    detailsMovie.originalTitle,
+                    detailsMovie.originalTitle + detailsMovie.releaseDate.toOriginalTitleYear(),
                     detailsMovie.genres.joinGenreArrayToString(),
                     detailsMovie.voteAverage,
                     detailsMovie.voteCount,

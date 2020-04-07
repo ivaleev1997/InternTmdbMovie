@@ -10,3 +10,5 @@ const val BLANK_STR = ""
 const val TMDB_IMAGE_URL = BuildConfig.TMDB_IMAGE_SERVER_URL
 const val GREEN_MIN_VOTE_AVERAGE = 7.5
 const val RX_DEBOUNCE_INTERVAL = 500L // mills
+
+const val GRID_LAYOUT_ITEM_COUNT = 2

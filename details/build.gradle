@@ -57,6 +57,8 @@ dependencies {
     implementation glide
     kapt glide_compiler
 
-    implementation "androidx.navigation:navigation-runtime-ktx:2.2.1"
-    implementation "androidx.navigation:navigation-ui-ktx:2.2.1"
+    implementation navigation_runtime_ktx
+    implementation navigation_ui_ktx
+
+    implementation lottie
 }
