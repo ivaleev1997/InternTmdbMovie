@@ -5,7 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.education.core_api.data.network.exception.UnAuthorizedException
+import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.isNetworkException
+import com.education.core_api.extension.schedulersIoToMain
 import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.login.domain.UserUseCase
 import com.education.login.domain.entity.LoginResult
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 class LoginViewModel
 @Inject constructor (
-    private val userUseCase: UserUseCase
+    private val userUseCase: UserUseCase,
+    private val schedulersProvider: SchedulersProvider
 ) : BaseViewModel() {
 
     companion object {
@@ -38,9 +41,10 @@ class LoginViewModel
     val validatePasswordStatus: LiveData<Boolean>
         get() = _validatePasswordStatus
 
-    fun onLoginClicked(login: String, password: String) {
+    fun onLoginButtonClicked(login: String, password: String) {
         if (isLoginValid(login) && isPasswordValid(password))
             userUseCase.login(login, password)
+                .schedulersIoToMain(schedulersProvider)
                 .subscribe({
                     _loginStatus.value = LoginResult.SUCCESS
                 }, { error ->

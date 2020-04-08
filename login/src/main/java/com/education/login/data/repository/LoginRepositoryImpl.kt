@@ -1,10 +1,6 @@
 package com.education.login.data.repository
 
-import android.content.SharedPreferences
-import com.education.core_api.PREFS_REQUEST_LIFE
-import com.education.core_api.PREFS_REQUEST_TOKEN
-import com.education.core_api.PREFS_SESSION
-import com.education.core_api.convertTime
+import com.education.core_api.data.LocalDataSource
 import com.education.core_api.data.network.TmdbAuthApi
 import com.education.core_api.data.network.entity.RequestSessionBody
 import com.education.core_api.data.network.entity.RequestToken
@@ -20,7 +16,7 @@ import javax.inject.Inject
 class LoginRepositoryImpl
 @Inject constructor(
     private val tmdbAuthApi: TmdbAuthApi,
-    private val sharedPrefs: SharedPreferences
+    private val localDataSource: LocalDataSource
 ) : LoginRepository {
 
     override fun login(user: User): Completable {
@@ -47,14 +43,14 @@ class LoginRepositoryImpl
     }
 
     private fun saveRequestToken(token: String) {
-        sharedPrefs.putString(PREFS_REQUEST_TOKEN, token)
+        localDataSource.saveRequestToken(token)
     }
 
     private fun saveSessionId(sessionId: String) {
-        sharedPrefs.putString(PREFS_SESSION, sessionId)
+        localDataSource.saveSessionId(sessionId)
     }
 
     private fun saveTokenLifeTime(expiresAt: String) {
-        sharedPrefs.putLong(PREFS_REQUEST_LIFE, convertTime(expiresAt))
+        localDataSource.saveTokenLifeTime(expiresAt)
     }
 }

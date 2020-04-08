@@ -2,19 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply from: "$project.rootDir/common_build.gradle"
+
 android {
-    compileSdkVersion compile_sdk_version
-    buildToolsVersion build_tools_version
-
-    defaultConfig {
-        minSdkVersion min_sdk_version
-        targetSdkVersion target_sdk_version
-        versionCode version_code
-        versionName version_name
-
-        testInstrumentationRunner test_instrumentation_runner
-        consumerProguardFiles 'consumer-rules.pro'
-    }
 
     buildTypes {
         release {
@@ -42,9 +32,8 @@ dependencies {
 
     implementation retrofit2
     implementation retrofit2_converter_gson
-    implementation okhttp3_log
-    implementation retrofit2_converter_moshi
     implementation retrofit2_rxjava2_adapter
+    implementation okhttp3_log
 
     implementation lifecycle_viewmodel
 }

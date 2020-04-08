@@ -36,9 +36,11 @@ abstract class LoginModule {
         @Singleton
         fun provideLoginViewModel(
             map: @JvmSuppressWildcards MutableMap<Class<out ViewModel>, ViewModel>,
-            userUseCase: UserUseCase
+            userUseCase: UserUseCase,
+            schedulersProvider: SchedulersProvider
         ): ViewModel = LoginViewModel(
-            userUseCase
+            userUseCase,
+            schedulersProvider
         ).also {
             map[LoginViewModel::class.java] = it
         }

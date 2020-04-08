@@ -2,26 +2,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+
+apply from: "$project.rootDir/spek_and_junit5.gradle"
+apply from: "$project.rootDir/common_build.gradle"
+
 android {
-    compileSdkVersion compile_sdk_version
-    buildToolsVersion build_tools_version
-
-    defaultConfig {
-        minSdkVersion min_sdk_version
-        targetSdkVersion target_sdk_version
-        versionCode version_code
-        versionName version_name
-
-        testInstrumentationRunner test_instrumentation_runner
-        consumerProguardFiles 'consumer-rules.pro'
-    }
-
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
-    }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -29,8 +14,8 @@ android {
         }
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+    sourceSets {
+        test.java.srcDirs += ["${project(':core').projectDir}/src/test/java"]
     }
 }
 
@@ -44,8 +29,11 @@ dependencies {
     androidTestImplementation androidx_junit
     androidTestImplementation androidx_espresso
 
-    implementation project(':core')
+    testImplementation project(':core')
+    testImplementation project(':core-api')
+    testImplementation project(':core-impl')
 
+    implementation project(':core')
     implementation dagger2
     kapt dagger2_compiler
     
@@ -68,4 +56,7 @@ dependencies {
     testImplementation androidx_core
 
     testImplementation okhttp_mockwebserver
+    testImplementation mockito_kotlin2
+    testImplementation assertj
+
 }

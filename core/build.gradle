@@ -1,20 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply from: "$project.rootDir/common_build.gradle"
+
 android {
-    compileSdkVersion compile_sdk_version
-    buildToolsVersion build_tools_version
-
-    defaultConfig {
-        minSdkVersion min_sdk_version
-        targetSdkVersion target_sdk_version
-        versionCode version_code
-        versionName version_name
-
-        testInstrumentationRunner test_instrumentation_runner
-        consumerProguardFiles 'consumer-rules.pro'
-    }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -30,4 +19,9 @@ dependencies {
 
     api project(':core-api')
     implementation project(':core-impl')
+
+    testImplementation okhttp_mockwebserver
+    testImplementation retrofit2
+    testImplementation retrofit2_converter_gson
+    testImplementation retrofit2_rxjava2_adapter
 }

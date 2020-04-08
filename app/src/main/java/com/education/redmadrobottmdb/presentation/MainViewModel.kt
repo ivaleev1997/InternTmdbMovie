@@ -1,29 +1,25 @@
 package com.education.redmadrobottmdb.presentation
 
-import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
-import com.education.core_api.BLANK_STR
-import com.education.core_api.PREFS_REQUEST_LIFE
-import com.education.core_api.PREFS_REQUEST_TOKEN
-import com.education.core_api.PREFS_SESSION
+import com.education.core_api.data.LocalDataSource
 import java.util.*
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val sharedPrefs: SharedPreferences
+    private val localDataSource: LocalDataSource
 ) : ViewModel() {
 
     fun isSessionExist(): Boolean =
         isSessionTokenExist() && isRequestTokenExist() && isTokenLifeTimeUp()
 
     private fun isRequestTokenExist(): Boolean =
-         sharedPrefs.getString(PREFS_REQUEST_TOKEN, BLANK_STR)?.isNotBlank() == true
+        localDataSource.getRequestToken().isNotBlank()
 
     private fun isSessionTokenExist(): Boolean =
-        sharedPrefs.getString(PREFS_SESSION, BLANK_STR)?.isNotBlank() == true
+        localDataSource.getSessionId().isNotBlank()
 
     private fun isTokenLifeTimeUp(): Boolean =
-        sharedPrefs.getLong(PREFS_REQUEST_LIFE, 0L) > getCurrentTimeMills()
+        localDataSource.getTokenLifeTime() > getCurrentTimeMills()
 
     private fun getCurrentTimeMills(): Long {
         val calendar = Calendar.getInstance()
