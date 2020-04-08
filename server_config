@@ -1,0 +1,5 @@
+ext {
+    tmdb_url = "https://api.themoviedb.org/3/"
+    tmdb_api_key = "aa7b2f0df06cb6ccf1cbcf705bcf9892"
+    tmdb_image_url = "https://image.tmdb.org/t/p/w500"
+}
