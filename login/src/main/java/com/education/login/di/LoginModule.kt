@@ -34,7 +34,7 @@ abstract class LoginModule {
         @Provides
         @JvmStatic
         @Singleton
-        fun provideSongsListViewModel(
+        fun provideLoginViewModel(
             map: @JvmSuppressWildcards MutableMap<Class<out ViewModel>, ViewModel>,
             userUseCase: UserUseCase,
             schedulersProvider: SchedulersProvider

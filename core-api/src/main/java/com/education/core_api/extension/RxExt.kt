@@ -14,6 +14,10 @@ fun <T> Single<T>.schedulersIoToMain(provider: SchedulersProvider): Single<T> {
     return subscribeOn(provider.io()).observeOn(provider.mainThread())
 }
 
+fun <T : Any> Single<T>.flatMapCompletableAction(action: (T) -> Unit): Completable {
+    return flatMapCompletable { param -> Completable.fromAction { action.invoke(param) } }
+}
+
 interface SchedulersProvider {
     fun io(): Scheduler
 

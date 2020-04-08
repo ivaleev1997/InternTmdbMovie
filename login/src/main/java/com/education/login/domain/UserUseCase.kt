@@ -9,7 +9,6 @@ class UserUseCase
 @Inject constructor (
     private val loginRepository: LoginRepository
 ) {
-
     fun login(login: String, password: String): Completable {
         return loginRepository.login(
             User(
