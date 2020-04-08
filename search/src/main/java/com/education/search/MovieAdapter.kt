@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.education.core_api.GREEN_MIN_VOTE_AVERAGE
-import com.education.core_api.autoNotify
+import com.education.core_api.util.autoNotify
 import com.education.search.entity.Movie
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.movie_item.*

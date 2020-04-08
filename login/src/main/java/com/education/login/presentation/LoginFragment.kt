@@ -13,8 +13,8 @@ import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.login.R
 import com.education.login.di.LoginComponent
 import com.education.login.domain.entity.LoginResult
-import javax.inject.Inject
 import kotlinx.android.synthetic.main.login_fragment.*
+import javax.inject.Inject
 
 class LoginFragment : BaseFragment(R.layout.login_fragment) {
 
@@ -23,13 +23,13 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
     }
 
     @Inject
-    lateinit var appViewModelFactory: ViewModelProvider.Factory
+    internal lateinit var appViewModelFactory: ViewModelProvider.Factory
     private val viewModel: LoginViewModel by viewModels {
         appViewModelFactory
     }
 
     @Inject
-    lateinit var viewModelTrigger: ViewModelTrigger
+    internal lateinit var viewModelTrigger: ViewModelTrigger
 
     override fun onAttach(context: Context) {
         LoginComponent.create((requireActivity().application as AppWithComponent).getComponent())

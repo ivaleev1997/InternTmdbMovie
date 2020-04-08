@@ -2,11 +2,12 @@ package com.education.redmadrobottmdb.presentation.activity
 
 import androidx.lifecycle.ViewModel
 import com.education.core_api.data.LocalDataSource
-import java.util.*
+import com.education.core_api.util.CurrentTime
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val localDataSource: LocalDataSource
+    private val localDataSource: LocalDataSource,
+    private val currentTime: CurrentTime
 ) : ViewModel() {
 
     fun isSessionExist(): Boolean =
@@ -22,8 +23,7 @@ class MainViewModel @Inject constructor(
         localDataSource.getTokenLifeTime() > getCurrentTimeMills()
 
     private fun getCurrentTimeMills(): Long {
-        val calendar = Calendar.getInstance()
-        return calendar.time.time
+        return currentTime.getCurrentTimeMills()
     }
 
     fun onLogoutClicked() {

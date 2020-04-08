@@ -1,5 +1,6 @@
 package com.education.core_api
 
+import com.education.core_api.util.convertTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest

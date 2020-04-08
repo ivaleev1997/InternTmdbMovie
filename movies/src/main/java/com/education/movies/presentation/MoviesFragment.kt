@@ -32,9 +32,9 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     }
 
     @Inject
-    lateinit var viewModelTrigger: ViewModelTrigger
+    internal lateinit var viewModelTrigger: ViewModelTrigger
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var adapter: MovieAdapter
 

@@ -15,17 +15,17 @@ import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.login.presentation.LoginFragmentDirections
 import com.education.redmadrobottmdb.R
 import com.education.redmadrobottmdb.di.component.MainComponent
-import javax.inject.Inject
 import timber.log.Timber
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), BaseActivity {
 
     @Inject
-    lateinit var viewModelTrigger: ViewModelTrigger
+    internal lateinit var viewModelTrigger: ViewModelTrigger
     @Inject
-    lateinit var appViewModelFactory: ViewModelProvider.Factory
+    internal lateinit var appViewModelFactory: ViewModelProvider.Factory
     @Inject
-    lateinit var loginMediator: LoginMediator
+    internal lateinit var loginMediator: LoginMediator
 
     lateinit var rootNavController: NavController
 
