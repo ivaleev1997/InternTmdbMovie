@@ -3,13 +3,15 @@ package com.education.redmadrobottmdb.di.module
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import com.education.core_api.PREFS_SHARED_PREFS
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
 class AppModule {
+    companion object {
+        const val PREFS_SHARED_PREFS = "tmdb_shared"
+    }
 
     @Provides
     @Singleton

@@ -16,7 +16,7 @@ interface TmdbMovieApi {
     fun getFavoriteMovies(@Path("account_id") accountId: Long): Single<MovieApiResponse<SearchMovie>>
 
     @POST("account/{account_id}/favorite")
-    fun markAsFavorite(
+    fun changeFavorite(
         @Path("account_id") accountId: Long,
         @Body requestFavoriteBody: RequestFavoriteBody
     ): Single<StatusResponse>

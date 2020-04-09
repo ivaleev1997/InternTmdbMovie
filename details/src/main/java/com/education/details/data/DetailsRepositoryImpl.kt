@@ -12,10 +12,10 @@ class DetailsRepositoryImpl @Inject constructor(
         return tmdbMovieApi.getDetailsMovie(movieId)
     }
 
-    override fun markAsFavorite(movieId: Long, flag: Boolean): Single<StatusResponse> {
+    override fun changeFavorite(movieId: Long, flag: Boolean): Single<StatusResponse> {
         return tmdbMovieApi.getAccountInfo()
             .flatMap { account ->
-                tmdbMovieApi.markAsFavorite(account.id, RequestFavoriteBody(movieId, flag))
+                tmdbMovieApi.changeFavorite(account.id, RequestFavoriteBody(movieId, flag))
             }
     }
 

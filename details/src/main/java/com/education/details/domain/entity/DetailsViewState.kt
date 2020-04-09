@@ -1,6 +1,7 @@
 package com.education.details.domain.entity
 
 data class DetailsViewState(
-    val movieOverView: List<MovieOverView>,
-    val loadStatus: LoadStatus
+    val movieOverView: MovieOverView?,
+    val loadStatus: LoadStatus,
+    val favorite: Boolean?
 )

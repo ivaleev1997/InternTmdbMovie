@@ -1,4 +1,4 @@
-package com.education.core_api.presentation.view
+package com.education.core_api.presentation.view.recycler
 
 import android.content.Context
 import android.util.AttributeSet
@@ -19,7 +19,9 @@ class FromLinearToGridChangeManagerRecycler @JvmOverloads constructor(
         private const val GRID_LAYOUT_ITEM_COUNT_2 = 2
     }
 
-    val gridLayoutManager = GridLayoutManager(context, GRID_LAYOUT_ITEM_COUNT_2)
+    val gridLayoutManager = GridLayoutManager(context,
+        GRID_LAYOUT_ITEM_COUNT_2
+    )
     val linearLayoutManager = LinearLayoutManager(context)
 
     fun changeLayoutManager(isLineLayoutManager: Boolean) {

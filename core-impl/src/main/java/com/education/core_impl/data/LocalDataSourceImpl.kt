@@ -1,16 +1,41 @@
 package com.education.core_impl.data
 
 import android.content.SharedPreferences
-import com.education.core_api.*
+import com.education.core_api.BLANK_STR
 import com.education.core_api.data.LocalDataSource
 import com.education.core_api.extension.clear
 import com.education.core_api.extension.putLong
 import com.education.core_api.extension.putString
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(
     private val sharedPrefs: SharedPreferences
 ) : LocalDataSource {
+
+    companion object {
+        const val PREFS_REQUEST_TOKEN = "request_token"
+        const val PREFS_REQUEST_LIFE = "request_token_life"
+        const val PREFS_SESSION = "session"
+
+        fun convertTime(timeString: String): Long {
+            val timeFormat = "yyyy-MM-dd HH:mm:ss"
+            return try {
+                val sdf = SimpleDateFormat(timeFormat)
+                sdf.timeZone = TimeZone.getTimeZone("UTC")
+
+                val sdfOutPutToSend = SimpleDateFormat(timeFormat)
+                sdfOutPutToSend.timeZone = TimeZone.getDefault()
+
+                val date = sdf.parse(timeString)
+                date?.time ?: 0L
+            } catch (e: Exception) {
+                0L
+            }
+        }
+    }
+
     override fun saveSessionId(sessionId: String) {
         sharedPrefs.putString(PREFS_SESSION, sessionId)
     }

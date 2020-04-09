@@ -1,4 +1,4 @@
-package com.education.core_api.presentation.view
+package com.education.core_api.presentation.view.recycler
 
 import android.content.Context
 import android.util.AttributeSet

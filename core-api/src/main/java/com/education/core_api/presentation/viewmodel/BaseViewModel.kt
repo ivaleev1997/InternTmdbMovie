@@ -31,15 +31,15 @@ abstract class BaseViewModel : ViewModel() {
     protected fun handleError(error: Throwable) {
         when {
             error.isNetworkException() -> sendEvent(
-                object : NoNetworkEvent {}
+                NoNetworkEvent()
             )
 
             error is UnAuthorizedException -> sendEvent(
-                object : UnAuthorizedEvent {}
+                UnAuthorizedEvent()
             )
 
             else -> sendEvent(
-                object : AnotherEvent {}
+                TryLaterEvent()
             )
         }
         Timber.e(error)

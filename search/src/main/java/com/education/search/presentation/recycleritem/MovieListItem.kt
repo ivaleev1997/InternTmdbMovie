@@ -3,9 +3,9 @@ package com.education.search.presentation.recycleritem
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.education.core_api.isShouldBeGreen
 import com.education.search.R
 import com.education.search.domain.entity.Movie
+import com.education.search.isShouldBeGreen
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.movie_item.view.*
@@ -22,7 +22,7 @@ data class MovieListItem(
             Glide.with(posterImageView)
                 .load(movie.posterPath)
                 .placeholder(resources.getDrawable(R.drawable.image_placeholder))
-                .transform(CenterCrop(), RoundedCorners(8))
+                .transform(CenterCrop(), RoundedCorners(resources.getInteger(R.integer.round_corner_8)))
                 .into(posterImageView)
 
             titleTextView.text = movie.title

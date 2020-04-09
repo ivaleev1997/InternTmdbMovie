@@ -6,7 +6,7 @@ import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.delegate
 import com.education.core_api.extension.mapDistinct
 import com.education.core_api.extension.schedulersComputationToMain
-import com.education.core_api.presentation.uievent.NavigateToDetailsEvent
+import com.education.core_api.presentation.uievent.NavigateToEvent
 import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.movies.domain.MoviesUseCase
 import com.education.movies.domain.entity.MoviesScreenState
@@ -14,8 +14,6 @@ import com.education.movies.domain.entity.MoviesViewState
 import com.education.search.domain.entity.Movie
 import com.education.search.presentation.recycleritem.MovieListItem
 import com.education.search.presentation.recycleritem.MovieTileItem
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.ViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import io.reactivex.Flowable
 import timber.log.Timber
@@ -36,7 +34,6 @@ class MoviesViewModel(
     val moviesScreenState = liveState.mapDistinct { it.moviesScreenState }
     val recyclerMapState = liveState.mapDistinct { it.isLineRecyclerMap }
     val adapterItemsState = liveState.mapDistinct { it.listItems }
-    val adapter = GroupAdapter<ViewHolder>()
 
     fun initSearchMovies(observableQuery: Flowable<String>) {
         observableQuery
@@ -124,9 +121,8 @@ class MoviesViewModel(
     }
 
     private fun navigateToDetails(movie: Movie) {
-        sendEvent(object : NavigateToDetailsEvent{
-            override val movieId: Long
-                get() = movie.id
-        })
+        sendEvent(NavigateToEvent(
+            MoviesFragmentDirections.actionFilmsToDetails(movie.id)
+        ))
     }
 }

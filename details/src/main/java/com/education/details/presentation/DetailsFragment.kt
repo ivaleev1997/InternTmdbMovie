@@ -54,15 +54,19 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
     }
 
     override fun initViewElements(view: View) {
-        loadAnimation.makeVisible()
         setupToolBar()
         viewModel.loadDetails(args.movieId, resources.getString(R.string.ru_locale_min))
-
-        observe(viewModel.liveState, ::renderView)
-        observe(viewModel.eventsQueue, ::onEvent)
         toolbar.setNavigationOnClickListener {
             navigateUp()
         }
+
+        observeLiveDataChanges()
+    }
+
+    private fun observeLiveDataChanges() {
+        observe(viewModel.liveState, ::renderView)
+        observe(viewModel.favoriteState, ::changeFavoriteIcon)
+        observe(viewModel.eventsQueue, ::onEvent)
     }
 
     private fun onEvent(event: Event) {
@@ -83,47 +87,48 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
     private fun renderView(detailsViewState: DetailsViewState) {
         when (detailsViewState.loadStatus) {
             LoadStatus.SUCCESS -> {
-                with(detailsViewState.movieOverView.first()) {
-                    Glide.with(requireContext())
-                        .load(posterPath)
-                        .placeholder(resources.getDrawable(R.drawable.image_placeholder))
-                        .transform(CenterCrop(), RoundedCorners(8))
-                        .into(posterImageView)
+                if (detailsViewState.movieOverView != null)
+                    with(detailsViewState.movieOverView) {
+                        Glide.with(requireContext())
+                            .load(posterPath)
+                            .placeholder(resources.getDrawable(R.drawable.image_placeholder))
+                            .transform(CenterCrop(), RoundedCorners(8))
+                            .into(posterImageView)
 
-                    titleTextView.text = title
-                    originalTitleTextView.text = originalTitle
-                    genresTextView.text = genre
-                    runTimeTextView.text = runTime
-                    voteAverageTextView.text = voteAverage
-                    voteCountTextView.text = voteCount
-                    changeFavoriteIcon(isFavorite)
-                    if (overView.isBlank()) {
-                        noContentView.visibility = View.VISIBLE
-                    } else {
-                        overViewContainer.visibility = View.VISIBLE
-                        overViewTextView.text = overView
+                        titleTextView.text = title
+                        originalTitleTextView.text = originalTitle
+                        genresTextView.text = genre
+                        runTimeTextView.text = runTime
+                        voteAverageTextView.text = voteAverage
+                        voteCountTextView.text = voteCount
+                        changeFavoriteIcon(isFavorite)
+                        if (overView.isBlank()) {
+                            noContentView.visibility = View.VISIBLE
+                        } else {
+                            overViewContainer.visibility = View.VISIBLE
+                            overViewTextView.text = overView
+                        }
                     }
-                }
                 loadAnimation.makeGone()
                 detailsMainContent.makeVisible()
             }
 
-            LoadStatus.FAVORITE -> {
-                changeFavoriteIcon(detailsViewState.movieOverView.first().isFavorite)
-            }
             LoadStatus.LOAD -> {
+                loadAnimation.makeVisible()
             }
         }
     }
 
-    private fun changeFavoriteIcon(flag: Boolean) {
-        favoriteItem.icon =
-            if (flag)
-                resources.getDrawable(R.drawable.ic_favorite_clicked)
-            else
-                resources.getDrawable(R.drawable.ic_favorite_not_clicked)
+    private fun changeFavoriteIcon(flag: Boolean?) {
+        if (flag != null) {
+            favoriteItem.icon =
+                if (flag)
+                    resources.getDrawable(R.drawable.ic_favorite_clicked)
+                else
+                    resources.getDrawable(R.drawable.ic_favorite_not_clicked)
 
-        favoriteItem.isVisible = true
+            favoriteItem.isVisible = true
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -134,9 +139,7 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.favorite -> {
-                viewModel.onFavoriteClicked()
-            }
+            R.id.favorite -> viewModel.onFavoriteClicked()
         }
 
         return true

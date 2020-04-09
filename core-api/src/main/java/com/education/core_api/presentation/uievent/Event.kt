@@ -1,5 +1,7 @@
 package com.education.core_api.presentation.uievent
 
+import androidx.navigation.NavDirections
+
 interface Event
 
 data class ErrorMessageEvent(
@@ -10,12 +12,12 @@ data class MessageEvent(
     val message: String
 ) : Event
 
-interface NoNetworkEvent : Event
+class NoNetworkEvent : Event
 
-interface UnAuthorizedEvent : Event
+class UnAuthorizedEvent : Event
 
-interface AnotherEvent : Event
+class TryLaterEvent : Event
 
-interface NavigateToDetailsEvent: Event {
-    val movieId: Long
-}
+data class NavigateToEvent(
+    val navDirections: NavDirections
+) : Event

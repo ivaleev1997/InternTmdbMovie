@@ -21,6 +21,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "TMDB_IMAGE_SERVER_URL", "\"${tmdb_image_url}\""
         }
         debug {
             buildConfigField "String", "TMDB_IMAGE_SERVER_URL", "\"${tmdb_image_url}\""
@@ -92,5 +93,4 @@ dependencies {
 
     // spek
     testImplementation(spek_dsl_jvm, spek_runner_junit5)
-
 }

@@ -6,7 +6,7 @@ import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.delegate
 import com.education.core_api.extension.isNetworkException
 import com.education.core_api.extension.schedulersIoToMain
-import com.education.core_api.presentation.uievent.AnotherEvent
+import com.education.core_api.presentation.uievent.TryLaterEvent
 import com.education.core_api.presentation.uievent.NoNetworkEvent
 import com.education.core_api.presentation.uievent.UnAuthorizedEvent
 import com.education.core_api.presentation.viewmodel.BaseViewModel
@@ -32,15 +32,15 @@ class UserProfileViewModel(
             { error ->
                 when {
                     error.isNetworkException() -> sendEvent(
-                        object : NoNetworkEvent {}
+                        NoNetworkEvent()
                     )
 
                     error is UnAuthorizedException -> sendEvent(
-                        object : UnAuthorizedEvent {}
+                        UnAuthorizedEvent()
                     )
 
                     else -> sendEvent(
-                        object : AnotherEvent {}
+                        TryLaterEvent()
                     )
                 }
                 Timber.d(error)

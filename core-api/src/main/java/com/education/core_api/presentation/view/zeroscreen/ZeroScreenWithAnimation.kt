@@ -1,4 +1,4 @@
-package com.education.core_api.presentation.view
+package com.education.core_api.presentation.view.zeroscreen
 
 import android.content.Context
 import android.content.res.TypedArray
@@ -8,42 +8,41 @@ import android.widget.LinearLayout
 import androidx.annotation.RawRes
 import com.education.core_api.R
 import com.education.core_api.extension.makeVisible
-import kotlinx.android.synthetic.main.no_content_overview.view.animationView
-import kotlinx.android.synthetic.main.no_internet_connection.view.*
+import kotlinx.android.synthetic.main.zero_screen_layout.view.*
 
-class UnexpectedNetworkErrorView @JvmOverloads constructor(
+class ZeroScreenWithAnimation @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
-
     init {
-        LayoutInflater.from(context).inflate(R.layout.no_internet_connection, this, true)
+        LayoutInflater.from(context).inflate(R.layout.zero_screen_layout, this, true)
 
         lateinit var attrsArray: TypedArray
 
         try {
-            attrsArray = context.obtainStyledAttributes(attrs, R.styleable.UnexpectedNetworkErrorView)
+            attrsArray = context.obtainStyledAttributes(attrs, R.styleable.ZeroScreenView)
             with (attrsArray) {
-                stubAnimation = getResourceId(R.styleable.UnexpectedNetworkErrorView_animationView, R.raw.no_internet_connection_animation)
-                stubNoConnectionMessage = getString(R.styleable.UnexpectedNetworkErrorView_noConnectionMessage) ?: resources.getString(R.string.unexpected_network_error_string)
-                stubRetryButton = getString(R.styleable.UnexpectedNetworkErrorView_retryButtonText) ?: ""
+                stubAnimation = getResourceId(R.styleable.ZeroScreenView_animationView, R.raw.no_internet_connection_animation)
+                stubMessage = getString(R.styleable.ZeroScreenView_message) ?: resources.getString(
+                    R.string.unexpected_network_error)
+                stubRetryButton = getBoolean(R.styleable.ZeroScreenView_retryButton, false)
             }
         } finally {
             attrsArray.recycle()
         }
     }
 
-    var stubNoConnectionMessage: String = ""
+    var stubMessage: String = ""
         set(value) {
             field = value
             noConnectionMessage.text = field
         }
 
-    var stubRetryButton: String = ""
+    var stubRetryButton: Boolean = false
         set(value) {
             field = value
-            if (field.isNotBlank()) {
+            if (field) {
                 retryButton.makeVisible()
             }
         }
@@ -56,5 +55,6 @@ class UnexpectedNetworkErrorView @JvmOverloads constructor(
         }
 
     fun setOnRepeatClickListener(listener: () -> Unit) {
-        retryButton.setOnClickListener { listener() } }
+        retryButton.setOnClickListener { listener() }
+    }
 }

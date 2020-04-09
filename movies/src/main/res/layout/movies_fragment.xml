@@ -11,16 +11,17 @@
         android:id="@+id/searchInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_56"
         app:endIconMode="clear_text"
         app:endIconTint="@color/search_main_color"
         app:startIconDrawable="@drawable/ic_search_24dp"
         app:startIconTint="@color/search_main_color"
+        style="@style/SearchTextInputLayoutStyle"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/SearchTextInputLayoutStyle" >
+        app:layout_constraintTop_toTopOf="parent" >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginTextEdit"
@@ -56,13 +57,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <com.education.core_api.presentation.view.UnexpectedNetworkErrorView
+    <com.education.core_api.presentation.view.zeroscreen.ZeroScreenWithAnimation
         android:id="@+id/networkErrorView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
         app:animationView="@raw/alert_animation"
-        app:retryButtonText="@string/repeat_string"
+        app:retryButton="true"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchInputLayout"
@@ -74,7 +75,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="4dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="@dimen/margin_2"
         android:indeterminate="true"
         android:indeterminateTint="@color/gray"
 

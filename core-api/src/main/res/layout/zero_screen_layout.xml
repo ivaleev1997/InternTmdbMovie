@@ -13,8 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:text="@string/unexpected_network_error_string"
+        android:layout_marginTop="@dimen/margin_8"
+        android:text="@string/unexpected_network_error"
 
         tools:text="Непредвиденная ошибка сети.." />
 
@@ -34,11 +34,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:text="@string/repeat_string"
+        android:text="@string/repeat"
         android:visibility="gone"
         android:clickable="true"
         android:focusable="true"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="@dimen/margin_16"
         style="@style/ClickableTextView"
 
         tools:text="Повторить"

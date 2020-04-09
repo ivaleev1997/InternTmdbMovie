@@ -28,7 +28,7 @@ class DetailsUseCase @Inject constructor(
     }
 
     fun changeFavorite(movieId: Long, flag: Boolean): Single<StatusResponse> {
-        return detailsRepository.markAsFavorite(movieId, flag)
+        return detailsRepository.changeFavorite(movieId, flag)
     }
 
     private fun detailsMapToMovieOverView(detailsMovie: DetailsMovie, movieApiResponse: MovieApiResponse<SearchMovie>): MovieOverView {

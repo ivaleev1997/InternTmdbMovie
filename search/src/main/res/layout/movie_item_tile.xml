@@ -6,10 +6,10 @@
         android:id="@+id/movieItemContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="4dp" >
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_4" >
 
         <ImageView
             android:id="@+id/posterImageView"
@@ -28,9 +28,9 @@
         android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="@dimen/margin_4"
+        android:layout_marginEnd="@dimen/margin_4"
+        android:layout_marginBottom="@dimen/margin_4"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/posterImageView"
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_8"
 
             app:layout_constraintBottom_toTopOf="@+id/originalTitleTextView"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
             style="@style/OriginalTitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_8"
             android:maxLines="1"
 
             app:layout_constraintBottom_toTopOf="@+id/genreTextView"
@@ -69,7 +69,7 @@
             style="@style/GenresTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_8"
             android:maxLines="1"
 
             app:layout_constraintBottom_toTopOf="@+id/averageTextView"
@@ -82,7 +82,7 @@
             style="@style/TitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_8"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +94,7 @@
             style="@style/OriginalTitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/margin_4"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/averageTextView"
@@ -114,7 +114,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="@dimen/margin_4"
 
             app:layout_constraintBottom_toBottomOf="@+id/runTimeTextView"
             app:layout_constraintEnd_toStartOf="@id/runTimeTextView"

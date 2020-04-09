@@ -41,7 +41,7 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         viewModelFactory
     }
 
-    private lateinit var groupAdapter: GroupAdapter<ViewHolder>
+    private var groupAdapter: GroupAdapter<ViewHolder> = GroupAdapter()
 
     override fun onAttach(context: Context) {
         MoviesComponent.create((requireActivity().application as AppWithComponent).getComponent())
@@ -50,8 +50,6 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     }
 
     override fun initViewElements(view: View) {
-        mainContent.makeVisible()
-
         viewModel.initSearchMovies(
             loginTextEdit.textChanges()
                 .map { it.toString() }
@@ -66,8 +64,6 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
             progressBar.makeGone()
         }
 
-        groupAdapter = viewModel.adapter
-
         moviesRecyclerView.apply {
             layoutManager = if (viewModel.recyclerMapState.value == true)
                 linearLayoutManager
@@ -75,11 +71,6 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
                 gridLayoutManager
             adapter = groupAdapter
         }
-
-        observe(viewModel.moviesScreenState, ::renderView)
-        observe(viewModel.recyclerMapState, ::renderRecyclerMapState)
-        observe(viewModel.adapterItemsState, ::updateAdapter)
-        observe(viewModel.eventsQueue, ::onEvent)
 
         moviesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -95,6 +86,15 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         setRecyclerChangeMapListener()
 
         setOnErrorRepeatListener()
+
+        observeLiveDataChanges()
+    }
+
+    private fun observeLiveDataChanges() {
+        observe(viewModel.moviesScreenState, ::renderView)
+        observe(viewModel.recyclerMapState, ::renderRecyclerMapState)
+        observe(viewModel.adapterItemsState, ::updateAdapter)
+        observe(viewModel.eventsQueue, ::onEvent)
     }
 
     private fun setOnErrorRepeatListener() {
@@ -142,6 +142,7 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     }
 
     private fun renderRecyclerView() {
+        mainContent.makeVisible()
         progressBar.makeGone()
         notfoundImageView.makeGone()
         notfoundTextView.makeGone()
@@ -149,6 +150,7 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     }
 
     private fun renderNotFoundScreen() {
+        mainContent.makeVisible()
         progressBar.makeGone()
         moviesRecyclerView.makeGone()
         notfoundImageView.makeVisible()
@@ -156,6 +158,7 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     }
 
     private fun cleanState() {
+        mainContent.makeVisible()
         progressBar.makeGone()
         moviesRecyclerView.makeGone()
         notfoundImageView.makeGone()
@@ -182,7 +185,6 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
             recyclerMap.setImageResource(R.drawable.ic_to_list_map)
         else
             recyclerMap.setImageResource(R.drawable.ic_to_tile_map)
-
     }
 
     override fun onDestroyView() {

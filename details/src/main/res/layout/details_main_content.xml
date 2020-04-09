@@ -9,8 +9,8 @@
         android:id="@+id/posterImageView"
         android:layout_width="80dp"
         android:layout_height="112dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_8"
         android:scaleType="centerCrop"
         app:srcCompat="@android:drawable/screen_background_dark_transparent"
 
@@ -21,10 +21,10 @@
         android:id="@+id/titleContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/margin_4"
+        android:layout_marginStart="@dimen/margin_16"
 
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/margin_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/posterImageView"
         app:layout_constraintTop_toTopOf="@id/posterImageView">
@@ -44,7 +44,7 @@
             style="@style/OriginalTitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_8"
 
             app:layout_constraintStart_toStartOf="@id/titleContainer"
             app:layout_constraintTop_toBottomOf="@id/titleTextView"
@@ -55,7 +55,7 @@
             style="@style/GenresTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_8"
 
             app:layout_constraintStart_toStartOf="@id/titleContainer"
             app:layout_constraintTop_toBottomOf="@id/originalTitleTextView"
@@ -67,7 +67,7 @@
         android:id="@+id/TimeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/margin_16"
         android:text="@string/details_time_title"
         style="@style/OriginalTitleTextViewStyle"
 
@@ -78,7 +78,7 @@
         android:id="@+id/runTimeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="2dp"
+        android:paddingTop="@dimen/margin_2"
         style="@style/TitleTextViewStyle"
 
         app:layout_constraintStart_toStartOf="@id/TimeTitle"
@@ -111,7 +111,7 @@
         style="@style/OriginalTitleTextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="@dimen/margin_4"
 
         app:layout_constraintBottom_toBottomOf="@+id/voteAverageTextView"
         app:layout_constraintStart_toEndOf="@+id/voteAverageTextView"
@@ -122,7 +122,7 @@
         android:id="@+id/lineImageView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/margin_16"
         app:srcCompat="@drawable/line_background"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -134,8 +134,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
         android:visibility="gone"
 
         app:layout_constraintTop_toBottomOf="@id/lineImageView"
@@ -148,22 +148,21 @@
             android:id="@+id/overViewTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingBottom="4dp"
+            android:paddingTop="@dimen/padding_8"
+            android:paddingBottom="@dimen/padding_4"
             android:lineSpacingExtra="5sp"
             android:gravity="top"
-            style="@style/TitleTextViewStyle"
-            tools:text="@string/tools_overview_string"/>
+            style="@style/TitleTextViewStyle" />
     </ScrollView>
 
-    <com.education.core_api.presentation.view.NoContentView
+    <com.education.core_api.presentation.view.zeroscreen.ZeroScreenWithAnimation
         android:id="@+id/noContentView"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:visibility="gone"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_8"
         app:animationView="@raw/spider_animation"
-        app:descriptionText="@string/no_content_string"
+        app:message="@string/no_content"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

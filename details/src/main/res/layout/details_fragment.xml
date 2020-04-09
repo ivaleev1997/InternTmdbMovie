@@ -44,13 +44,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <com.education.core_api.presentation.view.UnexpectedNetworkErrorView
+    <com.education.core_api.presentation.view.zeroscreen.ZeroScreenWithAnimation
         android:id="@+id/networkErrorView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
         app:animationView="@raw/alert_animation"
-        app:retryButtonText="@string/repeat_string"
+        app:retryButton="true"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
