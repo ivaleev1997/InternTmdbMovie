@@ -4,10 +4,7 @@ import android.content.Context
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.education.core_api.GRID_LAYOUT_ITEM_COUNT
 import com.education.core_api.di.AppWithComponent
 import com.education.core_api.extension.makeGone
 import com.education.core_api.extension.makeVisible
@@ -55,11 +52,6 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     override fun initViewElements(view: View) {
         mainContent.makeVisible()
 
-        viewModel.initResources(
-            resources.getColor(R.color.green_color),
-            resources.getString(R.string.ru_locale_min),
-            resources.getDrawable(R.drawable.image_placeholder))
-
         viewModel.initSearchMovies(
             loginTextEdit.textChanges()
                 .map { it.toString() }
@@ -75,11 +67,12 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         }
 
         groupAdapter = viewModel.adapter
+
         moviesRecyclerView.apply {
             layoutManager = if (viewModel.recyclerMapState.value == true)
-                LinearLayoutManager(context)
+                linearLayoutManager
             else
-                GridLayoutManager(context, GRID_LAYOUT_ITEM_COUNT)
+                gridLayoutManager
             adapter = groupAdapter
         }
 
@@ -181,31 +174,15 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
 
     private fun renderRecyclerMapState(isLineLayoutManager: Boolean) {
         changeRecyclerMapIcon(isLineLayoutManager)
-        val currentPos =
-            if (moviesRecyclerView.layoutManager is GridLayoutManager)
-                (moviesRecyclerView.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
-            else
-                (moviesRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-
-        if (isLineLayoutManager) {
-            if (moviesRecyclerView.layoutManager is GridLayoutManager)
-                moviesRecyclerView.layoutManager = LinearLayoutManager(context)
-        } else if (moviesRecyclerView.layoutManager !is GridLayoutManager) {
-            moviesRecyclerView.layoutManager = GridLayoutManager(context, GRID_LAYOUT_ITEM_COUNT)
-        }
-
-        // GridLayout расширяет LinearLayoutManager
-        if (currentPos != -1)
-            (moviesRecyclerView.layoutManager as LinearLayoutManager).scrollToPosition(currentPos)
+        moviesRecyclerView.changeLayoutManager(isLineLayoutManager)
     }
 
     private fun changeRecyclerMapIcon(isLineLayoutManager: Boolean) {
-        if (!isLineLayoutManager) {
+        if (!isLineLayoutManager)
             recyclerMap.setImageResource(R.drawable.ic_to_list_map)
-        }
-        else {
+        else
             recyclerMap.setImageResource(R.drawable.ic_to_tile_map)
-        }
+
     }
 
     override fun onDestroyView() {

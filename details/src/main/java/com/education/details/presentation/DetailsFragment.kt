@@ -117,10 +117,11 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
     }
 
     private fun changeFavoriteIcon(flag: Boolean) {
-        if (flag)
-            favoriteItem.setIcon(R.drawable.ic_favorite_clicked)
-        else
-            favoriteItem.setIcon(R.drawable.ic_favorite_not_clicked)
+        favoriteItem.icon =
+            if (flag)
+                resources.getDrawable(R.drawable.ic_favorite_clicked)
+            else
+                resources.getDrawable(R.drawable.ic_favorite_not_clicked)
 
         favoriteItem.isVisible = true
     }

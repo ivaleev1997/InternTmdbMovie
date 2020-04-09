@@ -31,20 +31,21 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlin_std_lib
-    implementation androidx_appcompat
-    implementation androidx_core_ktx
+    implementation(
+            kotlin_std_lib,
+            androidx_appcompat,
+            androidx_core_ktx,
+            retrofit2,
+            retrofit2_converter_gson,
+            retrofit2_rxjava2_adapter,
+            okhttp3_log,
+            okhttp_mockwebserver,
+            androidx_core
+    )
 
     implementation project(':core')
     implementation project(':core-impl')
 
     testImplementation junit
     androidTestImplementation androidx_junit
-
-    implementation retrofit2
-    implementation retrofit2_converter_gson
-    implementation retrofit2_rxjava2_adapter
-    implementation okhttp3_log
-    implementation okhttp_mockwebserver
-    implementation androidx_core
 }

@@ -25,17 +25,21 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlin_std_lib
-    implementation androidx_core_ktx
+    implementation(
+            kotlin_std_lib,
+            androidx_core_ktx,
+            androidx_core,
+            arch_core_testing
+    )
 
     api project(':core-api')
     implementation project(':core-impl')
 
-    testImplementation okhttp_mockwebserver
-    testImplementation retrofit2
-    testImplementation retrofit2_converter_gson
-    testImplementation retrofit2_rxjava2_adapter
+    testImplementation(
+            okhttp_mockwebserver,
+            retrofit2,
+            retrofit2_converter_gson,
+            retrofit2_rxjava2_adapter
+    )
 
-    implementation androidx_core
-    implementation arch_core_testing
 }

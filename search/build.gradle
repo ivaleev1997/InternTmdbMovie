@@ -35,22 +35,21 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlin_std_lib
-    implementation androidx_appcompat
-    implementation androidx_core_ktx
+    implementation(
+            kotlin_std_lib,
+            androidx_appcompat,
+            androidx_core_ktx,
+            material,
+            constraintlayout,
+            recyclerview,
+            glide,
+            rxjava2,
+            timber,
+            groupie,
+            groupie_ktx
+    )
 
     implementation project(':core')
 
-    implementation material
-    implementation constraintlayout
-    implementation recyclerview
-    implementation glide
     kapt glide_compiler
-
-    implementation rxjava2
-
-    implementation timber
-
-    implementation groupie
-    implementation groupie_ktx
 }

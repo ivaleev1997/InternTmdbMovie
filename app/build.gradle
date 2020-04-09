@@ -37,17 +37,23 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlin_std_lib
-    implementation androidx_appcompat
-    implementation androidx_core_ktx
-    implementation constraintlayout
-    implementation activity_ktx
-
-    // navigation component
-    implementation navigation_fragment
-    implementation navigation_ui
-    implementation navigation_ui_ktx
-    implementation navigation_fragment_ktx
+    implementation(
+            kotlin_std_lib,
+            androidx_appcompat,
+            androidx_core_ktx,
+            constraintlayout,
+            activity_ktx,
+            material,
+            timber,
+            fragment,
+            lifecycle_ext,
+            lifecycle_viewmodel,
+            navigation_fragment,
+            navigation_ui,
+            navigation_ui_ktx,
+            navigation_fragment_ktx,
+            dagger2
+    )
 
     testImplementation junit
     androidTestImplementation androidx_junit
@@ -60,13 +66,5 @@ dependencies {
     implementation project(':movies')
     implementation project(':details')
 
-    implementation dagger2
     kapt dagger2_compiler
-
-    implementation material
-    implementation timber
-
-    implementation fragment
-    implementation lifecycle_ext
-    implementation lifecycle_viewmodel
 }

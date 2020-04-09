@@ -58,48 +58,46 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlin_std_lib
-    implementation androidx_appcompat
-    implementation androidx_core_ktx
+    implementation(
+            kotlin_std_lib,
+            androidx_appcompat,
+            androidx_core_ktx,
+            dagger2,
 
-    testImplementation junit
-    androidTestImplementation androidx_junit
-    androidTestImplementation androidx_espresso
-
-    testImplementation project(':testmodule')
+            material,
+            constraintlayout,
+            fragment,
+            lifecycle_ext,
+            lifecycle_viewmodel,
+            rxjava2,
+            rxAndroid,
+            timber,
+            navigation_fragment,
+            navigation_fragment_ktx
+    )
 
     implementation project(':core')
-    implementation dagger2
     kapt dagger2_compiler
-    
-    implementation material
-    implementation constraintlayout
-    implementation fragment
-    implementation lifecycle_ext
-    implementation lifecycle_viewmodel
 
-    implementation rxjava2
-    implementation rxAndroid
+    androidTestImplementation(androidx_junit, androidx_espresso)
 
-    implementation timber
+    testImplementation(
+            retrofit2_converter_gson,
+            retrofit2,
+            retrofit2_rxjava2_adapter,
+            okhttp3_log,
+            androidx_core,
+            junit,
+            okhttp_mockwebserver,
+            mockito_kotlin2,
+            assertj,
+            junit_jupiter_api
+    )
 
-    testImplementation retrofit2_converter_gson
-    testImplementation retrofit2
-    testImplementation retrofit2_rxjava2_adapter
-    testImplementation okhttp3_log
-    testImplementation androidx_core
-
-    testImplementation okhttp_mockwebserver
-    testImplementation mockito_kotlin2
-    testImplementation assertj
-
-    testImplementation junit_jupiter_api
     testRuntimeOnly junit_jupiter_engine
 
     // spek
-    testImplementation spek_dsl_jvm
-    testImplementation spek_runner_junit5
+    testImplementation(spek_dsl_jvm, spek_runner_junit5)
 
-    implementation navigation_fragment
-    implementation navigation_fragment_ktx
+    testImplementation project(':testmodule')
 }

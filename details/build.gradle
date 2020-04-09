@@ -31,34 +31,28 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlin_std_lib
-    implementation androidx_appcompat
-    implementation androidx_core_ktx
+    implementation(
+            kotlin_std_lib,
+            androidx_appcompat,
+            androidx_core_ktx,
+            material,
+            constraintlayout,
+            fragment,
+            lifecycle_ext,
+            lifecycle_viewmodel,
+            navigation_fragment,
+            navigation_fragment_ktx,
+            dagger2,
+            rxjava2,
+            rxAndroid,
+            timber,
+            glide,
+            navigation_runtime_ktx,
+            navigation_ui_ktx,
+            lottie
+    )
+
+    kapt(glide_compiler, dagger2_compiler)
 
     implementation project(':core')
-
-    implementation material
-    implementation constraintlayout
-    implementation fragment
-    implementation lifecycle_ext
-    implementation lifecycle_viewmodel
-
-    implementation navigation_fragment
-    implementation navigation_fragment_ktx
-
-    implementation dagger2
-    kapt dagger2_compiler
-
-    implementation rxjava2
-    implementation rxAndroid
-
-    implementation timber
-
-    implementation glide
-    kapt glide_compiler
-
-    implementation navigation_runtime_ktx
-    implementation navigation_ui_ktx
-
-    implementation lottie
 }

@@ -1,8 +1,7 @@
 package com.education.movies.presentation
 
-import android.graphics.drawable.Drawable
 import androidx.lifecycle.MutableLiveData
-import com.education.core_api.RX_DEBOUNCE_INTERVAL
+import com.education.core_api.RX_DEBOUNCE_INTERVAL_500
 import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.delegate
 import com.education.core_api.extension.mapDistinct
@@ -27,10 +26,6 @@ class MoviesViewModel(
     private val moviesUseCase: MoviesUseCase,
     private val schedulersProvider: SchedulersProvider
 ) : BaseViewModel() {
-
-    private var imagePlaceholder: Drawable? = null
-    private var greenTextColorId: Int = 0
-    private var minWord: String = ""
     private var isListRecyclerMap = true
     private var currentListMovies = listOf<Movie>()
     private var lastFetchedQuery: String = ""
@@ -53,7 +48,7 @@ class MoviesViewModel(
                 setMoviesScreenState(MoviesScreenState.ON_SEARCH, moviesToRecyclerItem(currentListMovies))
             }
             .observeOn(schedulersProvider.computation())
-            .debounce(RX_DEBOUNCE_INTERVAL, TimeUnit.MILLISECONDS)
+            .debounce(RX_DEBOUNCE_INTERVAL_500, TimeUnit.MILLISECONDS)
             .map { query -> query.toLowerCase(Locale.getDefault()).trim() }
             .observeOn(schedulersProvider.io())
             .switchMapSingle { query -> moviesUseCase.searchQuery(query) }
@@ -81,12 +76,6 @@ class MoviesViewModel(
                         error -> Timber.e(error)
                 }
             ).autoDispose()
-    }
-
-    fun initResources(greenId: Int, min: String, placeHolder: Drawable) {
-        greenTextColorId = greenId
-        minWord = min
-        imagePlaceholder = placeHolder
     }
 
     fun onClearTextIconClick() {
@@ -122,19 +111,13 @@ class MoviesViewModel(
         return moviesList.map { movie ->
             if (isListRecyclerMap) {
                 MovieListItem(
-                    greenTextColorId,
-                    minWord,
-                    ::navigateToDetails,
                     movie,
-                    imagePlaceholder
+                    ::navigateToDetails
                 )
             } else {
                 MovieTileItem(
-                    greenTextColorId,
-                    minWord,
-                    ::navigateToDetails,
                     movie,
-                    imagePlaceholder
+                    ::navigateToDetails
                 )
             }
         }
