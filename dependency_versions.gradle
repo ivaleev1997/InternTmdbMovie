@@ -2,6 +2,7 @@ ext {
 	activity_ktx_version = '1.1.0'
 	androidx_appcompat_version = '1.1.0'
 	androidx_core_ktx_version = '1.2.0'
+	assisted_inject_dagger2_version = '0.5.2'
 	retrofit2_version = '2.6.1'
 	okhttp3_log_version = '3.9.1'
 	room_version = '2.2.3'
@@ -28,6 +29,8 @@ ext {
 	androidx_appcompat = "androidx.appcompat:appcompat:$androidx_appcompat_version"
 	androidx_core_ktx = "androidx.core:core-ktx:$androidx_core_ktx_version"
 	arch_core_testing = "androidx.arch.core:core-testing:$arch_core_testing_version"
+	assisted_inject_annotations_dagger2 = "com.squareup.inject:assisted-inject-annotations-dagger2:$assisted_inject_dagger2_version"
+	assisted_inject_inject_processor_dagger2 = "com.squareup.inject:assisted-inject-processor-dagger2:$assisted_inject_dagger2_version"
 	cardview = "androidx.cardview:cardview:$cardview_version"
 	constraintlayout = "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
 	dagger2 = "com.google.dagger:dagger:$dagger2_version"

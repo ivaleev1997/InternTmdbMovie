@@ -14,8 +14,7 @@
         android:layout_marginStart="@dimen/margin_16"
         android:layout_marginTop="@dimen/margin_12"
         android:text="@string/favorite_title"
-        android:textColor="@color/text_color"
-        android:textSize="32sp"
+        android:textAppearance="?attr/textAppearanceHeadline1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_44"
         android:text="@string/no_movies_title"
-        android:textColor="@color/text_color"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+
         app:layout_constraintStart_toStartOf="@+id/favoriteTitle"
         app:layout_constraintTop_toBottomOf="@+id/favoriteTitle" />
 
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_12"
         android:text="@string/find_movies_title"
-        android:textColor="@color/purple"
+        style="@style/ClickableTextView"
         app:layout_constraintStart_toStartOf="@+id/noMoviesTextView"
         app:layout_constraintTop_toBottomOf="@+id/noMoviesTextView" />
 

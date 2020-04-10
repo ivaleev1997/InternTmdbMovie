@@ -11,16 +11,19 @@ import com.education.details.domain.entity.DetailsViewState
 import com.education.details.domain.entity.LoadStatus
 import timber.log.Timber
 
-class DetailsViewModel(
+class DetailsViewModel /*@AssistedInject constructor*/ (
     private val detailsUseCase: DetailsUseCase,
     private val schedulersProvider: SchedulersProvider
+    //@Assisted private val movieId: Int,
+    //@Assisted private val minWord: String,
+    //@Assisted private val voteAverageColor: Int
 ) : BaseViewModel() {
 
     val liveState = MutableLiveData(createInitialState())
     private var state: DetailsViewState by liveState.delegate()
     val favoriteState = liveState.mapDistinct { it.favorite }
 
-    private fun createInitialState(): DetailsViewState = DetailsViewState(null, LoadStatus.LOAD, null)
+    private fun createInitialState(): DetailsViewState = DetailsViewState()
 
     fun loadDetails(id: Long, minWord: String) {
         detailsUseCase.loadDetails(id, minWord)
@@ -58,4 +61,13 @@ class DetailsViewModel(
                 .autoDispose()
         }
     }
+
+//    @AssistedInject.Factory
+//    interface Factory {
+//        fun get(
+//            movieId: Int,
+//            minWord: String,
+//            voteAverageColor: Int
+//        ) : DetailsViewModel
+//    }
 }

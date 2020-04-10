@@ -55,4 +55,8 @@ dependencies {
     kapt(glide_compiler, dagger2_compiler)
 
     implementation project(':core')
+
+    // Assisted inject
+    compileOnly assisted_inject_annotations_dagger2
+    kapt assisted_inject_inject_processor_dagger2
 }

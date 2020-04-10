@@ -1,15 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
-
-        <item name="colorPrimary">@color/colorPrimary</item>
+    <style name="Theme.MyApp" parent="Base.Theme.MyApp">
+        <!--Material color attributes (light theme) -->
+        <!--colorPrimary colors map to components and elements, such as app bars and buttons. -->
+        <!--colorSecondary colors are most often used as accents on components, such as FABs and -->
+        <!--selection controls.-->
+        <item name="colorPrimary">@color/dark_blue</item>
+        <item name="colorPrimaryVariant">@color/purple</item>
         <item name="colorPrimaryDark">@color/dark_blue</item>
         <item name="colorSecondary">@color/gray</item>
+        <item name="colorSecondaryVariant">@color/stroke_color</item>
+        <item name="colorAccent">@color/text_color</item>
+        <!--colorBackground appears behind scrollable content and is used for the default window-->
+        <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
+        <!--and menus. colorError is used to indicate an error state for components such as-->
+        <!--text fields.-->
         <item name="android:colorBackground">@color/dark_blue</item>
+        <item name="colorError">@color/error_msg</item>
+        <item name="colorSurface">@color/dark_blue</item>
+        <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
+        <!--on which they appear.-->
+        <item name="colorOnPrimary">@color/search_main_color</item>
+        <item name="colorOnSecondary">@color/search_edit_color</item>
+        <item name="colorOnBackground">@color/gray</item>
+        <item name="colorOnSurface">@color/gray</item>
+
+        <item name="textAppearanceHeadline1">@style/TextAppearance.MyApp.HeadLine1</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.MyApp.Subtitle1</item>
     </style>
 
-    <style name="ThemeOverlay.MyApp" parent="@style/ThemeOverlay.MaterialComponents.Light">
-        <item name="colorPrimary">@color/dark_blue</item>
+    <style name="Base.Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:statusBarColor" tools:ignore="NewApi">?attr/colorSurface</item>
+        <!-- Иконки статус бара (сеть, время батарея) -->
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">?android:attr/colorBackground</item>
+        <!-- Цвет нижней стандартной навигации -->
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+        <item name="android:navigationBarDividerColor" tools:ignore="NewApi">?attr/colorControlHighlight</item>
     </style>
 </resources>
