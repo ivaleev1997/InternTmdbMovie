@@ -1,4 +1,4 @@
-package com.education.movies.domain.entity
+package com.education.search.domain.entity
 
 enum class MoviesScreenState {
     EMPTY,

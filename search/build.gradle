@@ -42,6 +42,8 @@ dependencies {
             material,
             constraintlayout,
             recyclerview,
+            navigation_fragment,
+            navigation_fragment_ktx,
             glide,
             rxjava2,
             timber,

@@ -3,7 +3,6 @@ package com.education.details.di
 import androidx.lifecycle.ViewModel
 import com.education.core_api.di.module.SchedulersProviderModule
 import com.education.core_api.extension.SchedulersProvider
-import com.education.core_api.extension.SchedulersProviderImpl
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.details.data.DetailsRepository
 import com.education.details.data.DetailsRepositoryImpl
@@ -20,9 +19,6 @@ abstract class DetailsModule {
     @Binds
     abstract fun bindsRepository(detailsRepositoryImpl: DetailsRepositoryImpl): DetailsRepository
 
-    @Binds
-    abstract fun bindsSchedulersProvider(schedulersProviderImp: SchedulersProviderImpl): SchedulersProvider
-
     @Module
     companion object {
         @Provides
@@ -30,10 +26,10 @@ abstract class DetailsModule {
         @Singleton
         fun provideDetailsViewModel(
             map: @JvmSuppressWildcards MutableMap<Class<out ViewModel>, ViewModel>,
-            moviesUseCase: DetailsUseCase,
+            detailsUseCase: DetailsUseCase,
             schedulersProvider: SchedulersProvider
         ): ViewModel = DetailsViewModel(
-            moviesUseCase,
+            detailsUseCase,
             schedulersProvider
         ).also {
             map[DetailsViewModel::class.java] = it

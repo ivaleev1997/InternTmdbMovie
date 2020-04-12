@@ -103,10 +103,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textSize="16sp"
-        android:textColor="@color/error_msg"
         android:text="@string/error_login"
+        android:textColor="@color/error_msg"
+        android:textSize="16sp"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/enterButton"
         app:layout_constraintStart_toStartOf="@+id/passwordTextInput"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextInput" />
 
@@ -122,6 +123,7 @@
         app:layout_constraintBottom_toTopOf="@+id/enterButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextInput" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

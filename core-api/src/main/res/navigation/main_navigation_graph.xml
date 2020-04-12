@@ -11,7 +11,7 @@
         tools:layout="@layout/movies_fragment" >
 
         <action
-            android:id="@+id/action_films_to_details"
+            android:id="@+id/action_to_details"
             app:destination="@id/details" />
 
     </fragment>
@@ -28,7 +28,15 @@
     <fragment
         android:id="@+id/navigation_favorite"
         android:name="com.education.favorite.FavoriteFragment"
-        tools:layout="@layout/favorite_fragment" />
+        tools:layout="@layout/favorite_fragment" >
+
+        <action
+            android:id="@+id/action_to_details"
+            app:destination="@id/details" />
+
+<!--        <action-->
+<!--            android:id="@+id/action_"-->
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"

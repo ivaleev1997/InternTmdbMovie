@@ -1,38 +1,38 @@
-package com.education.login.di
+package com.education.favorite.di
 
 import androidx.lifecycle.ViewModel
 import com.education.core_api.di.module.SchedulersProviderModule
 import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
-import com.education.login.data.repository.LoginRepository
-import com.education.login.data.repository.LoginRepositoryImpl
-import com.education.login.domain.UserUseCase
-import com.education.login.presentation.LoginViewModel
+import com.education.favorite.FavoriteViewModel
+import com.education.favorite.data.FavoriteRepository
+import com.education.favorite.data.FavoriteRepositoryImpl
+import com.education.favorite.domain.FavoriteUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module(includes = [SchedulersProviderModule::class])
-abstract class LoginModule {
+abstract class FavoriteModule {
 
     @Binds
-    abstract fun bindsLoginRepository(loginRepositoryImpl: LoginRepositoryImpl): LoginRepository
+    abstract fun bindsFavoriteRepository(favoriteRepositoryImpl: FavoriteRepositoryImpl): FavoriteRepository
 
     @Module
     companion object {
         @Provides
         @JvmStatic
         @Singleton
-        fun provideLoginViewModel(
+        fun provideFavoriteViewModel(
             map: @JvmSuppressWildcards MutableMap<Class<out ViewModel>, ViewModel>,
-            userUseCase: UserUseCase,
+            favoriteUseCase: FavoriteUseCase,
             schedulersProvider: SchedulersProvider
-        ): ViewModel = LoginViewModel(
-            userUseCase,
+        ): ViewModel = FavoriteViewModel(
+            favoriteUseCase,
             schedulersProvider
         ).also {
-            map[LoginViewModel::class.java] = it
+            map[FavoriteViewModel::class.java] = it
         }
 
         @Provides

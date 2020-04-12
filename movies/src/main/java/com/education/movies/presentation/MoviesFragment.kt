@@ -15,7 +15,7 @@ import com.education.core_api.presentation.uievent.NoNetworkEvent
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.movies.R
 import com.education.movies.di.MoviesComponent
-import com.education.movies.domain.entity.MoviesScreenState
+import com.education.search.domain.entity.MoviesScreenState
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
@@ -51,7 +51,7 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
 
     override fun initViewElements(view: View) {
         viewModel.initSearchMovies(
-            loginTextEdit.textChanges()
+            searchTextEdit.textChanges()
                 .map { it.toString() }
                 .toFlowable(
                     BackpressureStrategy.LATEST
@@ -88,6 +88,7 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         setOnErrorRepeatListener()
 
         observeLiveDataChanges()
+
     }
 
     private fun observeLiveDataChanges() {
@@ -185,11 +186,5 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
             recyclerMap.setImageResource(R.drawable.ic_to_list_map)
         else
             recyclerMap.setImageResource(R.drawable.ic_to_tile_map)
-    }
-
-    override fun onDestroyView() {
-        if (moviesRecyclerView.adapter != null)
-            moviesRecyclerView.swapAdapter(null, true)
-        super.onDestroyView()
     }
 }
