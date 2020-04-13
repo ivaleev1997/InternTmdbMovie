@@ -27,6 +27,7 @@
         <item name="colorOnSurface">@color/gray</item>
 
         <item name="textAppearanceHeadline1">@style/TextAppearance.MyApp.HeadLine1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.MyApp.HeadLine2</item>
         <item name="textAppearanceSubtitle1">@style/TextAppearance.MyApp.Subtitle1</item>
     </style>
 

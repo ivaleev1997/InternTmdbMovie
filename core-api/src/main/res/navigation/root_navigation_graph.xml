@@ -7,6 +7,10 @@
     <include app:graph="@navigation/start_graph"/>
 
     <fragment
+        android:id="@+id/create_pin_fragment"
+        android:name="com.education.pin.presentation.createpin.CreatePinFragment"/>
+
+    <fragment
         android:id="@+id/login_fragment"
         android:name="com.education.login.presentation.LoginFragment" />
 
@@ -20,5 +24,13 @@
         app:destination="@id/start_graph"
         app:popUpTo="@id/login_fragment"
         app:popUpToInclusive="true" />
+
+
+    <action
+        android:id="@+id/to_create_pin_fragment"
+        app:destination="@id/create_pin_fragment"
+        app:popUpToInclusive="true"
+        app:popUpTo="@id/create_pin_fragment"
+        />
 
 </navigation>

@@ -13,6 +13,7 @@ import com.education.core_api.presentation.activity.BaseActivity
 import com.education.core_api.presentation.ui.LoginMediator
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.login.presentation.LoginFragmentDirections
+import com.education.pin.presentation.createpin.CreatePinFragmentDirections
 import com.education.redmadrobottmdb.R
 import com.education.redmadrobottmdb.di.component.MainComponent
 import timber.log.Timber
@@ -40,16 +41,17 @@ class MainActivity : AppCompatActivity(), BaseActivity {
 
         setupRootNavComponent()
 
-        if (!viewModel.isSessionExist())
-            startLoginScreen()
-        else {
-            startMainAppScreen()
-        }
+        rootNavController.navigate(CreatePinFragmentDirections.toCreatePinFragment())
+
+//        if (!viewModel.isSessionExist())
+//            startLoginScreen()
+//        else {
+//            startMainAppScreen()
+//        }
     }
 
     private fun setupRootNavComponent() {
         rootNavController = findNavController(R.id.nav_host_fragment)
-        //supportActionBar?.hide()
     }
 
     override fun startMainAppScreen() {

@@ -1,71 +1,69 @@
-apply plugin: 'com.android.application'
-
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion compile_sdk_version
     buildToolsVersion build_tools_version
 
     defaultConfig {
-        applicationId application_id
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
         versionCode version_code
         versionName version_name
+
         testInstrumentationRunner test_instrumentation_runner
+        consumerProguardFiles 'consumer-rules.pro'
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-// To inline the bytecode built with JVM target 1.8 into
-// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation(
             kotlin_std_lib,
             androidx_appcompat,
             androidx_core_ktx,
-            constraintlayout,
-            activity_ktx,
             material,
-            timber,
+            constraintlayout,
             fragment,
             lifecycle_ext,
             lifecycle_viewmodel,
+            lifecycle_livedata_ktx,
+            dagger2,
+            rxjava2,
+            rxAndroid,
+            timber,
             navigation_fragment,
-            navigation_ui,
-            navigation_ui_ktx,
             navigation_fragment_ktx,
-            dagger2
+            groupie,
+            groupie_ktx,
+            cardview
     )
 
-    testImplementation junit
-    androidTestImplementation androidx_junit
-    androidTestImplementation androidx_espresso
-
     implementation project(':core')
-    implementation project(':login')
-    implementation project(':user-profile')
-    implementation project(':favorite')
-    implementation project(':movies')
-    implementation project(':details')
-    implementation project(':pin')
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     kapt dagger2_compiler
 }

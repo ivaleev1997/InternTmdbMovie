@@ -59,9 +59,6 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
     override fun initViewElements(view: View) {
         setupToolBar()
         viewModel.loadDetails(args.movieId, resources.getString(R.string.ru_locale_min))
-        toolbar.setNavigationOnClickListener {
-            navigateUp()
-        }
 
         observeLiveDataChanges()
     }
@@ -84,6 +81,10 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         (requireActivity() as AppCompatActivity).title = " "
         setHasOptionsMenu(true)
+
+        toolbar.setNavigationOnClickListener {
+            navigateUp()
+        }
 
     }
 

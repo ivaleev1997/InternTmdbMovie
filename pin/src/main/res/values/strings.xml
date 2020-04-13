@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="come_up_with_pin_code">Придумайте пин-код для быстрого доступа</string>
+    <string name="repeat_pin_code">Повторите ваш пин-код</string>
+    <string name="wrong_pin">Неверный пин-код</string>
+</resources>
