@@ -17,6 +17,10 @@ class LoginRepositoryImpl
     private val localDataSource: LocalDataSource
 ) : LoginRepository {
 
+    private var requestToken: String = ""
+    private var sessionId: String = ""
+    private var requestTokenLife: String = ""
+
     override fun login(user: User): Completable {
         return tmdbAuthApi.createRequestToken()
             .flatMap { requestToken: RequestToken ->
@@ -40,15 +44,24 @@ class LoginRepositoryImpl
             }
     }
 
+    override fun getRequestToken() = requestToken
+
+    override fun getSessionId() = sessionId
+
+    override fun getRequestTokenLifeTime() = requestTokenLife
+
     private fun saveRequestToken(token: String) {
-        localDataSource.saveRequestToken(token)
+        //localDataSource.saveRequestToken(token)
+        requestToken = token
     }
 
-    private fun saveSessionId(sessionId: String) {
-        localDataSource.saveSessionId(sessionId)
+    private fun saveSessionId(session: String) {
+        //localDataSource.saveSessionId(session)
+        sessionId = session
     }
 
     private fun saveTokenLifeTime(expiresAt: String) {
-        localDataSource.saveTokenLifeTime(expiresAt)
+        //localDataSource.saveTokenLifeTime(expiresAt)
+        requestTokenLife = expiresAt
     }
 }

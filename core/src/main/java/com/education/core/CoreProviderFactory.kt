@@ -11,12 +11,16 @@ import com.education.core_impl.di.component.DaggerViewModelComponent
 object CoreProviderFactory {
 
     private var viewModelsProvider: ViewModelsProvider? = null
+    private var networkProvider: NetworkProvider? = null
+    private var localDataSourceProvider:LocalDataSourceProvider? = null
 
     fun createNetworkProvider(localDataSourceProvider: LocalDataSourceProvider): NetworkProvider {
-        return DaggerNetworkComponent
+        return networkProvider ?: DaggerNetworkComponent
             .builder()
             .localDataSourceProvider(localDataSourceProvider)
-            .build()
+            .build().also {
+                networkProvider = it
+            }
     }
 
     fun createViewModelProvider(): ViewModelsProvider {
@@ -24,9 +28,11 @@ object CoreProviderFactory {
     }
 
     fun createLocalDataSourceProvider(appProvider: AppProvider): LocalDataSourceProvider {
-        return DaggerLocalDataSourceComponent
+        return localDataSourceProvider ?: DaggerLocalDataSourceComponent
             .builder()
             .appProvider(appProvider)
-            .build()
+            .build().also {
+                localDataSourceProvider = it
+            }
     }
 }

@@ -16,6 +16,8 @@ class NoNetworkEvent : Event
 
 class UnAuthorizedEvent : Event
 
+class LogoutEvent : Event
+
 class TryLaterEvent : Event
 
 data class NavigateToEvent(

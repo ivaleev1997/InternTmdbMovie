@@ -1,110 +1,89 @@
 package com.education.pin.presentation.createpin
 
-import androidx.lifecycle.MutableLiveData
-import com.education.core_api.extension.delegate
-import com.education.core_api.presentation.viewmodel.BaseViewModel
+import android.content.Context
+import com.education.core_api.dto.UserCredentials
+import com.education.core_api.extension.SchedulersProvider
+import com.education.core_api.extension.schedulersComputationToMain
+import com.education.core_api.presentation.uievent.NavigateToEvent
+import com.education.core_api.presentation.uievent.TryLaterEvent
+import com.education.pin.domain.PinUseCase
 import com.education.pin.domain.entity.EnterKeyStatus
-import com.education.pin.domain.entity.Number
-import com.education.pin.domain.entity.PinViewState
-import com.education.pin.presentation.item.BackSpaceItem
-import com.education.pin.presentation.item.NumberItem
-import com.xwray.groupie.kotlinandroidextensions.Item
+import com.education.pin.presentation.PinViewModel
 import timber.log.Timber
-import java.util.*
-import kotlin.collections.HashMap
 
 
-class CreatePinViewModel : BaseViewModel() {
+class CreatePinViewModel(
+    private val useCase: PinUseCase,
+    private val schedulersProvider: SchedulersProvider
+) : PinViewModel() {
 
-    companion object {
-        const val NUMBERS_COUNT = 4
-    }
+    lateinit var userCredentials: UserCredentials
+    lateinit var appContext: Context
 
-    val liveState = MutableLiveData(PinViewState(number = Number.ZERO))
-    private var state: PinViewState by liveState.delegate()
-//    val enterStatus = liveState.mapDistinct { it.enterStatus }
-//    val each
-
-    var isSecondDeque = false
-        private set
-
-    private val firstDeque: Deque<Int> = LinkedList<Int>()
-    private val secondDeque: Deque<Int> = LinkedList<Int>()
-
-    private val dequeSizeMapToNumber: HashMap<Int, Number> = HashMap<Int,Number>().apply {
-        put(0, Number.ZERO)
-        put(1, Number.FIRST)
-        put(2, Number.SECOND)
-        put(3, Number.THIRD)
-        put(4, Number.FOURTH)
-    }
-
-    fun genKeyboardItems(count: Int): List<Item> {
-        val listNumbers = MutableList(count) {
-            NumberItem(it + 1, ::onNumberClicked) as Item
-        }.apply {
-            add(NumberItem())
-            add(NumberItem(0, ::onNumberClicked))
-            add(BackSpaceItem(::onBackSpaceClicked))
+    override fun onBackPressed() {
+        if (!isSecondDeque)
+            onExitPressed()
+        else {
+            state = state.copy(enterKeyStatus = EnterKeyStatus.CLEAN)
+            firstDeque.clear()
+            secondDeque.clear()
+            isSecondDeque = false
         }
-
-        return listNumbers
     }
 
-    fun onBackNavigatePressed() {
-        state = state.copy(enterKeyStatus = EnterKeyStatus.CLEAN)
-        firstDeque.clear()
-        secondDeque.clear()
-        isSecondDeque = false
-    }
-
-    private fun onNumberClicked(number: Int?) {
+    override fun onNumberClicked(number: Int?) {
         if (number != null) {
             if (!isSecondDeque) {
-                firstDeque.push(number)
-                state = state.copy(
-                    enterKeyStatus = EnterKeyStatus.ENTER,
-                    number = dequeSizeMapToNumber[firstDeque.size]
-                )
-                if (firstDeque.size == NUMBERS_COUNT) {
-                    Timber.d("All numbers in first clicked")
-                    isSecondDeque = true
-                    state = state.copy(enterKeyStatus = EnterKeyStatus.REPEAT)
-                }
+                withFirstDeque(number)
             } else {
-                secondDeque.push(number)
-                state = state.copy(
-                    enterKeyStatus = EnterKeyStatus.ENTER,
-                    number = dequeSizeMapToNumber[secondDeque.size]
-                )
-                if (secondDeque.size == NUMBERS_COUNT) {
-                    checkPins()
-                }
+                withSecondDeque(number)
             }
         }
     }
 
-    private fun onBackSpaceClicked() {
-        if (!isSecondDeque) {
-            if (firstDeque.isNotEmpty()) {
-                firstDeque.removeLast()
-                state = state.copy(enterKeyStatus = EnterKeyStatus.BACKSPACE, number = dequeSizeMapToNumber[firstDeque.size + 1])
-            }
-        } else {
-            if (secondDeque.isNotEmpty()) {
-                secondDeque.removeLast()
-                state = state.copy(enterKeyStatus = EnterKeyStatus.BACKSPACE, number = dequeSizeMapToNumber[secondDeque.size + 1])
-            }
-        }
-    }
-
-    private fun checkPins() {
+    override fun checkPins() {
         if (firstDeque == secondDeque) {
-            Timber.d("Pins are same!")
-            // Save pin navigate to main screen
+            val pin = firstDeque.joinToString(separator = "") { it.toString() }
+            Timber.d("Pins are same! pin: $pin")
+
+            useCase.saveUserCredentials(userCredentials, pin)
+                .andThen(useCase.saveUserName(appContext))
+                .schedulersComputationToMain(schedulersProvider)
+                .subscribe({
+                    Timber.d("Success encryption")
+                    sendEvent(NavigateToEvent(CreatePinFragmentDirections.createPinToStartGraph()))
+                },{
+                    error ->
+                    Timber.e(error)
+                    sendEvent(TryLaterEvent())
+
+                }).autoDispose()
         } else {
             Timber.d("Pins are different")
             state = state.copy(enterKeyStatus = EnterKeyStatus.ERROR)
+        }
+    }
+
+    private fun withFirstDeque(number: Int) {
+        if (firstDeque.size < PIN_NUMBERS_COUNT_4) {
+            firstDeque.push(number)
+            state = state.copy(
+                enterKeyStatus = EnterKeyStatus.ENTER,
+                number = dequeSizeMapToNumber[firstDeque.size]
+            )
+            if (firstDeque.size == PIN_NUMBERS_COUNT_4) {
+                Timber.d("All numbers in first clicked")
+                isSecondDeque = true
+                state = state.copy(enterKeyStatus = EnterKeyStatus.REPEAT)
+            }
+        }
+    }
+
+    override fun onBackSpaceClicked() {
+        if (!isSecondDeque) {
+            backSpaceOnFirstDeque()
+        } else {
+            backSpaceOnSecondDeque()
         }
     }
 }

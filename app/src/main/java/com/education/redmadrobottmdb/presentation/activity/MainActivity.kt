@@ -13,7 +13,6 @@ import com.education.core_api.presentation.activity.BaseActivity
 import com.education.core_api.presentation.ui.LoginMediator
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.login.presentation.LoginFragmentDirections
-import com.education.pin.presentation.createpin.CreatePinFragmentDirections
 import com.education.redmadrobottmdb.R
 import com.education.redmadrobottmdb.di.component.MainComponent
 import timber.log.Timber
@@ -41,13 +40,7 @@ class MainActivity : AppCompatActivity(), BaseActivity {
 
         setupRootNavComponent()
 
-        rootNavController.navigate(CreatePinFragmentDirections.toCreatePinFragment())
-
-//        if (!viewModel.isSessionExist())
-//            startLoginScreen()
-//        else {
-//            startMainAppScreen()
-//        }
+        viewModel.defineScreen(rootNavController)
     }
 
     private fun setupRootNavComponent() {
@@ -70,5 +63,20 @@ class MainActivity : AppCompatActivity(), BaseActivity {
 
     override fun navigateTo(navDirection: NavDirections) {
         rootNavController.navigate(navDirection)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.d("onResume")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Timber.d("onStop")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Timber.d("onStart")
     }
 }

@@ -5,7 +5,7 @@ import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.number_item.view.*
 
-class NumberItem(
+data class NumberItem(
     private val number: Int? = null,
     private val callback: ((Int?) -> Unit)? = null
 ) : Item() {

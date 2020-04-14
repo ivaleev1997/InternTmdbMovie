@@ -7,14 +7,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.education.core_api.di.AppWithComponent
+import com.education.core_api.extension.observe
 import com.education.core_api.presentation.activity.BaseActivity
 import com.education.core_api.presentation.fragment.BaseFragment
+import com.education.core_api.presentation.uievent.Event
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.login.R
 import com.education.login.di.LoginComponent
 import com.education.login.domain.entity.LoginResult
-import javax.inject.Inject
 import kotlinx.android.synthetic.main.login_fragment.*
+import javax.inject.Inject
 
 class LoginFragment : BaseFragment(R.layout.login_fragment) {
 
@@ -109,6 +111,11 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
                 }
             }
         }
+        observe(viewModel.eventsQueue, ::onEvent)
+    }
+
+    private fun onEvent(event: Event) {
+        onFragmentEvent(event, loginConstraintLayout, null)
     }
 
     private fun setMsgToEnterStatusTextView(stringId: Int) {

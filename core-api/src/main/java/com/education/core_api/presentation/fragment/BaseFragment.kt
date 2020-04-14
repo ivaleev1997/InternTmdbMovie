@@ -14,6 +14,7 @@ import com.education.core_api.presentation.activity.BaseActivity
 import com.education.core_api.presentation.uievent.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import timber.log.Timber
 
 abstract class BaseFragment(private val layoutId: Int) : Fragment() {
     override fun onCreateView(
@@ -55,6 +56,7 @@ abstract class BaseFragment(private val layoutId: Int) : Fragment() {
 
 
     fun navigateUp() {
+        Timber.d("Navigate up")
         findNavController().navigateUp()
     }
 
@@ -69,6 +71,9 @@ abstract class BaseFragment(private val layoutId: Int) : Fragment() {
             is TryLaterEvent -> {
                 showTryLaterSnackBar(view, anchorView)
             }
+
+            is LogoutEvent -> logout()
+
             is NavigateToEvent -> {
                 navigateTo(event.navDirections)
             }
