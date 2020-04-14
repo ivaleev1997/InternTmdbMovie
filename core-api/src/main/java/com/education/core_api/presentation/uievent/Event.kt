@@ -20,6 +20,8 @@ class LogoutEvent : Event
 
 class TryLaterEvent : Event
 
+class RootedDeviceEvent: Event
+
 data class NavigateToEvent(
     val navDirections: NavDirections
 ) : Event

@@ -65,6 +65,7 @@ dependencies {
             androidx_core_ktx,
             fragment,
             constraintlayout,
+            lifecycle_ext,
             lifecycle_livedata_ktx,
             material,
             retrofit2,

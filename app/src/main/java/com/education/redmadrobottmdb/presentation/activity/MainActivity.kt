@@ -9,12 +9,19 @@ import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.education.core_api.RootNavigationGraphDirections
 import com.education.core_api.di.AppWithComponent
+import com.education.core_api.extension.makeVisible
+import com.education.core_api.extension.observe
 import com.education.core_api.presentation.activity.BaseActivity
 import com.education.core_api.presentation.ui.LoginMediator
+import com.education.core_api.presentation.uievent.Event
+import com.education.core_api.presentation.uievent.NavigateToEvent
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.login.presentation.LoginFragmentDirections
 import com.education.redmadrobottmdb.R
 import com.education.redmadrobottmdb.di.component.MainComponent
+import com.education.redmadrobottmdb.domain.MainActivityViewState
+import com.education.redmadrobottmdb.domain.RootStatus
+import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -38,9 +45,29 @@ class MainActivity : AppCompatActivity(), BaseActivity {
         MainComponent.create((application as AppWithComponent).getComponent()).inject(this)
         setContentView(R.layout.activity_main)
 
-        setupRootNavComponent()
+        viewModel.checkRoot(application)
 
-        viewModel.defineScreen(rootNavController)
+        observe(viewModel.liveState, ::renderViewState)
+        observe(viewModel.eventsQueue, ::onEvent)
+    }
+
+    private fun onEvent(event: Event) {
+        when (event) {
+            is NavigateToEvent -> rootNavController.navigate(event.navDirections)
+        }
+    }
+
+    private fun renderViewState(mainActivityViewState: MainActivityViewState) {
+        when (mainActivityViewState.rootStatus) {
+            RootStatus.ROOTED -> {
+                root_alert.makeVisible()
+            }
+            RootStatus.NOT_ROOTED -> {
+                setupRootNavComponent()
+
+                viewModel.defineScreen()
+            }
+        }
     }
 
     private fun setupRootNavComponent() {

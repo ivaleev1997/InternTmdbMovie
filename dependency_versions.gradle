@@ -24,6 +24,7 @@ ext {
 	rxBinding_version = '2.2.0'
 	timber_version = '4.7.1'
 	navigation_component_version = '2.2.1'
+	rootbeer_version = '0.0.8'
 
 	activity_ktx = "androidx.activity:activity-ktx:$activity_ktx_version"
 	androidx_appcompat = "androidx.appcompat:appcompat:$androidx_appcompat_version"
@@ -71,6 +72,7 @@ ext {
 	room = "androidx.room:room-runtime:$room_version"
 	room_compiler = "androidx.room:room-compiler:$room_version"
 	timber = "com.jakewharton.timber:timber:$timber_version"
+	rootbeer = "com.scottyab:rootbeer-lib:$rootbeer_version"
 
 	//Test
 	junit_version = '4.12'

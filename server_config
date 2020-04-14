@@ -2,4 +2,6 @@ ext {
     tmdb_url = "https://api.themoviedb.org/3/"
     tmdb_api_key = "aa7b2f0df06cb6ccf1cbcf705bcf9892"
     tmdb_image_url = "https://image.tmdb.org/t/p/w500"
+    pin1 = "sha256/HkCBucsA3Tgiby96X7vjb/ojHaE1BrjvZ2+LRdJJd0E="
+    pin2 = "sha256/nKWcsYrc+y5I8vLf1VGByjbt+Hnasjl+9h8lNKJytoE="
 }

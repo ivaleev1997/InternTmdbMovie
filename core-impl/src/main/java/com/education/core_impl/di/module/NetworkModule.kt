@@ -12,6 +12,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -55,16 +56,27 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun provideCertificatePinner(): CertificatePinner {
+        return CertificatePinner.Builder()
+            .add(BuildConfig.SERVER_ADDR,
+                BuildConfig.PIN1, BuildConfig.PIN2)
+            .build();
+    }
+
+    @Provides
+    @Singleton
     fun provideOkHttpClientBuilder(
         authenticator: TmdbAuthenticator,
         apiKeyInterceptor: ApiKeyInterceptor,
         loggingInterceptor: HttpLoggingInterceptor,
-        networkErrorInterceptor: NetworkErrorInterceptor
+        networkErrorInterceptor: NetworkErrorInterceptor,
+        certificatePinner: CertificatePinner
     ): OkHttpClient.Builder {
         return OkHttpClient.Builder().apply {
             authenticator(authenticator)
             addInterceptor(apiKeyInterceptor)
             addInterceptor(networkErrorInterceptor)
+            certificatePinner(certificatePinner)
             if (BuildConfig.DEBUG) addInterceptor(loggingInterceptor)
         }
     }

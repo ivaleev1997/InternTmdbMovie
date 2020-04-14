@@ -3,6 +3,7 @@ package com.education.core_api.presentation.view.zeroscreen
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.annotation.RawRes
@@ -27,6 +28,7 @@ class ZeroScreenWithAnimation @JvmOverloads constructor(
                 stubMessage = getString(R.styleable.ZeroScreenView_message) ?: resources.getString(
                     R.string.unexpected_network_error)
                 stubRetryButton = getBoolean(R.styleable.ZeroScreenView_retryButton, false)
+                stubBackground = getBoolean(R.styleable.ZeroScreenView_colorPrimaryOnBackground, false)
             }
         } finally {
             attrsArray.recycle()
@@ -47,6 +49,15 @@ class ZeroScreenWithAnimation @JvmOverloads constructor(
             }
         }
 
+    var stubBackground: Boolean = false
+        set(value) {
+            field = value
+            if (field) {
+                // Не получилось получить colorPrimary из темы программно
+                zeroScreenContainer.setBackgroundResource(R.color.dark_blue)
+            }
+        }
+
     @RawRes
     var stubAnimation: Int = R.raw.no_internet_connection_animation
         set(value) {
@@ -56,5 +67,12 @@ class ZeroScreenWithAnimation @JvmOverloads constructor(
 
     fun setOnRepeatClickListener(listener: () -> Unit) {
         retryButton.setOnClickListener { listener() }
+    }
+
+    private fun getCurrentColorPrimary(): Int {
+        val typedValue = TypedValue()
+        context.theme.resolveAttribute(R.attr.colorPrimary, typedValue, true)
+
+        return typedValue.data
     }
 }

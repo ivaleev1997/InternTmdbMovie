@@ -46,13 +46,18 @@ dependencies {
             material,
             timber,
             fragment,
+            lifecycle_livedata_ktx,
             lifecycle_ext,
             lifecycle_viewmodel,
             navigation_fragment,
             navigation_ui,
             navigation_ui_ktx,
             navigation_fragment_ktx,
-            dagger2
+            dagger2,
+            rxjava2,
+            rxAndroid,
+            lottie,
+            rootbeer
     )
 
     testImplementation junit

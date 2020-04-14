@@ -1,5 +1,6 @@
 package com.education.core_api.extension
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.education.core_api.presentation.uievent.Event
@@ -10,6 +11,10 @@ import kotlin.reflect.KProperty
 
 fun <T, LD : LiveData<T>> Fragment.observe(liveData: LD, block: (T) -> Unit) {
     liveData.observe(viewLifecycleOwner) { block(it) }
+}
+
+fun <T, LD : LiveData<T>> AppCompatActivity.observe(liveData: LD, block: (T) -> Unit) {
+    liveData.observe(this) { block(it) }
 }
 
 fun <T> MutableLiveData<T>.onNext(next: T) {
@@ -35,6 +40,14 @@ fun <T : Any> MutableLiveData<T>.delegate(): ReadWriteProperty<Any, T> {
 
 fun Fragment.observe(eventsQueue: EventsQueue, eventHandler: (Event) -> Unit) {
     eventsQueue.observe(viewLifecycleOwner) { queue: Queue<Event>? ->
+        while (queue != null && queue.isNotEmpty()) {
+            eventHandler(queue.remove())
+        }
+    }
+}
+
+fun AppCompatActivity.observe(eventsQueue: EventsQueue, eventHandler: (Event) -> Unit) {
+    eventsQueue.observe(this) { queue: Queue<Event>? ->
         while (queue != null && queue.isNotEmpty()) {
             eventHandler(queue.remove())
         }
