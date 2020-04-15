@@ -59,8 +59,8 @@ class NetworkModule {
     fun provideCertificatePinner(): CertificatePinner {
         return CertificatePinner.Builder()
             .add(BuildConfig.SERVER_ADDR,
-                BuildConfig.PIN1, BuildConfig.PIN2)
-            .build();
+                BuildConfig.SSL_PIN)
+            .build()
     }
 
     @Provides
