@@ -6,11 +6,8 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import com.education.core_api.extension.getEditTextString
-import com.education.core_api.fragment.BaseFragment
 import com.education.core_api.di.AppWithComponent
 import com.education.core_api.presentation.activity.BaseActivity
-import com.education.core_api.di.AppWithComponent
 import com.education.core_api.presentation.fragment.BaseFragment
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.login.R
