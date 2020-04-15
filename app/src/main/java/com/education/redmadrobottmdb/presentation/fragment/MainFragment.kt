@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.NavHostFragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.education.core_api.presentation.fragment.ParentFragment
@@ -37,10 +37,7 @@ class MainFragment : ParentFragment() {
     }
 
     private fun setupBottomNavigationWithNavComponent() {
-        val hostFragment =
-            childFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as? NavHostFragment
-
-        hostFragment?.findNavController()?.let {
+        mainNavHostFragment?.findNavController()?.let {
             mainFragmentNavView.setupWithNavController(it)
         }
     }

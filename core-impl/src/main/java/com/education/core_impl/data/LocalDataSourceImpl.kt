@@ -45,7 +45,9 @@ class LocalDataSourceImpl @Inject constructor(
     }
 
     override fun saveTokenLifeTime(expiresAt: String) {
-        sharedPrefs.putLong(PREFS_REQUEST_LIFE, convertTime(expiresAt))
+        sharedPrefs.putLong(PREFS_REQUEST_LIFE,
+            convertTime(expiresAt)
+        )
     }
 
     override fun getSessionId(): String {
