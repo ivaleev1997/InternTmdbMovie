@@ -32,3 +32,4 @@
 
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.education.core_api.data.network.entity.* { <fields>; }
+-keep class com.education.core_api.dto.UserCredentials* { <fields>; }
