@@ -11,16 +11,17 @@
         android:id="@+id/searchInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_56"
         app:endIconMode="clear_text"
         app:endIconTint="@color/search_main_color"
         app:startIconDrawable="@drawable/ic_search_24dp"
         app:startIconTint="@color/search_main_color"
+        style="@style/SearchTextInputLayoutStyle"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/SearchTextInputLayoutStyle" >
+        app:layout_constraintTop_toTopOf="parent" >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginTextEdit"
@@ -32,59 +33,53 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/recyclerMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_widgets_24px_outlined"
+        app:srcCompat="@drawable/ic_to_tile_map"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+
         app:layout_constraintBottom_toBottomOf="@+id/searchInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/searchInputLayout"
         app:layout_constraintTop_toTopOf="@+id/searchInputLayout" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/moviesRecyclerView"
+    <include
+        android:id="@+id/mainContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        layout="@layout/movies_main_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchInputLayout"
-        tools:listitem="@layout/movie_item" />
-
-    <TextView
-        android:id="@+id/notfoundTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/not_found"
-        android:gravity="center"
-        android:textColor="@color/text_color"
-        android:visibility="gone"
-        android:layout_marginTop="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchInputLayout" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <ImageView
-        android:id="@+id/notfoundImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_not_found_12"
-        android:layout_marginTop="28dp"
+    <com.education.core_api.presentation.view.zeroscreen.ZeroScreenWithAnimation
+        android:id="@+id/networkErrorView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:visibility="gone"
+        app:animationView="@raw/alert_animation"
+        app:retryButton="true"
+
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchInputLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notfoundTextView" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="4dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="@dimen/margin_2"
         android:indeterminate="true"
         android:indeterminateTint="@color/gray"
+
         app:layout_constraintEnd_toEndOf="@+id/searchInputLayout"
         app:layout_constraintStart_toStartOf="@+id/searchInputLayout"
         app:layout_constraintTop_toBottomOf="@+id/searchInputLayout" />

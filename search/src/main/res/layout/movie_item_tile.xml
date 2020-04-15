@@ -1,102 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/posterImageView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/movieItemContainer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/info"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="3"
-        app:srcCompat="@android:drawable/screen_background_dark_transparent" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_4" >
+
+        <ImageView
+            android:id="@+id/posterImageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@android:drawable/screen_background_dark_transparent"
+
+            app:layout_constraintBottom_toTopOf="@id/info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintDimensionRatio="3:4" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/info"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/margin_4"
+        android:layout_marginEnd="@dimen/margin_4"
+        android:layout_marginBottom="@dimen/margin_4"
+
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_weight="1">
+        app:layout_constraintEnd_toEndOf="@id/posterImageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/posterImageView"
+        app:layout_constraintTop_toBottomOf="@id/posterImageView">
 
         <TextView
             android:id="@+id/titleTextView"
-            android:layout_width="match_parent"
+            style="@style/TitleTextViewStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Джентльмены"
-            android:textSize="16sp"
-            android:textColor="@color/text_color"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:maxLines="1"
+            android:layout_marginTop="@dimen/margin_8"
+
+            app:layout_constraintBottom_toTopOf="@+id/originalTitleTextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Джентльмены" />
 
         <TextView
             android:id="@+id/originalTitleTextView"
-            android:layout_width="match_parent"
+            style="@style/OriginalTitleTextViewStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="The Gentelmen (2020)"
-            android:textSize="12sp"
-            android:textColor="@color/gray"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            android:layout_marginTop="@dimen/margin_8"
+            android:maxLines="1"
+
+            app:layout_constraintBottom_toTopOf="@+id/genreTextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+            tools:text="The Gentelmen (2020)" />
 
         <TextView
             android:id="@+id/genreTextView"
-            android:layout_width="match_parent"
+            style="@style/GenresTextViewStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="боевик, комедия, криминал"
-            android:textSize="12sp"
-            android:textColor="@color/text_color"
-            app:layout_constraintTop_toBottomOf="@id/originalTitleTextView"
+            android:layout_marginTop="@dimen/margin_8"
+            android:maxLines="1"
+
+            app:layout_constraintBottom_toTopOf="@+id/averageTextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/originalTitleTextView"
+            tools:text="боевик, комедия, криминал" />
 
         <TextView
             android:id="@+id/averageTextView"
+            style="@style/TitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="8.7"
-            app:layout_constraintTop_toBottomOf="@id/genreTextView"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_marginTop="@dimen/margin_8"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/genreTextView"
+            tools:text="8.7" />
 
         <TextView
             android:id="@+id/votesCountTextView"
+            style="@style/OriginalTitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="52742"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/margin_4"
+
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/averageTextView"
-            app:layout_constraintTop_toTopOf="@+id/averageTextView" />
+            app:layout_constraintTop_toTopOf="@+id/averageTextView"
+            tools:text="52742" />
 
         <TextView
             android:id="@+id/runTimeTextView"
+            style="@style/GenresTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="103 мин"
-            android:textSize="13sp"
-            app:layout_constraintTop_toBottomOf="@id/genreTextView"
-            app:layout_constraintEnd_toEndOf="parent"/>
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/averageTextView"
+            tools:text="103 мин" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="@dimen/margin_4"
+
             app:layout_constraintBottom_toBottomOf="@+id/runTimeTextView"
             app:layout_constraintEnd_toStartOf="@id/runTimeTextView"
             app:layout_constraintTop_toTopOf="@+id/runTimeTextView"
             app:srcCompat="@drawable/ic_access_time_24px" />
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

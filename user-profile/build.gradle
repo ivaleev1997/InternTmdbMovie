@@ -56,27 +56,23 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlin_std_lib
-    implementation androidx_appcompat
-    implementation androidx_core_ktx
+    implementation(
+            kotlin_std_lib,
+            androidx_appcompat,
+            androidx_core_ktx,
+            material,
+            constraintlayout,
+            fragment,
+            lifecycle_ext,
+            lifecycle_viewmodel,
+            dagger2,
+            rxjava2,
+            rxAndroid,
+            timber,
+            navigation_fragment,
+            navigation_fragment_ktx
+    )
 
-    implementation project(':core')
-
-    implementation material
-    implementation constraintlayout
-    implementation fragment
-    implementation lifecycle_ext
-    implementation lifecycle_viewmodel
-
-    implementation dagger2
     kapt dagger2_compiler
-
-    implementation rxjava2
-    implementation rxAndroid
-
-    implementation timber
-
-    implementation navigation_fragment
-    implementation navigation_fragment_ktx
-
+    implementation project(':core')
 }

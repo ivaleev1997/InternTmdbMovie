@@ -1,18 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="SearchTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeWidth">0dp</item>
-        <item name="boxStrokeColor">@color/search_edit_color</item>
-        <item name="boxBackgroundColor">@color/search_edit_color</item>
-    </style>
-
-    <style name="SearchEditTextLayout">
-        <item name="android:textColor">@color/search_main_color</item>
-    </style>
-
-    <style name="roundedImageView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">8dp</item>
-    </style>
-
 </resources>

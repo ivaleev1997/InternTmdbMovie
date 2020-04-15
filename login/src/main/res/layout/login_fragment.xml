@@ -12,12 +12,11 @@
         android:id="@+id/welcomeText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/margin_16"
         android:layout_marginTop="12dp"
-        android:lineSpacingExtra="0sp"
         android:text="@string/welcome"
-        android:textColor="@color/text_color"
-        android:textSize="32sp"
+        android:textAppearance="?attr/textAppearanceHeadline1"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,34 +24,33 @@
         android:id="@+id/LoginAndPasswordText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="24dp"
-        android:lineSpacingExtra="1sp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_24"
+        android:textAppearance="@style/TextAppearance.MyApp.Subtitle1"
         android:text="@string/insert"
-        android:textColor="@color/text_color"
-        android:textSize="16sp"
+
         app:layout_constraintStart_toStartOf="@+id/welcomeText"
         app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginTextInput"
-        style="@style/LoginTextInputLayoutStyle"
+        style="@style/ThemeOverlay.MyApp.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_32"
         android:hint="@string/login"
         app:errorEnabled="true"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LoginAndPasswordText">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginTextEdit"
-            style="@style/TextInputEditText"
+            style="@style/TextInputEditStyle"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:inputType="textEmailAddress"/>
@@ -61,23 +59,24 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordTextInput"
-        style="@style/LoginTextInputLayoutStyle"
+        style="@style/ThemeOverlay.MyApp.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:hint="@string/password"
-        app:endIconMode="password_toggle"
-        app:endIconTint="@color/gray"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/gray"
         app:errorEnabled="true"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginTextInput">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordTextEdit"
-            style="@style/TextInputEditText"
+            style="@style/TextInputEditStyle"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:inputType="textPassword" />
@@ -92,8 +91,9 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:text="@string/enter"
-        style="@style/NotEnabledButtonStyle"
+        style="@style/DisabledButtonStyle"
         android:enabled="false"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

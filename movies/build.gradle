@@ -54,53 +54,57 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlin_std_lib
-    implementation androidx_appcompat
-    implementation androidx_core_ktx
+    implementation(
+            kotlin_std_lib,
+            androidx_appcompat,
+            androidx_core_ktx,
+            material,
+            constraintlayout,
+            fragment,
+            lifecycle_ext,
+            lifecycle_viewmodel,
+            lifecycle_livedata_ktx,
+            dagger2,
+            rxjava2,
+            rxAndroid,
+            timber,
+            navigation_fragment,
+            navigation_fragment_ktx,
+            rxBinding,
+            rxBindng_kotlin,
+            groupie,
+            groupie_ktx
+    )
 
     implementation project(':core')
     implementation project(':search')
 
-    implementation material
-    implementation constraintlayout
-    implementation fragment
-    implementation lifecycle_ext
-    implementation lifecycle_viewmodel
-
-    implementation dagger2
     kapt dagger2_compiler
 
-    implementation rxjava2
-    implementation rxAndroid
+    testImplementation(
+            retrofit2_converter_gson,
+            retrofit2,
+            retrofit2_rxjava2_adapter,
+            okhttp3_log,
+            androidx_core,
+            okhttp_mockwebserver,
+            mockito_kotlin2,
+            assertj,
+            junit_jupiter_api
+    )
 
-    implementation timber
-
-    implementation navigation_fragment
-    implementation navigation_fragment_ktx
-
-    testImplementation retrofit2_converter_gson
-    testImplementation retrofit2
-    testImplementation retrofit2_rxjava2_adapter
-    testImplementation okhttp3_log
-    testImplementation androidx_core
-
-    testImplementation okhttp_mockwebserver
-    testImplementation mockito_kotlin2
-    testImplementation assertj
-
-    testImplementation junit_jupiter_api
     testRuntimeOnly junit_jupiter_engine
 
     // spek
-    testImplementation spek_dsl_jvm
-    testImplementation spek_runner_junit5
+    testImplementation(spek_dsl_jvm, spek_runner_junit5)
 
     testImplementation project(':testmodule')
 
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
-    implementation 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
 }

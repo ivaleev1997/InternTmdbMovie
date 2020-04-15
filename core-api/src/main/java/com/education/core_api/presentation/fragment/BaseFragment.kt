@@ -11,10 +11,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.education.core_api.R
 import com.education.core_api.presentation.activity.BaseActivity
-import com.education.core_api.presentation.uievent.AnotherEvent
-import com.education.core_api.presentation.uievent.Event
-import com.education.core_api.presentation.uievent.NoNetworkEvent
-import com.education.core_api.presentation.uievent.UnAuthorizedEvent
+import com.education.core_api.presentation.uievent.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
@@ -56,8 +53,9 @@ abstract class BaseFragment(private val layoutId: Int) : Fragment() {
         (requireActivity() as BaseActivity).logout()
     }
 
-    fun navigateTo(navDirections: NavDirections) {
-        findNavController().navigate(navDirections)
+
+    fun navigateUp() {
+        findNavController().navigateUp()
     }
 
     protected fun onFragmentEvent(event: Event, view: View, anchorView: View? = null) {
@@ -68,10 +66,17 @@ abstract class BaseFragment(private val layoutId: Int) : Fragment() {
             is UnAuthorizedEvent -> {
                 logout()
             }
-            is AnotherEvent -> {
+            is TryLaterEvent -> {
                 showTryLaterSnackBar(view, anchorView)
             }
+            is NavigateToEvent -> {
+                navigateTo(event.navDirections)
+            }
         }
+    }
+
+    private fun navigateTo(navDirections: NavDirections) {
+        findNavController().navigate(navDirections)
     }
 
     private fun showTryLaterSnackBar(rootView: View, anchorView: View?) {

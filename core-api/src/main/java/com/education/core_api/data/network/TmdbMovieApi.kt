@@ -2,10 +2,7 @@ package com.education.core_api.data.network
 
 import com.education.core_api.data.network.entity.*
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface TmdbMovieApi {
 
@@ -19,9 +16,9 @@ interface TmdbMovieApi {
     fun getFavoriteMovies(@Path("account_id") accountId: Long): Single<MovieApiResponse<SearchMovie>>
 
     @POST("account/{account_id}/favorite")
-    fun markAsFavorite(
+    fun changeFavorite(
         @Path("account_id") accountId: Long,
-        requestFavoriteBody: RequestFavoriteBody
+        @Body requestFavoriteBody: RequestFavoriteBody
     ): Single<StatusResponse>
 
     @GET("movie/{movie_id}")

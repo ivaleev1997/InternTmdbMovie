@@ -1,8 +1,8 @@
 package com.education.movies.domain.entity
 
-enum class MoviesListState {
+enum class MoviesScreenState {
     EMPTY,
     NONE_EMPTY,
     CLEAN,
-    ON_SEARCH
+    ON_SEARCH,
 }

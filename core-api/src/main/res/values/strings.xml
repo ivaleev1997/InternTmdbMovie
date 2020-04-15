@@ -3,4 +3,8 @@
     <string name="no_internet">Отсутсвует соединение с интернетом</string>
     <string name="name_details_argument">movieTitle</string>
     <string name="try_later">Непредвиденная ошибка. Попробуйте позже</string>
+    <string name="ru_locale_min">мин</string>
+    <string name="no_content">"Описание отсутсвует :("</string>
+    <string name="repeat">Повторить</string>
+    <string name="unexpected_network_error">Непредвиденная ошибка сети..</string>
 </resources>

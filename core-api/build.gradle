@@ -12,6 +12,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "TMDB_IMAGE_SERVER_URL", "\"${tmdb_image_url}\""
         }
         debug {
             buildConfigField "String", "TMDB_IMAGE_SERVER_URL", "\"${tmdb_image_url}\""
@@ -21,29 +22,38 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlin_std_lib
-    implementation androidx_appcompat
-    implementation androidx_core_ktx
-    implementation fragment
+    implementation(
+            kotlin_std_lib,
+            androidx_appcompat,
+            androidx_core_ktx,
+            fragment,
+            constraintlayout,
+            lifecycle_livedata_ktx,
+            material,
+            retrofit2,
+            retrofit2_converter_gson,
+            rxjava2,
+            rxAndroid,
+            // navigation component
+            navigation_fragment,
+            navigation_ui,
+            navigation_ui_ktx,
+            navigation_fragment_ktx,
+            dagger2,
+            timber,
+            lottie
+    )
+
+    kapt dagger2_compiler
 
     testImplementation junit
-    androidTestImplementation androidx_junit
-    androidTestImplementation androidx_espresso
-
-    implementation material
-    implementation retrofit2
-    implementation retrofit2_converter_gson
-    implementation rxjava2
-    implementation rxAndroid
+    androidTestImplementation(androidx_junit, androidx_espresso)
 
     testImplementation assertj
 
-    // navigation component
-    implementation navigation_fragment
-    implementation navigation_ui
-    implementation navigation_ui_ktx
-    implementation navigation_fragment_ktx
+    testImplementation(junit_jupiter_api, junit_jupiter_params)
+    testRuntimeOnly junit_jupiter_engine
 
-    implementation dagger2
-    kapt dagger2_compiler
+    // spek
+    testImplementation(spek_dsl_jvm, spek_runner_junit5)
 }

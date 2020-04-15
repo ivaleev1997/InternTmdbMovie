@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 android {
     compileSdkVersion compile_sdk_version
@@ -22,22 +23,40 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlin_std_lib
-    implementation androidx_appcompat
-    implementation androidx_core_ktx
+    implementation(
+            kotlin_std_lib,
+            androidx_appcompat,
+            androidx_core_ktx,
+            material,
+            constraintlayout,
+            fragment,
+            lifecycle_ext,
+            lifecycle_viewmodel,
+            navigation_fragment,
+            navigation_fragment_ktx,
+            dagger2,
+            rxjava2,
+            rxAndroid,
+            timber,
+            glide,
+            navigation_runtime_ktx,
+            navigation_ui_ktx,
+            lottie
+    )
+
+    kapt(glide_compiler, dagger2_compiler)
 
     implementation project(':core')
 
-    implementation material
-    implementation constraintlayout
-    implementation fragment
-    implementation lifecycle_ext
-    implementation lifecycle_viewmodel
-
-    implementation navigation_fragment
-    implementation navigation_fragment_ktx
+    // Assisted inject
+    compileOnly assisted_inject_annotations_dagger2
+    kapt assisted_inject_inject_processor_dagger2
 }

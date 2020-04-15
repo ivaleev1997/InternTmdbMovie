@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="details_time_title">Время</string>
+    <string name="films_rating">Рейтинг фильма</string>
+    <string name="favorite_string">favorite</string>
+</resources>

@@ -1,112 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/movieItemContainer"
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/movieItemContainer"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools" >
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/posterImageViewCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
+    <ImageView
+        android:id="@+id/posterImageView"
+        android:layout_width="96dp"
+        android:layout_height="128dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@android:drawable/screen_background_dark_transparent"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_8"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="8dp">
-
-        <ImageView
-            android:id="@+id/posterImageView"
-            android:layout_width="64dp"
-            android:layout_height="96dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@android:drawable/screen_background_dark_transparent" />
-    </androidx.cardview.widget.CardView>
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/descriptionContainer"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toTopOf="@id/posterImageViewCard"
-        app:layout_constraintBottom_toBottomOf="@id/posterImageViewCard"
-        app:layout_constraintStart_toEndOf="@id/posterImageViewCard"
-        >
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_16"
+
+        app:layout_constraintBottom_toBottomOf="@id/posterImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/posterImageView"
+        app:layout_constraintTop_toTopOf="@id/posterImageView">
 
         <TextView
             android:id="@+id/titleTextView"
+            style="@style/TitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/text_color"
-            android:ellipsize="end"
-            android:singleLine="true"
+            android:maxLines="1"
+
             app:layout_constraintStart_toStartOf="@+id/descriptionContainer"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Джентльмены" />
 
         <TextView
             android:id="@+id/originalTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="@color/gray"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/margin_4"
+            android:maxLines="1"
+            style="@style/OriginalTitleTextViewStyle"
+
             app:layout_constraintStart_toStartOf="@+id/descriptionContainer"
             app:layout_constraintTop_toBottomOf="@id/titleTextView"
-            />
+            tools:text="The Gentelmen (2020)" />
 
         <TextView
             android:id="@+id/genreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="@color/text_color"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/margin_4"
+            android:maxLines="2"
+            style="@style/GenresTextViewStyle"
+
             app:layout_constraintStart_toStartOf="@id/descriptionContainer"
             app:layout_constraintTop_toBottomOf="@id/originalTitleTextView"
-            />
+            tools:text="боевик, комедия, криминал" />
 
         <TextView
             android:id="@+id/averageTextView"
+            style="@style/TitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/text_color"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="@dimen/margin_8"
+
             app:layout_constraintStart_toStartOf="@id/descriptionContainer"
-            app:layout_constraintTop_toBottomOf="@id/genreTextView" />
+            app:layout_constraintTop_toBottomOf="@id/genreTextView"
+            tools:text="8.7" />
 
         <TextView
             android:id="@+id/votesCountTextView"
+            style="@style/GenresTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:textSize="12sp"
-            android:textColor="@color/gray"
+            android:layout_marginStart="@dimen/margin_4"
+
             app:layout_constraintBottom_toBottomOf="@+id/averageTextView"
-            app:layout_constraintStart_toEndOf="@id/averageTextView" />
+            app:layout_constraintStart_toEndOf="@id/averageTextView"
+            app:layout_constraintTop_toTopOf="@+id/averageTextView"
+            tools:text="52742" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/margin_12"
+
             app:layout_constraintBottom_toBottomOf="@+id/votesCountTextView"
             app:layout_constraintStart_toEndOf="@+id/votesCountTextView"
             app:srcCompat="@drawable/ic_access_time_24px" />
 
         <TextView
             android:id="@+id/runTimeTextView"
+            style="@style/GenresTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="@color/text_color"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/margin_8"
+
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintStart_toEndOf="@+id/imageView" />
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            tools:text="103 мин" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

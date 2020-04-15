@@ -1,6 +1,7 @@
-package com.education.core_api
+package com.education.core_impl
 
-import com.education.core_api.util.convertTime
+import com.education.core_api.toOriginalTitleYear
+import com.education.core_impl.data.LocalDataSourceImpl.Companion.convertTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
@@ -20,6 +21,20 @@ class UtilTestJUnit5 {
     ])
     fun convertTimeTest(input: String, expected: Long) {
         val actualValue = convertTime(input)
+
+        assertThat(actualValue).isEqualTo(expected)
+    }
+
+    @DisplayName("Convert Time to year string")
+    @ParameterizedTest(name = "\"{0}\" should be {1}")
+    @CsvSource(value = [
+        "'2020-03-14', ' (2020)'", // Success
+        "'1982-04-25',' (1982)'",
+        "'', ''", // wrong format
+        "'ff-03-14', ''" // wrong format
+    ])
+    fun convertTimeToYearOnlyString(input: String, expected: String) {
+        val actualValue = input.toOriginalTitleYear()
 
         assertThat(actualValue).isEqualTo(expected)
     }

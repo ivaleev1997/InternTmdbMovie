@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: "$project.rootDir/common_build.gradle"
 
+apply plugin: "de.mannodermaus.android-junit5"
 android {
 
     buildTypes {
@@ -23,17 +24,21 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlin_std_lib
-    implementation androidx_core_ktx
+    implementation(kotlin_std_lib,
+            androidx_core_ktx,
+            retrofit2,
+            retrofit2_converter_gson,
+            retrofit2_rxjava2_adapter,
+            okhttp3_log,
+            lifecycle_viewmodel,
+            dagger2
+    )
 
     api project(':core-api')
-    implementation dagger2
     kapt dagger2_compiler
 
-    implementation retrofit2
-    implementation retrofit2_converter_gson
-    implementation retrofit2_rxjava2_adapter
-    implementation okhttp3_log
+    testImplementation assertj
 
-    implementation lifecycle_viewmodel
+    testImplementation(junit_jupiter_api, junit_jupiter_params)
+    testRuntimeOnly junit_jupiter_engine
 }
