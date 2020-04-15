@@ -16,7 +16,6 @@ import com.education.core_api.presentation.uievent.Event
 import com.education.core_api.presentation.uievent.NoNetworkEvent
 import com.education.core_api.presentation.uievent.UnAuthorizedEvent
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
 
 abstract class BaseFragment(private val layoutId: Int) : Fragment() {
     override fun onCreateView(

@@ -1,0 +1,26 @@
+
+apply from: "$project.rootDir/build_config.gradle"
+android {
+
+    compileSdkVersion compile_sdk_version
+    buildToolsVersion build_tools_version
+
+    defaultConfig {
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+        versionCode version_code
+        versionName version_name
+
+        testInstrumentationRunner test_instrumentation_runner
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}

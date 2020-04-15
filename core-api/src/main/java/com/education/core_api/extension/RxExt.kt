@@ -22,6 +22,10 @@ fun <T : Any> Single<T>.flatMapCompletableAction(action: (T) -> Unit): Completab
     return flatMapCompletable { param -> Completable.fromAction { action.invoke(param) } }
 }
 
+fun <T : Any> Single<T>.flatMapCompletableAction(action: (T) -> Unit): Completable {
+    return flatMapCompletable { param -> Completable.fromAction { action.invoke(param) } }
+}
+
 interface SchedulersProvider {
     fun io(): Scheduler
 

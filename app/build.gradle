@@ -1,10 +1,9 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
+
+apply from: "$project.rootDir/common_build.gradle"
 
 android {
     compileSdkVersion compile_sdk_version
@@ -12,26 +11,12 @@ android {
 
     defaultConfig {
         applicationId application_id
-        minSdkVersion min_sdk_version
-        targetSdkVersion target_sdk_version
-        versionCode version_code
-        versionName version_name
-        testInstrumentationRunner test_instrumentation_runner
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-// To inline the bytecode built with JVM target 1.8 into
-// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

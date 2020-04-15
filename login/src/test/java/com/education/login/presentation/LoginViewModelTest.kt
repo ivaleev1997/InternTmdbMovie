@@ -1,5 +1,7 @@
 package com.education.login.presentation
 
+import com.education.core.disableTestMode
+import com.education.core.enableTestMode
 import com.education.core_api.extension.SchedulersProvider
 import com.education.login.domain.UserUseCase
 import com.nhaarman.mockitokotlin2.mock
@@ -10,11 +12,14 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 object LoginViewModelTest : Spek({
+    beforeGroup { enableTestMode() }
+    afterGroup { disableTestMode() }
     Feature("Login: ViewModel only (login and password input only)") {
+        // region Fields
         val mockUserUseCase = mock<UserUseCase>()
         val mockSchedulersProvider = mock<SchedulersProvider>()
         val loginViewModel = LoginViewModel(mockUserUseCase, mockSchedulersProvider)
-
+        // endregion Fields
         Scenario("User insert wrong password") {
             var password = ""
             val expectedValidateStatus = false
