@@ -21,7 +21,9 @@ import javax.inject.Inject
 import javax.security.auth.x500.X500Principal
 
 
-class EncryptionImpl @Inject constructor() : Encryption {
+class EncryptionImpl @Inject constructor(
+    context: Context
+) : Encryption {
     companion object {
         private const val KEYS_SPEC_ITERATION_COUNT_512 = 512
         private const val SALT_SIZE_256 = 256
@@ -38,6 +40,14 @@ class EncryptionImpl @Inject constructor() : Encryption {
         private fun base64EncodeToString(data: ByteArray): String = Base64.encodeToString(data, Base64.NO_WRAP)
 
         private fun base64DecodeFromString(data: String): ByteArray = Base64.decode(data, Base64.NO_WRAP)
+    }
+
+    init {
+        val ks = initKeyStore()
+
+        if (!ks.containsAlias(KEY_ALIAS)) {
+            createKeys(context)
+        }
     }
 
     override fun encrypt(password: String, data: String): String {
@@ -89,13 +99,9 @@ class EncryptionImpl @Inject constructor() : Encryption {
         }
     }
 
-    override fun encrypt(data: String, context: Context): String {
+    override fun encrypt(data: String): String {
         return try {
             val ks = initKeyStore()
-
-            if (!ks.containsAlias(KEY_ALIAS)) {
-                createKeys(context)
-            }
 
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
                 val publicKey: PublicKey? = getPrivateKeyEntry(ks, KEY_ALIAS)?.certificate?.publicKey

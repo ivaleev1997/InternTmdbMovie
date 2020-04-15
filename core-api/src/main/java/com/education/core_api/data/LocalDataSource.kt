@@ -34,4 +34,10 @@ interface LocalDataSource {
     fun getUserName(): String
 
     fun saveUserCredentials(userCredentials: UserCredentials): Boolean
+
+    fun saveOnStopTime(timeMills: Long): Boolean
+
+    fun getOnStopTime(): Long
+
+    fun clearLastOnStopTime()
 }

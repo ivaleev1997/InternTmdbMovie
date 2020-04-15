@@ -23,6 +23,7 @@ class LocalDataSourceImpl @Inject constructor(
         const val PREFS_USER_LOGIN = "userLog"
         const val PREFS_USER_NAME = "userName"
         const val PREFS_USER_PASSWORD = "userPassword"
+        const val PREFS_ON_STOP_TIME = "onStopTime"
 
         fun convertTime(timeString: String): Long {
             val timeFormat = "yyyy-MM-dd HH:mm:ss"
@@ -105,13 +106,13 @@ class LocalDataSourceImpl @Inject constructor(
     }
 
     override fun saveUserName(userName: String, context: Context): Boolean {
-        val encrypted = security.encryptUserName(userName, context)
+        val encrypted = security.encryptOnKeysStore(userName)
 
         return encrypted.isNotEmpty() && sharedPrefs.putString(PREFS_USER_NAME, encrypted)
     }
 
     override fun getUserName(): String {
-        return security.decryptUserName(sharedPrefs.getString(PREFS_USER_NAME, BLANK_STR) ?: BLANK_STR)
+        return security.decryptOnKeyStore(sharedPrefs.getString(PREFS_USER_NAME, BLANK_STR) ?: BLANK_STR)
     }
 
     override fun saveUserCredentials(userCredentials: UserCredentials): Boolean {
@@ -120,5 +121,21 @@ class LocalDataSourceImpl @Inject constructor(
                 saveRequestToken(userCredentials.requestToken) &&
                 saveSessionId(userCredentials.sessionId) &&
                 saveTokenLifeTime(userCredentials.requestTokenLife)
+    }
+
+    override fun saveOnStopTime(timeMills: Long): Boolean {
+        val encrypted = security.encryptOnKeysStore(timeMills.toString())
+
+        return encrypted.isNotEmpty() && sharedPrefs.putString(PREFS_ON_STOP_TIME, encrypted)
+    }
+
+    override fun getOnStopTime(): Long {
+        val decrypted = security.decryptOnKeyStore(sharedPrefs.getString(PREFS_ON_STOP_TIME, BLANK_STR) ?: BLANK_STR)
+
+        return decrypted.toLongOrNull() ?: 0L
+    }
+
+    override fun clearLastOnStopTime() {
+        sharedPrefs.putString(PREFS_ON_STOP_TIME, "")
     }
 }

@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), BaseActivity {
         MainComponent.create((application as AppWithComponent).getComponent()).inject(this)
         setContentView(R.layout.activity_main)
 
-        viewModel.checkRoot(application)
+        viewModel.onCreate(application)
 
         observe(viewModel.liveState, ::renderViewState)
         observe(viewModel.eventsQueue, ::onEvent)
@@ -92,18 +92,15 @@ class MainActivity : AppCompatActivity(), BaseActivity {
         rootNavController.navigate(navDirection)
     }
 
-    override fun onResume() {
-        super.onResume()
-        Timber.d("onResume")
-    }
-
     override fun onStop() {
         super.onStop()
         Timber.d("onStop")
+        viewModel.onStop()
     }
 
     override fun onStart() {
         super.onStart()
         Timber.d("onStart")
+        viewModel.onStart()
     }
 }

@@ -18,6 +18,11 @@ class MainViewModel @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : BaseViewModel() {
 
+    companion object {
+        private const val MAX_TIME_ON_BACKGROUND_2_MIN_IN_MILLS = 2 * 60 * 1000
+        private const val FIRST_ON_STOP_TIME = 0L
+    }
+
     val liveState = MutableLiveData(MainActivityViewState())
     private var state:MainActivityViewState by liveState.delegate()
 
@@ -45,7 +50,7 @@ class MainViewModel @Inject constructor(
             }
     }
 
-    fun checkRoot(context: Context) {
+    private fun checkRoot(context: Context) {
         val rootBeer = RootBeer(context)
         // Добавил знак "!" так как тестирую на эмуляторе!
         if (!rootBeer.isRooted) {
@@ -60,5 +65,29 @@ class MainViewModel @Inject constructor(
         userName = localDataSource.getUserName()
 
         return userName.isNotEmpty()
+    }
+
+    fun onCreate(context: Context) {
+        localDataSource.clearLastOnStopTime()
+        checkRoot(context)
+    }
+
+    fun onStop() {
+        saveLastOnStopTime()
+    }
+
+    fun onStart() {
+        checkBackgroundTime()
+    }
+
+    private fun saveLastOnStopTime() {
+        localDataSource.saveOnStopTime(getCurrentTimeMills())
+    }
+
+    private fun checkBackgroundTime() {
+        val currentTime = getCurrentTimeMills()
+        val lastOnStopTime = localDataSource.getOnStopTime()
+        if (isLoggedIn() && lastOnStopTime != FIRST_ON_STOP_TIME && (currentTime - lastOnStopTime) > MAX_TIME_ON_BACKGROUND_2_MIN_IN_MILLS)
+            sendEvent(NavigateToEvent(EnterPinFragmentDirections.toEnterPinFragment(userName)))
     }
 }
