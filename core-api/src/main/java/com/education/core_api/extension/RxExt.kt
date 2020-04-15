@@ -1,6 +1,7 @@
 package com.education.core_api.extension
 
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,6 +13,10 @@ fun Completable.schedulersIoToMain(provider: SchedulersProvider): Completable {
 
 fun <T> Single<T>.schedulersIoToMain(provider: SchedulersProvider): Single<T> {
     return subscribeOn(provider.io()).observeOn(provider.mainThread())
+}
+
+fun <T> Flowable<T>.schedulersComputationToMain(provider: SchedulersProvider): Flowable<T> {
+    return subscribeOn(provider.computation()).observeOn(provider.mainThread())
 }
 
 fun <T : Any> Single<T>.flatMapCompletableAction(action: (T) -> Unit): Completable {

@@ -8,10 +8,6 @@
         <item name="passwordToggleTint">@color/gray</item>
     </style>
 
-    <style name="TextInputEditText" >
-        <item name="android:textColor">@color/gray</item>
-    </style>
-
     <style name="NotEnabledButtonStyle">
         <item name="android:colorPrimary">@color/disabled_fill_button_color</item>
         <item name="android:textColor">@color/gray</item>

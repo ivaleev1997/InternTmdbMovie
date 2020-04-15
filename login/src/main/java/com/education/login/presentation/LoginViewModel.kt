@@ -12,10 +12,8 @@ import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.login.domain.UserUseCase
 import com.education.login.domain.entity.LoginResult
 import timber.log.Timber
-import javax.inject.Inject
 
-class LoginViewModel
-@Inject constructor (
+class LoginViewModel(
     private val userUseCase: UserUseCase,
     private val schedulersProvider: SchedulersProvider
 ) : BaseViewModel() {
@@ -48,18 +46,16 @@ class LoginViewModel
                 .subscribe({
                     _loginStatus.value = LoginResult.SUCCESS
                 }, { error ->
+                    logThrow(error)
                     _loginStatus.value =
                         when {
                             error.isNetworkException() -> {
-                                logThrow(error)
                                 LoginResult.NO_NETWORK_CONNECTION
                             }
                             error is UnAuthorizedException -> {
-                                logThrow(error)
                                 LoginResult.LOGIN_OR_PASSWORD
                             }
                             else -> {
-                                logThrow(error)
                                 LoginResult.TRY_LATER
                             }
                         }

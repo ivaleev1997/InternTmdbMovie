@@ -1,2 +1,7 @@
-include ':app', ':login', ':core-api', ':core-impl', ':core'
+include ':app', ':login', ':core-api', ':core-impl', ':core', ':user-profile'
 rootProject.name='RedMadRobotTMDB'
+include ':favorite'
+include ':details'
+include ':movies'
+include ':search'
+include ':testmodule'

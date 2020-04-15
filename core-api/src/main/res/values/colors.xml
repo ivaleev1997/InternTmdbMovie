@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/gray</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="dark_blue">#191A25</color>
+    <color name="orange">#FE4E27</color>
+    <color name="bottom_navigation_color">#282C3F</color>
+
+    <color name="text_color">#E7EDFF</color>
+    <color name="disabled_fill_button_color">#E6232636</color>
+    <color name="gray">#656D8A</color>
+    <color name="purple">#6C63FF</color>
+    <color name="title_gray">#E7EDFF</color>
+    <color name="green_color">#17B913</color>
+</resources>

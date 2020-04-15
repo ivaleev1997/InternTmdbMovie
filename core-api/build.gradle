@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 apply from: "$project.rootDir/spek_and_junit5.gradle"
 apply from: "$project.rootDir/common_build.gradle"
@@ -11,6 +13,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            buildConfigField "String", "TMDB_IMAGE_SERVER_URL", "\"${tmdb_image_url}\""
+        }
     }
 }
 
@@ -19,6 +24,7 @@ dependencies {
     implementation kotlin_std_lib
     implementation androidx_appcompat
     implementation androidx_core_ktx
+    implementation fragment
 
     testImplementation junit
     androidTestImplementation androidx_junit
@@ -32,4 +38,12 @@ dependencies {
 
     testImplementation assertj
 
+    // navigation component
+    implementation navigation_fragment
+    implementation navigation_ui
+    implementation navigation_ui_ktx
+    implementation navigation_fragment_ktx
+
+    implementation dagger2
+    kapt dagger2_compiler
 }

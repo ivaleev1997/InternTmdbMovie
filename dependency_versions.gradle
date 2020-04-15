@@ -20,7 +20,7 @@ ext {
 	rxjava2 = '2.1.1'
 	rxAndroid = '2.1.1'
 	timber_version = '4.7.1'
-
+	navigation_component_version = '2.2.1'
 
 	activity_ktx = "androidx.activity:activity-ktx:$activity_ktx_version"
 	androidx_appcompat = "androidx.appcompat:appcompat:$androidx_appcompat_version"
@@ -41,6 +41,10 @@ ext {
 	material = "com.google.android.material:material:$material_version"
 	mockito_core = "org.mockito:mockito-core:$mockito_version"
 	mockito_android = "org.mockito:mockito-android:$mockito_version"
+	navigation_fragment = "androidx.navigation:navigation-fragment:$navigation_component_version"
+	navigation_fragment_ktx = "androidx.navigation:navigation-fragment-ktx:$navigation_component_version"
+	navigation_ui = "androidx.navigation:navigation-ui:$navigation_component_version"
+	navigation_ui_ktx = "androidx.navigation:navigation-ui-ktx:$navigation_component_version"
 	okhttp3_log = "com.squareup.okhttp3:logging-interceptor:$okhttp3_log_version"
 	recyclerview = "androidx.recyclerview:recyclerview:$recyclerview_version"
 	retrofit2 = "com.squareup.retrofit2:retrofit:$retrofit2_version"

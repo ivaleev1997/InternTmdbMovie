@@ -1,9 +1,9 @@
 package com.education.core_impl.data.network.interceptor
 
 import com.education.core_api.data.LocalDataSource
+import javax.inject.Inject
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 
 class SessionIdInterceptor
     @Inject constructor (
