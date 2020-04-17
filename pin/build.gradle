@@ -57,7 +57,8 @@ dependencies {
             navigation_fragment_ktx,
             groupie,
             groupie_ktx,
-            cardview
+            cardview,
+            biometric
     )
 
     implementation project(':core')

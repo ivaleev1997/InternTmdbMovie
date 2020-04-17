@@ -79,7 +79,10 @@ dependencies {
             navigation_fragment_ktx,
             dagger2,
             timber,
-            lottie
+            groupie,
+            groupie_ktx,
+            lottie,
+            biometric
     )
 
     kapt dagger2_compiler

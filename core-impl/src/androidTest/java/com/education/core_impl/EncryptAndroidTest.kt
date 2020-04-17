@@ -13,7 +13,7 @@ class EncryptAndroidTest {
 
 
     private val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val encryption: Encryption = EncryptionImpl()
+    private val encryption: Encryption = EncryptionImpl(appContext)
 
     @Test
     fun encryptDecryptWithSamePasswordsTest() {
@@ -40,10 +40,10 @@ class EncryptAndroidTest {
     }
 
     @Test
-    fun encryptDecryptWithKeyStore() {
+    fun encryptDecryptWithoutPassword() {
         val dataToEncrypt = "hello"
 
-        val encrypted = encryption.encrypt(dataToEncrypt, appContext)
+        val encrypted = encryption.encrypt(dataToEncrypt)
         val actual = encryption.decrypt(encrypted)
 
         Assert.assertEquals(dataToEncrypt, actual)

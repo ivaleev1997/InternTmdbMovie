@@ -1,6 +1,6 @@
-package com.education.pin.presentation.item
+package com.education.core_api.presentation.view.numberKeyBoard.item
 
-import com.education.pin.R
+import com.education.core_api.R
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.backspace_item.view.*

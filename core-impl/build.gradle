@@ -43,7 +43,8 @@ dependencies {
             retrofit2_rxjava2_adapter,
             okhttp3_log,
             lifecycle_viewmodel,
-            dagger2
+            dagger2,
+            tink
     )
 
     api project(':core-api')

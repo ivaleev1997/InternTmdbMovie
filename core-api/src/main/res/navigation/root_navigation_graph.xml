@@ -45,7 +45,7 @@
 
         <action android:id="@+id/login_fragment_to_create_pin_fragment"
             app:destination="@id/create_pin_fragment"
-            app:popUpTo="@id/login_fragment"
+            app:popUpTo="@id/root_navigation_graph"
             app:popUpToInclusive="true" />
 
     </fragment>
@@ -71,8 +71,7 @@
     <action
         android:id="@+id/to_create_pin_fragment"
         app:destination="@id/create_pin_fragment"
-        app:popUpTo="@id/create_pin_fragment"
-        app:popUpToInclusive="true"
-        />
+        app:popUpTo="@id/root_navigation_graph"
+        app:popUpToInclusive="true" />
 
 </navigation>

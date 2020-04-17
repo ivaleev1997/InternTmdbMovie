@@ -18,6 +18,14 @@ class PinUseCase @Inject constructor(
         return pinRepository.fetchAndSaveUserName(context)
     }
 
+    fun saveMasterKeyPin(encryptedMasterKey: String): Completable {
+        return pinRepository.saveMasterKeyPin(encryptedMasterKey)
+    }
+
+    fun getMasterKeyPin(): Single<String> {
+        return pinRepository.getMasterKeyPin()
+    }
+
     fun getUserName(): Single<String> {
         return pinRepository.getUserName()
     }

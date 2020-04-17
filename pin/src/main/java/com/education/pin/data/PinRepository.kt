@@ -13,4 +13,8 @@ interface PinRepository {
     fun getUserName(): Single<String>
 
     fun getUserLogin(pin: String): Single<String>
+
+    fun saveMasterKeyPin(pin: String): Completable
+
+    fun getMasterKeyPin(): Single<String>
 }

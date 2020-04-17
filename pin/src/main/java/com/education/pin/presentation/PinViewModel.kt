@@ -1,63 +1,43 @@
 package com.education.pin.presentation
 
+import android.content.Context
+import android.os.Build
+import androidx.biometric.BiometricManager
 import androidx.lifecycle.MutableLiveData
 import com.education.core_api.extension.delegate
 import com.education.core_api.presentation.uievent.LogoutEvent
 import com.education.core_api.presentation.viewmodel.BaseViewModel
+import com.education.pin.biometric.BiometricSecurity
 import com.education.pin.domain.entity.EnterKeyStatus
-import com.education.pin.domain.entity.Number
 import com.education.pin.domain.entity.PinViewState
-import com.education.pin.presentation.item.BackSpaceItem
-import com.education.pin.presentation.item.ExitItem
-import com.education.pin.presentation.item.NumberItem
-import com.xwray.groupie.kotlinandroidextensions.Item
+import timber.log.Timber
 import java.util.*
-import kotlin.collections.HashMap
 
 abstract class PinViewModel : BaseViewModel() {
     companion object {
         const val PIN_NUMBERS_COUNT_4 = 4
-        const val KEYBOARD_NUMBERS_9 = 9
     }
 
-    val liveState = MutableLiveData(PinViewState(number = Number.ZERO))
+    lateinit var biometricSecurity: BiometricSecurity
+    val liveState = MutableLiveData(PinViewState())
     protected var state: PinViewState by liveState.delegate()
 
     var isSecondDeque = false
         protected set
 
+    var wasError = false
+        protected set
+
+    protected var isBiometricEnable = false
+
     protected val firstDeque: Deque<Int> = LinkedList<Int>()
     protected val secondDeque: Deque<Int> = LinkedList<Int>()
-
-    protected val dequeSizeMapToNumber: HashMap<Int, Number> = HashMap<Int,Number>().apply {
-        put(0, Number.ZERO)
-        put(1, Number.FIRST)
-        put(2, Number.SECOND)
-        put(3, Number.THIRD)
-        put(4, Number.FOURTH)
-    }
-
-    fun genKeyboardItems(withExit: Boolean): List<Item> {
-        val listNumbers = MutableList(KEYBOARD_NUMBERS_9) {
-            NumberItem(it + 1, ::onNumberClicked) as Item
-        }.apply {
-            if (withExit)
-                add(ExitItem(::onExitPressed))
-            else
-                add(NumberItem())
-            add(NumberItem(0, ::onNumberClicked))
-            add(BackSpaceItem(::onBackSpaceClicked))
-        }
-
-        return listNumbers
-    }
 
     protected fun withSecondDeque(number: Int) {
         if (secondDeque.size < PIN_NUMBERS_COUNT_4) {
             secondDeque.push(number)
             state = state.copy(
-                enterKeyStatus = EnterKeyStatus.ENTER,
-                number = dequeSizeMapToNumber[secondDeque.size]
+                enterKeyStatus = EnterKeyStatus.ENTER
             )
             if (secondDeque.size == PIN_NUMBERS_COUNT_4) {
                 checkPins()
@@ -65,17 +45,43 @@ abstract class PinViewModel : BaseViewModel() {
         }
     }
 
+    protected fun checkBiometric(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val biometricManager = BiometricManager.from(context)
+            when (biometricManager.canAuthenticate()) {
+                BiometricManager.BIOMETRIC_SUCCESS -> {
+                    Timber.d( "App can authenticate using biometrics.")
+                    isBiometricEnable = true
+                }
+                BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE ->
+                    Timber.d("No biometric features available on this device.")
+                BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
+                    Timber.d("Biometric features are currently unavailable.")
+                BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
+                    Timber.d("The user hasn't associated any biometric credentials with their account.")
+            }
+        }
+    }
+
+    fun clearDeques(vararg deques: Deque<Int> ) {
+        wasError = false
+        state = state.copy(enterKeyStatus = EnterKeyStatus.CLEAN)
+        deques.forEach { deque ->
+            deque.clear()
+        }
+    }
+
     protected fun backSpaceOnFirstDeque() {
         if (firstDeque.isNotEmpty()) {
             firstDeque.removeLast()
-            state = state.copy(enterKeyStatus = EnterKeyStatus.BACKSPACE, number = dequeSizeMapToNumber[firstDeque.size + 1])
+            state = state.copy(enterKeyStatus = EnterKeyStatus.BACKSPACE)
         }
     }
 
     protected fun backSpaceOnSecondDeque() {
         if (secondDeque.isNotEmpty()) {
             secondDeque.removeLast()
-            state = state.copy(enterKeyStatus = EnterKeyStatus.BACKSPACE, number = dequeSizeMapToNumber[secondDeque.size + 1])
+            state = state.copy(enterKeyStatus = EnterKeyStatus.BACKSPACE)
         }
     }
 
@@ -85,9 +91,9 @@ abstract class PinViewModel : BaseViewModel() {
 
     abstract fun onBackPressed()
 
-    protected abstract fun onNumberClicked(number: Int?)
+    abstract fun onNumberClicked(number: Int)
 
-    protected abstract fun onBackSpaceClicked()
+    abstract fun onBackSpaceClicked()
 
     protected abstract fun checkPins()
 

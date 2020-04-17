@@ -18,7 +18,7 @@ class UnAuthorizedEvent : Event
 
 class LogoutEvent : Event
 
-class TryLaterEvent : Event
+class TryLaterEvent(val message: String? = null) : Event
 
 class RootedDeviceEvent: Event
 

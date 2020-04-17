@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity(), BaseActivity {
             }
             RootStatus.NOT_ROOTED -> {
                 setupRootNavComponent()
-
                 viewModel.defineScreen()
             }
         }

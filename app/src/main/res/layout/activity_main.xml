@@ -25,7 +25,7 @@
         android:visibility="gone"
         app:animationView="@raw/alert_animation"
         app:message="@string/root_alert"
-        app:colorPrimaryOnBackground="true"
+        app:backgroundColor="?attr/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

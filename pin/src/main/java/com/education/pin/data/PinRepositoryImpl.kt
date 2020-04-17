@@ -15,7 +15,7 @@ class PinRepositoryImpl @Inject constructor(
 ): PinRepository {
     override fun saveCredentials(userCredentials: UserCredentials, pin: String): Completable {
         return Completable.fromAction {
-            localDataSource.setMasterKey(pin)
+            localDataSource.setMasterPinKey(pin)
             if (!localDataSource.saveUserCredentials(userCredentials))
                 throw TryLaterException("Error while save user credentials")
         }
@@ -43,10 +43,23 @@ class PinRepositoryImpl @Inject constructor(
     }
 
     override fun getUserLogin(pin: String): Single<String> {
-        localDataSource.setMasterKey(pin)
+        localDataSource.setMasterPinKey(pin)
 
         return Single.just(
             localDataSource.getUserLogin()
+        )
+    }
+
+    override fun saveMasterKeyPin(pin: String): Completable {
+        return Completable.fromAction {
+            if (!localDataSource.saveMasterPinKey(pin))
+                throw TryLaterException("Error while save user credentials")
+        }
+    }
+
+    override fun getMasterKeyPin(): Single<String> {
+        return Single.just(
+            localDataSource.getMasterPinKey()
         )
     }
 }

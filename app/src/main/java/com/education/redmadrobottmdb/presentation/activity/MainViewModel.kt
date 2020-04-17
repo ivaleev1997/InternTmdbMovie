@@ -8,6 +8,7 @@ import com.education.core_api.presentation.uievent.NavigateToEvent
 import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.login.presentation.LoginFragmentDirections
 import com.education.pin.presentation.enterpin.EnterPinFragmentDirections
+import com.education.redmadrobottmdb.BuildConfig
 import com.education.redmadrobottmdb.domain.MainActivityViewState
 import com.education.redmadrobottmdb.domain.RootStatus
 import com.scottyab.rootbeer.RootBeer
@@ -52,8 +53,8 @@ class MainViewModel @Inject constructor(
 
     private fun checkRoot(context: Context) {
         val rootBeer = RootBeer(context)
-        // Добавил знак "!" так как тестирую на эмуляторе!
-        if (!rootBeer.isRooted) {
+
+        if ( !BuildConfig.DEBUG && rootBeer.isRooted) {
             state = state.copy(rootStatus = RootStatus.ROOTED)
             isRootedDevice = true
         } else {

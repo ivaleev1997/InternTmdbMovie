@@ -84,7 +84,7 @@ abstract class BaseFragment(private val layoutId: Int) : Fragment() {
         findNavController().navigate(navDirections)
     }
 
-    private fun showTryLaterSnackBar(rootView: View, anchorView: View?) {
-        showSnackBar(rootView, resources.getString(R.string.try_later), anchorView)
+    private fun showTryLaterSnackBar(rootView: View, anchorView: View?, message: String? = null) {
+        showSnackBar(rootView, message ?: resources.getString(R.string.try_later), anchorView)
     }
 }

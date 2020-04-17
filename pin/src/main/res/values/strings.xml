@@ -3,5 +3,8 @@
     <string name="come_up_with_pin_code">Придумайте пин-код для быстрого доступа</string>
     <string name="repeat_pin_code">Повторите ваш пин-код</string>
     <string name="wrong_pin">Неверный пин-код</string>
-    <string name="exit">Выйти</string>
+    <string name="biometric_error">Произошла ошибка при сканировании отпечатка пальца.</string>
+    <string name="biometric_title">Используйте отпечаток пальца</string>
+    <string name="biometric_subtitle">Для быстрого входа</string>
+    <string name="biometric_negative_button_text">Использовать пин-код</string>
 </resources>

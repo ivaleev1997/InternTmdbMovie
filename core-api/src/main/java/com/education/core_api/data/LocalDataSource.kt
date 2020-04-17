@@ -5,7 +5,11 @@ import com.education.core_api.dto.UserCredentials
 
 interface LocalDataSource {
 
-    fun setMasterKey(pin: String)
+    fun setMasterPinKey(pin: String)
+
+    fun saveMasterPinKey(pinKey: String): Boolean
+
+    fun getMasterPinKey(): String
 
     fun saveSessionId(sessionId: String): Boolean
 

@@ -37,7 +37,6 @@
             android:gravity="center"
             android:textColor="?attr/colorAccent"
             android:textSize="24sp"
-            android:text="Виталий Белов"
 
             app:layout_constraintBottom_toTopOf="@+id/hiddenPin"
             app:layout_constraintEnd_toEndOf="@+id/createPinTitleTextView"
@@ -46,12 +45,12 @@
             app:layout_constraintTop_toBottomOf="@+id/createPinTitleTextView"
             tools:text="Виталий Белов" />
 
-        <include
+        <com.education.core_api.presentation.view.pin.PinCodeIndicator
             android:id="@+id/hiddenPin"
-            layout="@layout/hidden_display"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_4"
+            android:layout_marginTop="@dimen/margin_8"
+            app:countIndicators="4"
 
             app:layout_constraintBottom_toTopOf="@+id/wrongEnterTextView"
             app:layout_constraintEnd_toEndOf="@+id/userNameTextView"
@@ -80,15 +79,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include
+    <com.education.core_api.presentation.view.numberKeyBoard.NumberKeyBoard
         android:id="@+id/pinKeyboard"
-        layout="@layout/pin_keyboard"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/margin_16"
         android:layout_marginEnd="@dimen/margin_16"
         android:layout_marginBottom="@dimen/margin_8"
         android:visibility="visible"
+        app:exitButton="true"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,5 +99,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.35" />
 </androidx.constraintlayout.widget.ConstraintLayout>

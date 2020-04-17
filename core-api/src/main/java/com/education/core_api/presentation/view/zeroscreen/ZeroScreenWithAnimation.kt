@@ -3,7 +3,6 @@ package com.education.core_api.presentation.view.zeroscreen
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.annotation.RawRes
@@ -23,12 +22,16 @@ class ZeroScreenWithAnimation @JvmOverloads constructor(
 
         try {
             attrsArray = context.obtainStyledAttributes(attrs, R.styleable.ZeroScreenView)
-            with (attrsArray) {
-                stubAnimation = getResourceId(R.styleable.ZeroScreenView_animationView, R.raw.no_internet_connection_animation)
+            with(attrsArray) {
+                stubAnimation = getResourceId(
+                    R.styleable.ZeroScreenView_animationView,
+                    R.raw.no_internet_connection_animation
+                )
                 stubMessage = getString(R.styleable.ZeroScreenView_message) ?: resources.getString(
-                    R.string.unexpected_network_error)
+                    R.string.unexpected_network_error
+                )
                 stubRetryButton = getBoolean(R.styleable.ZeroScreenView_retryButton, false)
-                stubBackground = getBoolean(R.styleable.ZeroScreenView_colorPrimaryOnBackground, false)
+                stubBackground = getColor(R.styleable.ZeroScreenView_backgroundColor, 0)
             }
         } finally {
             attrsArray.recycle()
@@ -49,12 +52,12 @@ class ZeroScreenWithAnimation @JvmOverloads constructor(
             }
         }
 
-    var stubBackground: Boolean = false
+    var stubBackground: Int = 0
         set(value) {
             field = value
-            if (field) {
+            if (field != 0) {
                 // Не получилось получить colorPrimary из темы программно
-                zeroScreenContainer.setBackgroundResource(R.color.dark_blue)
+                zeroScreenContainer.setBackgroundColor(field)
             }
         }
 
@@ -67,12 +70,5 @@ class ZeroScreenWithAnimation @JvmOverloads constructor(
 
     fun setOnRepeatClickListener(listener: () -> Unit) {
         retryButton.setOnClickListener { listener() }
-    }
-
-    private fun getCurrentColorPrimary(): Int {
-        val typedValue = TypedValue()
-        context.theme.resolveAttribute(R.attr.colorPrimary, typedValue, true)
-
-        return typedValue.data
     }
 }
