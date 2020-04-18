@@ -10,6 +10,6 @@ class ProfileUseCase @Inject constructor(
 ) {
 
     fun loadUserProfile(): Single<Profile> {
-        return profileRepository.loadUserAccount().map { Profile(it.name, it.username) }
+        return profileRepository.loadUserAccount().map { Profile(it) }
     }
 }

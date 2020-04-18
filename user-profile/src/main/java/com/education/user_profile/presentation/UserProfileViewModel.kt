@@ -6,8 +6,8 @@ import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.delegate
 import com.education.core_api.extension.isNetworkException
 import com.education.core_api.extension.schedulersIoToMain
-import com.education.core_api.presentation.uievent.TryLaterEvent
 import com.education.core_api.presentation.uievent.NoNetworkEvent
+import com.education.core_api.presentation.uievent.TryLaterEvent
 import com.education.core_api.presentation.uievent.UnAuthorizedEvent
 import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.user_profile.domain.ProfileUseCase
@@ -22,12 +22,12 @@ class UserProfileViewModel(
     val liveState = MutableLiveData(createInitialState())
     private var state: UserProfileViewState by liveState.delegate()
 
-    private fun createInitialState() = UserProfileViewState("", "")
+    private fun createInitialState() = UserProfileViewState()
 
     fun loadUserProfile() {
         profileUseCase.loadUserProfile().schedulersIoToMain(schedulersProvider).subscribe(
             { profile ->
-                state = state.copy(userName = profile.name, userEmail = profile.email)
+                state = state.copy(userName = profile.name)
             },
             { error ->
                 when {

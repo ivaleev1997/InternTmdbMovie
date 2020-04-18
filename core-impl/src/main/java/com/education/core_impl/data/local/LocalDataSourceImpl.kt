@@ -4,15 +4,20 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.education.core_api.BLANK_STR
 import com.education.core_api.data.LocalDataSource
+import com.education.core_api.data.local.entuty.Movie
+import com.education.core_api.data.local.dao.MovieDao
 import com.education.core_api.dto.UserCredentials
 import com.education.core_api.extension.clear
 import com.education.core_api.extension.getStringOrBlank
 import com.education.core_api.extension.putString
+import io.reactivex.Completable
+import io.reactivex.Single
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(
+    private val movieDao: MovieDao,
     private val sharedPrefs: SharedPreferences,
     private val security: Security
 ) : LocalDataSource {
@@ -147,5 +152,13 @@ class LocalDataSourceImpl @Inject constructor(
 
     override fun clearLastOnStopTime() {
         sharedPrefs.putString(PREFS_ON_STOP_TIME, BLANK_STR)
+    }
+
+    override fun saveMovies(listMovies: List<Movie>): Completable {
+        return movieDao.insertMovies(listMovies)
+    }
+
+    override fun getMovies(): Single<List<Movie>> {
+        return movieDao.getMovies()
     }
 }

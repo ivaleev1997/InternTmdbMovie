@@ -8,7 +8,7 @@ import com.education.core_api.extension.schedulersIoToMain
 import com.education.favorite.domain.FavoriteUseCase
 import com.education.favorite.domain.entity.LoadFavoriteStatus
 import com.education.favorite.domain.entity.LoadFavoritesViewState
-import com.education.search.domain.entity.Movie
+import com.education.search.domain.entity.DomainMovie
 import com.education.search.presentation.MoviesRecyclerViewModel
 import io.reactivex.Flowable
 import java.util.*
@@ -20,7 +20,7 @@ class FavoriteViewModel(
 
     val loadLiveState = MutableLiveData(createInitialLoadViewState())
     private var loadState: LoadFavoritesViewState by loadLiveState.delegate()
-    private var favoriteListMovies: List<Movie> = listOf()
+    private var favoriteListDomainMovies: List<DomainMovie> = listOf()
 
     private fun createInitialLoadViewState(): LoadFavoritesViewState = LoadFavoritesViewState(LoadFavoriteStatus.LOAD)
 
@@ -29,7 +29,7 @@ class FavoriteViewModel(
             .distinctUntilChanged()
             .map { query -> query.toLowerCase(Locale.getDefault()).trim() }
             .map { query ->
-                Pair(query, favoriteListMovies.filterMovieByQuery(query))
+                Pair(query, favoriteListDomainMovies.filterMovieByQuery(query))
             }
             .schedulersComputationToMain(schedulersProvider)
             .subscribe { queryAndMovies ->
@@ -42,7 +42,7 @@ class FavoriteViewModel(
         favoriteUseCase.loadFavorites()
             .schedulersIoToMain(schedulersProvider)
             .subscribe({ movies ->
-                favoriteListMovies = movies
+                favoriteListDomainMovies = movies
                 setMoviesToScreenState(movies.filterMovieByQuery(lastFetchedQuery))
                 loadState = if (movies.isEmpty()) {
                     loadState.copy(loadFavoriteStatus = LoadFavoriteStatus.EMPTY)
@@ -54,7 +54,7 @@ class FavoriteViewModel(
             }).autoDispose()
     }
 
-    private fun List<Movie>.filterMovieByQuery(query: String) =
+    private fun List<DomainMovie>.filterMovieByQuery(query: String) =
         this.filter { movie ->
             movie.title.contains(query, true) || movie.originalTitle.contains(query, true)
         }

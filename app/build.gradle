@@ -79,4 +79,6 @@ dependencies {
     implementation project(':pin')
 
     kapt dagger2_compiler
+
+    debugImplementation debug_database
 }

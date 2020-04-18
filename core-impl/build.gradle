@@ -44,11 +44,14 @@ dependencies {
             okhttp3_log,
             lifecycle_viewmodel,
             dagger2,
-            tink
+            tink,
+            room,
+            room_rxjava2
     )
 
     api project(':core-api')
     kapt dagger2_compiler
+    kapt room_compiler
 
     testImplementation assertj
 

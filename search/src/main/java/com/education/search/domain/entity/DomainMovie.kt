@@ -1,6 +1,6 @@
 package com.education.search.domain.entity
 
-data class Movie(
+data class DomainMovie(
     val id: Long,
     val posterPath: String,
     val title: String,
@@ -14,7 +14,7 @@ data class Movie(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Movie
+        other as DomainMovie
 
         if (id != other.id) return false
         if (title != other.title) return false

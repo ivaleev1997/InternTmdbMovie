@@ -4,15 +4,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.education.search.R
-import com.education.search.domain.entity.Movie
+import com.education.search.domain.entity.DomainMovie
 import com.education.search.isShouldBeGreen
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.movie_item.view.*
 
 data class MovieListItem(
-    private val movie: Movie,
-    private val onClickCallBack: (Movie) -> Unit
+    private val domainMovie: DomainMovie,
+    private val onClickCallBack: (DomainMovie) -> Unit
 ): Item() {
     override fun bind(
         viewHolder: ViewHolder,
@@ -20,30 +20,30 @@ data class MovieListItem(
     ) {
         with(viewHolder.itemView) {
             Glide.with(posterImageView)
-                .load(movie.posterPath)
+                .load(domainMovie.posterPath)
                 .placeholder(resources.getDrawable(R.drawable.image_placeholder))
                 .transform(CenterCrop(), RoundedCorners(resources.getInteger(R.integer.round_corner_8)))
                 .into(posterImageView)
 
-            titleTextView.text = movie.title
-            originalTitleTextView.text = movie.originalTitle
-            genreTextView.text = movie.genre
-            averageTextView.text = movie.voteAverage.toString()
-            if (isShouldBeGreen(movie.voteAverage))
+            titleTextView.text = domainMovie.title
+            originalTitleTextView.text = domainMovie.originalTitle
+            genreTextView.text = domainMovie.genre
+            averageTextView.text = domainMovie.voteAverage.toString()
+            if (isShouldBeGreen(domainMovie.voteAverage))
                 averageTextView.setTextColor(resources.getColor(R.color.green_color))
-            votesCountTextView.text = movie.voteCount.toString()
+            votesCountTextView.text = domainMovie.voteCount.toString()
             movieItemContainer.setOnClickListener {
-                onClickCallBack.invoke(movie)
+                onClickCallBack.invoke(domainMovie)
             }
 
-            if (movie.runTime.isNotBlank()) {
+            if (domainMovie.runTime.isNotBlank()) {
                 val minWord = R.string.ru_locale_min
-                runTimeTextView.text = "${movie.runTime} ${resources.getString(minWord)}"
+                runTimeTextView.text = "${domainMovie.runTime} ${resources.getString(minWord)}"
             }
         }
     }
 
     override fun getLayout(): Int = R.layout.movie_item
 
-    override fun getId(): Long = movie.hashCode().toLong()
+    override fun getId(): Long = domainMovie.hashCode().toLong()
 }
