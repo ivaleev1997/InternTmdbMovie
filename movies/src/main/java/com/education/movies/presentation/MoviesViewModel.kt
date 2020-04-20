@@ -4,6 +4,7 @@ import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.schedulersComputationToMain
 import com.education.movies.domain.MoviesUseCase
 import com.education.search.domain.entity.MoviesScreenState
+import com.education.search.domain.entity.MoviesViewState
 import com.education.search.presentation.MoviesRecyclerViewModel
 import io.reactivex.Flowable
 import timber.log.Timber
@@ -24,7 +25,7 @@ class MoviesViewModel(
             .distinctUntilChanged()
             .skip(1)
             .observeOn(schedulersProvider.mainThread())
-            .filter { query -> query != lastFetchedQuery }
+            //.filter { query -> query != lastFetchedQuery }
             .doOnEach {
                 setMoviesScreenState(MoviesScreenState.ON_SEARCH, moviesToRecyclerItem(currentListMovies))
             }
@@ -46,4 +47,6 @@ class MoviesViewModel(
                 }
             ).autoDispose()
     }
+
+    override fun createInitialMoviesViewState(): MoviesViewState = MoviesViewState(MoviesScreenState.ZERO, listOf())
 }

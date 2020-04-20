@@ -1,11 +1,15 @@
 package com.education.search.presentation
 
+import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.education.core_api.extension.makeGone
-import com.education.core_api.extension.makeVisible
 import com.education.core_api.presentation.fragment.BaseFragment
+import com.education.core_api.presentation.view.recycler.FromLinearToGridChangeManagerRecycler
 import com.education.search.R
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
@@ -38,13 +42,9 @@ abstract class RecyclerFragment(
         })
     }
 
-    protected fun makeRecyclerVisible() {
-        moviesRecyclerView.makeVisible()
-    }
-
-    protected fun makeRecyclerGone() {
-        moviesRecyclerView.makeGone()
-    }
+    inline val Fragment.moviesRecycler: FromLinearToGridChangeManagerRecycler get() = moviesRecyclerView
+    inline val Fragment.notfoundImage: ImageView get() = notfoundImageView
+    inline val Fragment.notfoundText: TextView get() = notfoundTextView
 
     protected fun updateAdapter(listItems: List<Item>) {
         Timber.d("Update adapter: ${listItems.size}")
@@ -67,6 +67,18 @@ abstract class RecyclerFragment(
             view.setImageResource(R.drawable.ic_to_list_map)
         else
             view.setImageResource(R.drawable.ic_to_tile_map)
+    }
+
+    protected fun setFocusableEditText(editText: EditText?) {
+        // Установка курсора на searchInputLayout.editText
+        editText?.isFocusableInTouchMode = true
+        editText?.requestFocus()
+    }
+
+    protected fun showKeyboard(editText: EditText?) {
+        // Показать клавиатуру keyboard
+        val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
     }
 
 }

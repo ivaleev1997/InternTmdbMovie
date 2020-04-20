@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.education.core_api.di.AppWithComponent
@@ -106,14 +105,9 @@ class FavoriteFragment : RecyclerFragment(R.layout.favorite_fragment) {
             searchIcon.makeGone()
             searchInputLayout.makeVisible()
 
-            // Установка курсора на searchInputLayout.editText
-            searchInputLayout.editText?.isFocusableInTouchMode = true
-            searchInputLayout.editText?.requestFocus()
-
-            // Показать клавиатуру keyboard
-            val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.showSoftInput(searchInputLayout.editText, InputMethodManager.SHOW_IMPLICIT)
-        }
+            setFocusableEditText(searchInputLayout.editText)
+            showKeyboard(searchInputLayout.editText)
+            }
     }
 
     private fun renderLoadFavorites(loadFavoritesViewState: LoadFavoritesViewState) {
@@ -123,13 +117,12 @@ class FavoriteFragment : RecyclerFragment(R.layout.favorite_fragment) {
                 loadAnimation.makeVisible()
             }
             LoadFavoriteStatus.NON_EMPTY -> {
-                // visible recycler
-                makeRecyclerVisible()
+                moviesRecycler.makeVisible()
                 loadAnimation.makeGone()
                 mainContent.makeVisible()
             }
             LoadFavoriteStatus.EMPTY -> {
-                makeRecyclerGone()
+                moviesRecycler.makeGone()
                 loadAnimation.makeGone()
                 emptyContent.makeVisible()
             }

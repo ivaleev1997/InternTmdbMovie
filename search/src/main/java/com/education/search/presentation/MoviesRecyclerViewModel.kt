@@ -29,7 +29,7 @@ abstract class MoviesRecyclerViewModel : BaseViewModel() {
     abstract fun initSearchMovies(observableQuery: Flowable<String>)
 
     fun onClearTextIconClick() {
-        state = createInitialMoviesViewState()
+        state = state.copy(moviesScreenState = MoviesScreenState.CLEAN, listItems = listOf())
     }
 
     fun onReMapRecyclerClick() {
@@ -71,11 +71,7 @@ abstract class MoviesRecyclerViewModel : BaseViewModel() {
         }
     }
 
-    private fun createInitialMoviesViewState() =
-        MoviesViewState(
-            MoviesScreenState.CLEAN,
-            listOf()
-        )
+    protected abstract fun createInitialMoviesViewState(): MoviesViewState
 
     protected fun setMoviesToScreenState(listMovies: List<Movie>) {
         state = state.copy(listItems = moviesToRecyclerItem(listMovies))

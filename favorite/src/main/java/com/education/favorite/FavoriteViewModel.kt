@@ -9,6 +9,8 @@ import com.education.favorite.domain.FavoriteUseCase
 import com.education.favorite.domain.entity.LoadFavoriteStatus
 import com.education.favorite.domain.entity.LoadFavoritesViewState
 import com.education.search.domain.entity.Movie
+import com.education.search.domain.entity.MoviesScreenState
+import com.education.search.domain.entity.MoviesViewState
 import com.education.search.presentation.MoviesRecyclerViewModel
 import io.reactivex.Flowable
 import java.util.*
@@ -37,6 +39,11 @@ class FavoriteViewModel(
                 handleQueryAndMovies(queryAndMovies)
             }.autoDispose()
     }
+
+    override fun createInitialMoviesViewState() = MoviesViewState(
+            MoviesScreenState.CLEAN,
+            listOf()
+        )
 
     fun loadFavorites() {
         favoriteUseCase.loadFavorites()
