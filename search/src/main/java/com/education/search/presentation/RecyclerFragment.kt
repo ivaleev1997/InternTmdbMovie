@@ -81,4 +81,7 @@ abstract class RecyclerFragment(
         inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
     }
 
+    protected abstract fun setupSearchInput()
+
+    protected abstract fun setOnErrorRepeatListener()
 }

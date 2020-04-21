@@ -6,4 +6,5 @@ enum class MoviesScreenState {
     NONE_EMPTY,
     CLEAN,
     ON_SEARCH,
+    RETRY
 }

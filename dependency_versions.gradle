@@ -16,6 +16,7 @@ ext {
 	material_version = '1.1.0'
 	mockito_version = '2.25.0'
 	navigation_component_version = '2.2.1'
+	okhttp3_version = '4.5.0'
 	okhttp3_log_version = '3.9.1'
 	recyclerview_version = '1.1.0'
 	retrofit2_version = '2.6.1'
@@ -60,7 +61,8 @@ ext {
 	navigation_ui_ktx = "androidx.navigation:navigation-ui-ktx:$navigation_component_version"
 	navigation_runtime_ktx = "androidx.navigation:navigation-runtime-ktx:$navigation_component_version"
 	navigation_ui_ktx = "androidx.navigation:navigation-ui-ktx:$navigation_component_version"
-	okhttp3_log = "com.squareup.okhttp3:logging-interceptor:$okhttp3_log_version"
+	okhttp3 = "com.squareup.okhttp3:okhttp:$okhttp3_version"
+	okhttp3_log = "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
 	recyclerview = "androidx.recyclerview:recyclerview:$recyclerview_version"
 	retrofit2 = "com.squareup.retrofit2:retrofit:$retrofit2_version"
 	retrofit2_converter_gson = "com.squareup.retrofit2:converter-gson:$retrofit2_version"
@@ -98,7 +100,7 @@ ext {
 	assertj = "org.assertj:assertj-core:$assertj_version"
 	junit = "junit:junit:$junit_version"
 	mockito_kotlin2 = "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin2_version"
-	okhttp_mockwebserver = "com.squareup.okhttp3:mockwebserver:$okhttp3_mockwebserver_version"
+	okhttp_mockwebserver = "com.squareup.okhttp3:mockwebserver:$okhttp3_version"
 	robolectric = "org.robolectric:robolectric:$robolectric_version"
 	junit_jupiter_api = "org.junit.jupiter:junit-jupiter-api:$junit5_version"
 	junit_jupiter_engine = "org.junit.jupiter:junit-jupiter-engine:$junit5_version"

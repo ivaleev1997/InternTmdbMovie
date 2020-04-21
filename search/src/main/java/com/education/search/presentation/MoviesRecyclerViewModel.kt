@@ -71,7 +71,7 @@ abstract class MoviesRecyclerViewModel : BaseViewModel() {
         }
     }
 
-    protected abstract fun createInitialMoviesViewState(): MoviesViewState
+    private fun createInitialMoviesViewState(): MoviesViewState = MoviesViewState()
 
     protected fun setMoviesToScreenState(listMovies: List<Movie>) {
         state = state.copy(listItems = moviesToRecyclerItem(listMovies))
@@ -95,5 +95,10 @@ abstract class MoviesRecyclerViewModel : BaseViewModel() {
                 MoviesFragmentDirections.actionToDetails(movie.id)
             )
         )
+    }
+
+    open fun onErrorRepeatClicked() {
+        state = state.copy(moviesScreenState = MoviesScreenState.CLEAN)
+        state = state.copy(moviesScreenState = MoviesScreenState.RETRY)
     }
 }

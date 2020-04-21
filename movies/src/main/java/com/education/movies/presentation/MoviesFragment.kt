@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.education.core_api.BLANK_STR
 import com.education.core_api.di.AppWithComponent
 import com.education.core_api.extension.makeGone
 import com.education.core_api.extension.makeVisible
@@ -43,13 +44,7 @@ class MoviesFragment : RecyclerFragment(R.layout.movies_fragment) {
     }
 
     override fun initViewElements(view: View) {
-        viewModel.initSearchMovies(
-            searchTextEdit.textChanges()
-                .map { it.toString() }
-                .toFlowable(
-                    BackpressureStrategy.LATEST
-                )
-        )
+        setupSearchInput()
 
         setupMoviesRecycler(viewModel.recyclerMapState.value == true)
 
@@ -69,6 +64,26 @@ class MoviesFragment : RecyclerFragment(R.layout.movies_fragment) {
 
     }
 
+    override fun setupSearchInput() {
+        viewModel.initSearchMovies(
+            searchTextEdit.textChanges()
+                .map { it.toString() }
+                .toFlowable(
+                    BackpressureStrategy.LATEST
+                )
+        )
+    }
+
+    override fun setOnErrorRepeatListener() {
+        networkErrorView.setOnRepeatClickListener {
+            val currentQuery = "${searchTextEdit.text}"
+            searchTextEdit.setText(BLANK_STR)
+            searchTextEdit.setText(currentQuery)
+
+            viewModel.onErrorRepeatClicked()
+        }
+    }
+
     private fun searchInputEndIconListener() {
         searchInputLayout.setEndIconOnClickListener {
             searchInputLayout.editText?.setText("")
@@ -82,17 +97,6 @@ class MoviesFragment : RecyclerFragment(R.layout.movies_fragment) {
         observe(viewModel.recyclerMapState, ::renderRecyclerMapState)
         observe(viewModel.adapterItemsState, ::updateAdapter)
         observe(viewModel.eventsQueue, ::onEvent)
-    }
-
-    private fun setOnErrorRepeatListener() {
-        networkErrorView.setOnRepeatClickListener {
-            networkErrorView.makeGone()
-            mainContent.makeVisible()
-            // TODO retry request
-            //val currentQuery = "${loginTextEdit.text} "
-            //loginTextEdit.setText(currentQuery)
-            //loginTextEdit.setText(loginTextEdit.text?.trim())
-        }
     }
 
     private fun onEvent(event: Event) {
@@ -139,6 +143,10 @@ class MoviesFragment : RecyclerFragment(R.layout.movies_fragment) {
                 Timber.d("ZERO")
                 renderZeroState()
             }
+            MoviesScreenState.RETRY -> {
+                Timber.d("RETRY")
+                renderRetryState()
+            }
         }
     }
 
@@ -157,6 +165,12 @@ class MoviesFragment : RecyclerFragment(R.layout.movies_fragment) {
             setFocusableEditText(searchInputLayout.editText)
             showKeyboard(searchInputLayout.editText)
         }
+    }
+
+    private fun renderRetryState() {
+        progressBar.makeVisible()
+        networkErrorView.makeGone()
+        mainContent.makeVisible()
     }
 
     private fun fromZeroToCleanState() {

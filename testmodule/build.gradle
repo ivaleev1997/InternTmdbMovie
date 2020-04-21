@@ -38,7 +38,7 @@ dependencies {
             retrofit2,
             retrofit2_converter_gson,
             retrofit2_rxjava2_adapter,
-            okhttp3_log,
+            okhttp3,
             okhttp_mockwebserver,
             androidx_core
     )
