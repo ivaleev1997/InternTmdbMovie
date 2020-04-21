@@ -7,7 +7,7 @@ import com.education.core_api.data.local.entuty.Movie
 
 @Database(
     entities = [Movie::class],
-    version = 3,
+    version = 1,
     exportSchema = true
 )
 abstract class AppDbImpl : RoomDatabase(), AppDb

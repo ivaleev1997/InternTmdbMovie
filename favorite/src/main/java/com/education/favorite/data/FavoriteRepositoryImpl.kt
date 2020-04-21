@@ -54,8 +54,7 @@ class FavoriteRepositoryImpl @Inject constructor(
                 detailsMovie.title,
                 detailsMovie.popularity,
                 detailsMovie.runTime,
-                detailsMovie.genres.joinGenreArrayToString(),
-                false
+                detailsMovie.genres.joinGenreArrayToString()
             )
         }
     }

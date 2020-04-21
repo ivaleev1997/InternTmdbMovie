@@ -16,6 +16,5 @@ data class Movie(
     val title: String,
     val popularity: Double,
     val runTime: Int,
-    val genres: String,
-    val isWorthWatching: Boolean
+    val genres: String
 )
