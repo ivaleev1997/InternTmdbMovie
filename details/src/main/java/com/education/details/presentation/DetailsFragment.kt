@@ -7,8 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -17,10 +15,10 @@ import com.education.core_api.di.AppWithComponent
 import com.education.core_api.extension.makeGone
 import com.education.core_api.extension.makeVisible
 import com.education.core_api.extension.observe
+import com.education.core_api.extension.viewModels
 import com.education.core_api.presentation.fragment.BaseFragment
 import com.education.core_api.presentation.uievent.Event
 import com.education.core_api.presentation.uievent.NoNetworkEvent
-import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.details.R
 import com.education.details.di.DetailsComponent
 import com.education.details.domain.entity.DetailsViewState
@@ -36,20 +34,15 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
     }
 
     @Inject
-    internal lateinit var viewModelTrigger: ViewModelTrigger
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    //@Inject
-    //internal lateinit var viewModelFactory: DetailsViewModel.Factory
+    lateinit var viewModelFactory: DetailsViewModel.Factory
 
     private lateinit var favoriteItem: MenuItem
 
-    private val viewModel: DetailsViewModel by viewModels {
-        viewModelFactory
-    }
-
     private val args: DetailsFragmentArgs by navArgs()
+
+    private val viewModel: DetailsViewModel by viewModels {
+        viewModelFactory.get(args.movieId, resources.getString(R.string.ru_locale_min))
+    }
 
     override fun onAttach(context: Context) {
         DetailsComponent.create((requireActivity().application as AppWithComponent).getComponent()).inject(this)
@@ -58,9 +51,18 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
 
     override fun initViewElements(view: View) {
         setupToolBar()
-        viewModel.loadDetails(args.movieId, resources.getString(R.string.ru_locale_min))
+
+        setOnErrorRepeatListener()
 
         observeLiveDataChanges()
+    }
+
+    private fun setOnErrorRepeatListener() {
+        networkErrorView.setOnRepeatClickListener {
+            networkErrorView.makeGone()
+            loadAnimation.makeVisible()
+            viewModel.onErrorRepeatClicked()
+        }
     }
 
     private fun observeLiveDataChanges() {
@@ -85,42 +87,45 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
         toolbar.setNavigationOnClickListener {
             navigateUp()
         }
-
     }
 
     private fun renderView(detailsViewState: DetailsViewState) {
         when (detailsViewState.loadStatus) {
             LoadStatus.SUCCESS -> {
-                if (detailsViewState.movieOverView != null)
-                    with(detailsViewState.movieOverView) {
-                        Glide.with(requireContext())
-                            .load(posterPath)
-                            .placeholder(resources.getDrawable(R.drawable.image_placeholder))
-                            .transform(CenterCrop(), RoundedCorners(8))
-                            .into(posterImageView)
-
-                        titleTextView.text = title
-                        originalTitleTextView.text = originalTitle
-                        genresTextView.text = genre
-                        runTimeTextView.text = runTime
-                        voteAverageTextView.text = voteAverage
-                        voteCountTextView.text = voteCount
-                        changeFavoriteIcon(isFavorite)
-                        if (overView.isBlank()) {
-                            noContentView.visibility = View.VISIBLE
-                        } else {
-                            overViewContainer.visibility = View.VISIBLE
-                            overViewTextView.text = overView
-                        }
-                    }
-                loadAnimation.makeGone()
-                detailsMainContent.makeVisible()
+                renderLoadedContent(detailsViewState)
             }
 
             LoadStatus.LOAD -> {
                 loadAnimation.makeVisible()
             }
         }
+    }
+
+    private fun renderLoadedContent(detailsViewState: DetailsViewState) {
+        if (detailsViewState.movieOverView != null)
+            with(detailsViewState.movieOverView) {
+                Glide.with(requireContext())
+                    .load(posterPath)
+                    .placeholder(resources.getDrawable(R.drawable.image_placeholder))
+                    .transform(CenterCrop(), RoundedCorners(8))
+                    .into(posterImageView)
+
+                titleTextView.text = title
+                originalTitleTextView.text = originalTitle
+                genresTextView.text = genre
+                runTimeTextView.text = runTime
+                voteAverageTextView.text = voteAverage
+                voteCountTextView.text = voteCount
+                changeFavoriteIcon(isFavorite)
+                if (overView.isBlank()) {
+                    noContentView.makeVisible()
+                } else {
+                    overViewContainer.makeVisible()
+                    overViewTextView.text = overView
+                }
+            }
+        loadAnimation.makeGone()
+        detailsMainContent.makeVisible()
     }
 
     private fun changeFavoriteIcon(flag: Boolean?) {

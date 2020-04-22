@@ -7,7 +7,6 @@ import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.pin.data.PinRepository
 import com.education.pin.data.PinRepositoryImpl
 import com.education.pin.domain.PinUseCase
-import com.education.pin.presentation.createpin.CreatePinViewModel
 import com.education.pin.presentation.enterpin.EnterPinViewModel
 import dagger.Binds
 import dagger.Module
@@ -15,7 +14,7 @@ import dagger.Provides
 import javax.inject.Named
 import javax.inject.Singleton
 
-@Module(includes = [SchedulersProviderModule::class])
+@Module(includes = [SchedulersProviderModule::class, AssistedViewModelModule::class])
 abstract class PinModule {
 
     @Binds
@@ -23,21 +22,6 @@ abstract class PinModule {
 
     @Module
     companion object {
-        @Provides
-        @JvmStatic
-        @Singleton
-        @Named("PinViewModel")
-        fun provideCreatePinViewModel(
-            map: @JvmSuppressWildcards MutableMap<Class<out ViewModel>, ViewModel>,
-            pinUseCase: PinUseCase,
-            schedulersProvider: SchedulersProvider
-        ): ViewModel = CreatePinViewModel(
-            pinUseCase,
-            schedulersProvider
-        ).also {
-            map[CreatePinViewModel::class.java] = it
-        }
-
         @Provides
         @JvmStatic
         @Singleton
@@ -56,13 +40,6 @@ abstract class PinModule {
         @Provides
         @JvmStatic
         @Singleton
-        @Named("PinViewModel")
-        fun provideTriggerCreatePin(@Named("PinViewModel")viewModel: ViewModel) = ViewModelTrigger()
-
-        @Provides
-        @JvmStatic
-        @Singleton
-        @Named("EnterPinViewModel")
         fun provideTriggerEnterPin(@Named("EnterPinViewModel")viewModel: ViewModel) = ViewModelTrigger()
     }
 }

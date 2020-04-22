@@ -4,15 +4,13 @@ import android.content.Context
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.education.core_api.di.AppWithComponent
 import com.education.core_api.extension.makeInvisible
 import com.education.core_api.extension.makeVisible
 import com.education.core_api.extension.observe
+import com.education.core_api.extension.viewModels
 import com.education.core_api.presentation.uievent.Event
-import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.pin.R
 import com.education.pin.biometric.BiometricSecurity
 import com.education.pin.di.PinComponent
@@ -21,7 +19,6 @@ import com.education.pin.domain.entity.PinViewState
 import com.education.pin.presentation.PinFragment
 import kotlinx.android.synthetic.main.create_pin_fragment.*
 import javax.inject.Inject
-import javax.inject.Named
 
 class CreatePinFragment : PinFragment(R.layout.create_pin_fragment) {
 
@@ -30,18 +27,24 @@ class CreatePinFragment : PinFragment(R.layout.create_pin_fragment) {
             CreatePinFragment()
     }
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+//    @Inject
+//    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+//
+//    @Inject
+//    @Named("PinViewModel")
+//    internal lateinit var viewModelTrigger: ViewModelTrigger
 
     @Inject
-    @Named("PinViewModel")
-    internal lateinit var viewModelTrigger: ViewModelTrigger
-
-    private val viewModel: CreatePinViewModel by viewModels {
-        viewModelFactory
-    }
+    internal lateinit var viewModelFactory: CreatePinViewModel.Factory
 
     private val args: CreatePinFragmentArgs by navArgs()
+
+    private val viewModel: CreatePinViewModel by viewModels {
+        viewModelFactory.get(
+            requireActivity().applicationContext,
+            args.userCredentials
+        )
+    }
 
     override fun onAttach(context: Context) {
         PinComponent.create((requireActivity().application as AppWithComponent).getComponent()).inject(this)
@@ -49,8 +52,6 @@ class CreatePinFragment : PinFragment(R.layout.create_pin_fragment) {
     }
 
     override fun initViewElements(view: View) {
-        viewModel.appContext = requireActivity().applicationContext
-        viewModel.userCredentials = args.userCredentials
         viewModel.biometricSecurity = BiometricSecurity(true, this, ContextCompat.getMainExecutor(context))
         viewModel.checkBiometric()
 

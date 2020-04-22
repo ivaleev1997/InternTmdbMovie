@@ -7,6 +7,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.education.core_api.di.AppWithComponent
+import com.education.core_api.extension.makeGone
+import com.education.core_api.extension.makeVisible
 import com.education.core_api.extension.observe
 import com.education.core_api.presentation.activity.BaseActivity
 import com.education.core_api.presentation.fragment.BaseFragment
@@ -47,7 +49,8 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
 
         enterButton.setOnClickListener {
             clearMsgFromEnterStatusTextView()
-            enterProgressBar.visibility = View.VISIBLE
+            enterProgressBar.makeVisible()
+            transparentView.makeVisible()
             viewModel.onLoginButtonClicked(
                 loginTextInput.getEditTextString(),
                 passwordTextInput.getEditTextString()
@@ -100,7 +103,8 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
         }
 
         viewModel.login.observe(viewLifecycleOwner) { resultStatus ->
-            enterProgressBar.visibility = View.GONE
+            enterProgressBar.makeGone()
+            transparentView.makeGone()
             when (resultStatus) {
                 LoginResult.LOGIN_OR_PASSWORD -> setMsgToEnterStatusTextView(R.string.error_login)
                 LoginResult.TRY_LATER -> setMsgToEnterStatusTextView(R.string.error_later)

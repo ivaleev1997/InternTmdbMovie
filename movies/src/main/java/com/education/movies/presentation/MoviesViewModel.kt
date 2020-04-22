@@ -23,14 +23,17 @@ class MoviesViewModel(
         observableQuery
             .distinctUntilChanged()
             .skip(1)
-            .observeOn(schedulersProvider.mainThread())
-            .filter { query -> query != lastFetchedQuery }
-            .doOnEach {
-                setMoviesScreenState(MoviesScreenState.ON_SEARCH, moviesToRecyclerItem(currentListMovies))
-            }
             .observeOn(schedulersProvider.computation())
             .debounce(RX_DEBOUNCE_INTERVAL_500, TimeUnit.MILLISECONDS)
+            .filter { query -> query != lastFetchedQuery }
             .map { query -> query.toLowerCase(Locale.getDefault()).trim() }
+            .observeOn(schedulersProvider.mainThread())
+            .doOnEach { filteredQuery ->
+                filteredQuery.value?.let {
+                    lastFetchedQuery = it
+                }
+                setMoviesScreenState(MoviesScreenState.ON_SEARCH, moviesToRecyclerItem(currentListMovies))
+            }
             .observeOn(schedulersProvider.io())
             .switchMapSingle { query -> moviesUseCase.searchQuery(query) }
             .schedulersComputationToMain(schedulersProvider)

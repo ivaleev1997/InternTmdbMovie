@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.enter_pin_fragment.*
 import kotlinx.android.synthetic.main.enter_pin_fragment.hiddenPin
 import kotlinx.android.synthetic.main.enter_pin_fragment.pinKeyboard
 import javax.inject.Inject
-import javax.inject.Named
 
 class EnterPinFragment : PinFragment(R.layout.enter_pin_fragment) {
 
@@ -36,7 +35,6 @@ class EnterPinFragment : PinFragment(R.layout.enter_pin_fragment) {
     internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    @Named("EnterPinViewModel")
     internal lateinit var viewModelTrigger: ViewModelTrigger
 
     private val viewModel: EnterPinViewModel by viewModels {
