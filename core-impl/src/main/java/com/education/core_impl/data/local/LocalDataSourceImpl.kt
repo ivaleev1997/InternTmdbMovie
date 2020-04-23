@@ -31,6 +31,7 @@ class LocalDataSourceImpl @Inject constructor(
         const val PREFS_USER_PASSWORD = "userPassword"
         const val PREFS_ON_STOP_TIME = "onStopTime"
         const val PREFS_MASTER_KEY_PIN = "masterPinKey"
+        const val PREFS_MAP_RECYCLER_STATE = "recyclerMapState"
 
         fun convertTime(timeString: String): Long {
             val timeFormat = "yyyy-MM-dd HH:mm:ss"
@@ -159,5 +160,18 @@ class LocalDataSourceImpl @Inject constructor(
 
     override fun getMovies(): Single<List<Movie>> {
         return movieDao.getMovies()
+    }
+
+    override fun saveRecyclerMapState(flag: Boolean) {
+        sharedPrefs.putString(PREFS_MAP_RECYCLER_STATE, security.encrypt(flag.toString()))
+    }
+
+    override fun getRecyclerMapState(): Boolean {
+        val decrypted =
+            security.decrypt(sharedPrefs.getStringOrBlank(PREFS_MAP_RECYCLER_STATE, BLANK_STR))
+
+        return if (decrypted.isNotBlank())
+                    decrypted.toBoolean()
+                else false
     }
 }

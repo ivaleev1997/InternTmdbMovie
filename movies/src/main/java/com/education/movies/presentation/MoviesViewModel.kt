@@ -2,13 +2,14 @@ package com.education.movies.presentation
 
 import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.schedulersComputationToMain
+import com.education.core_api.extension.schedulersIoToMain
 import com.education.movies.domain.MoviesUseCase
 import com.education.search.domain.entity.MoviesScreenState
 import com.education.search.presentation.MoviesRecyclerViewModel
 import io.reactivex.Flowable
+import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
-import timber.log.Timber
 
 class MoviesViewModel(
     private val moviesUseCase: MoviesUseCase,
@@ -17,6 +18,10 @@ class MoviesViewModel(
 
     companion object {
         const val RX_DEBOUNCE_INTERVAL_500 = 500L // mills
+    }
+
+    init {
+        loadRecyclerMapState()
     }
 
     override fun initSearchMovies(observableQuery: Flowable<String>) {
@@ -43,5 +48,21 @@ class MoviesViewModel(
                 },
                 { error -> Timber.e(error) }
             ).autoDispose()
+    }
+
+    override fun saveRecyclerMapState(isLinearLayout: Boolean) {
+        moviesUseCase.saveRecyclerMapState(isLinearLayout)
+            .schedulersIoToMain(schedulersProvider)
+            .subscribe()
+            .autoDispose()
+    }
+
+    override fun loadRecyclerMapState() {
+        moviesUseCase.getRecyclerMapState()
+            .schedulersIoToMain(schedulersProvider)
+            .subscribe(::reMapRecycler) { error ->
+                Timber.d(error)
+            }
+            .autoDispose()
     }
 }

@@ -51,4 +51,8 @@ interface LocalDataSource {
     fun saveMovies(listMovies: List<Movie>): Completable
 
     fun getMovies(): Single<List<Movie>>
+
+    fun saveRecyclerMapState(flag: Boolean)
+
+    fun getRecyclerMapState(): Boolean
 }

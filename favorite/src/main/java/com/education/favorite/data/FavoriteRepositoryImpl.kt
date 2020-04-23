@@ -18,6 +18,14 @@ class FavoriteRepositoryImpl @Inject constructor(
             .onErrorResumeNext(getMoviesFromLocalStore())
     }
 
+    override fun saveRecyclerMapState(flag: Boolean): Completable {
+        return Completable.fromAction { localDataSource.saveRecyclerMapState(flag) }
+    }
+
+    override fun getRecyclerMapState(): Single<Boolean> {
+        return Single.just(localDataSource.getRecyclerMapState())
+    }
+
     private fun loadDetails(long: Long): Single<DetailsMovie> {
         return tmdbMovieApi.getDetailsMovie(long)
     }

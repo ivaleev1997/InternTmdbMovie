@@ -11,6 +11,7 @@ import com.education.favorite.domain.entity.LoadFavoritesViewState
 import com.education.search.domain.entity.DomainMovie
 import com.education.search.presentation.MoviesRecyclerViewModel
 import io.reactivex.Flowable
+import timber.log.Timber
 import java.util.*
 
 class FavoriteViewModel(
@@ -24,6 +25,10 @@ class FavoriteViewModel(
 
     private fun createInitialLoadViewState(): LoadFavoritesViewState = LoadFavoritesViewState(LoadFavoriteStatus.LOAD)
 
+    init {
+        loadRecyclerMapState()
+    }
+
     override fun initSearchMovies(observableQuery: Flowable<String>) {
         observableQuery
             .distinctUntilChanged()
@@ -36,6 +41,22 @@ class FavoriteViewModel(
                 lastFetchedQuery = query
                 handleQueryAndMovies(query, movies)
             }.autoDispose()
+    }
+
+    override fun saveRecyclerMapState(isLinearLayout: Boolean) {
+        favoriteUseCase.saveRecyclerMapState(isLinearLayout)
+            .schedulersIoToMain(schedulersProvider)
+            .subscribe()
+            .autoDispose()
+    }
+
+    override fun loadRecyclerMapState() {
+        favoriteUseCase.getRecyclerMapState()
+            .schedulersIoToMain(schedulersProvider)
+            .subscribe(::reMapRecycler) { error ->
+                Timber.d(error)
+            }
+            .autoDispose()
     }
 
     fun loadFavorites() {

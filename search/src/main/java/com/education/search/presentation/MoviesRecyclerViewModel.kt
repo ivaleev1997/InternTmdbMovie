@@ -33,7 +33,12 @@ abstract class MoviesRecyclerViewModel : BaseViewModel() {
 
     fun onReMapRecyclerClick() {
         val isLinearRecyclerMap = !(recyclerMapState.value as Boolean)
-        setRecyclerMapState(isLinearRecyclerMap)
+        saveRecyclerMapState(isLinearRecyclerMap)
+        reMapRecycler(isLinearRecyclerMap)
+    }
+
+    protected fun reMapRecycler(isLinearLayout: Boolean) {
+        setRecyclerMapState(isLinearLayout)
         setAdapterItems(moviesToRecyclerItem(currentListMovies))
     }
 
@@ -98,4 +103,8 @@ abstract class MoviesRecyclerViewModel : BaseViewModel() {
             )
         )
     }
+
+    protected abstract fun saveRecyclerMapState(isLinearLayout: Boolean)
+
+    protected abstract fun loadRecyclerMapState()
 }
