@@ -13,7 +13,6 @@ import com.education.search.presentation.recycleritem.MovieListItem
 import com.education.search.presentation.recycleritem.MovieTileItem
 import com.xwray.groupie.kotlinandroidextensions.Item
 import io.reactivex.Flowable
-import timber.log.Timber
 
 abstract class MoviesRecyclerViewModel : BaseViewModel() {
     protected var currentListMovies = listOf<DomainMovie>()
@@ -38,17 +37,16 @@ abstract class MoviesRecyclerViewModel : BaseViewModel() {
         setAdapterItems(moviesToRecyclerItem(currentListMovies))
     }
 
-    protected fun handleQueryAndMovies(movies: Pair<String, List<DomainMovie>>) {
-        Timber.d("handleQueryAndMovies: (${movies.first};${movies.second})")
+    protected fun handleQueryAndMovies(query: String, movies: List<DomainMovie>) {
         when {
-            movies.first.isBlank() -> {
-                setMoviesScreenState(MoviesScreenState.CLEAN, moviesToRecyclerItem(movies.second))
+            query.isBlank() -> {
+                setMoviesScreenState(MoviesScreenState.CLEAN, moviesToRecyclerItem(movies))
             }
-            movies.first.isNotBlank() && movies.second.isEmpty() -> {
-                setMoviesScreenState(MoviesScreenState.EMPTY, moviesToRecyclerItem(movies.second))
+            query.isNotBlank() && movies.isEmpty() -> {
+                setMoviesScreenState(MoviesScreenState.EMPTY, moviesToRecyclerItem(movies))
             }
             else -> {
-                setMoviesScreenState(MoviesScreenState.NONE_EMPTY, moviesToRecyclerItem(movies.second))
+                setMoviesScreenState(MoviesScreenState.NONE_EMPTY, moviesToRecyclerItem(movies))
             }
         }
     }

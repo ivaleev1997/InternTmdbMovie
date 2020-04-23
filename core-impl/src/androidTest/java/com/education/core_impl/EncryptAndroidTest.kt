@@ -11,7 +11,6 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class EncryptAndroidTest {
 
-
     private val appContext = InstrumentationRegistry.getInstrumentation().targetContext
     private val encryption: Encryption = EncryptionImpl(appContext)
 

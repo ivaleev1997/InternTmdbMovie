@@ -12,7 +12,7 @@ import javax.inject.Inject
 class PinRepositoryImpl @Inject constructor(
     private val tmdbMovieApi: TmdbMovieApi,
     private val localDataSource: LocalDataSource
-): PinRepository {
+) : PinRepository {
     override fun saveCredentials(userCredentials: UserCredentials, pin: String): Completable {
         return Completable.fromAction {
             localDataSource.setMasterPinKey(pin)

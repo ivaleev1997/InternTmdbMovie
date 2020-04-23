@@ -54,7 +54,6 @@ abstract class BaseFragment(private val layoutId: Int) : Fragment() {
         (requireActivity() as BaseActivity).logout()
     }
 
-
     fun navigateUp() {
         Timber.d("Navigate up")
         findNavController().navigateUp()

@@ -25,9 +25,9 @@ import com.education.details.R
 import com.education.details.di.DetailsComponent
 import com.education.details.domain.entity.DetailsViewState
 import com.education.details.domain.entity.LoadStatus
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.details_fragment.*
 import kotlinx.android.synthetic.main.details_main_content.*
-import javax.inject.Inject
 
 class DetailsFragment : BaseFragment(R.layout.details_fragment) {
 
@@ -40,8 +40,8 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
     @Inject
     internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    //@Inject
-    //internal lateinit var viewModelFactory: DetailsViewModel.Factory
+    // @Inject
+    // internal lateinit var viewModelFactory: DetailsViewModel.Factory
 
     private lateinit var favoriteItem: MenuItem
 
@@ -85,7 +85,6 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
         toolbar.setNavigationOnClickListener {
             navigateUp()
         }
-
     }
 
     private fun renderView(detailsViewState: DetailsViewState) {

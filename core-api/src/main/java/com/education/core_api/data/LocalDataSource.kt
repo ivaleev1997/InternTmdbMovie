@@ -1,7 +1,7 @@
 package com.education.core_api.data
 
 import android.content.Context
-import com.education.core_api.data.local.entuty.Movie
+import com.education.core_api.data.local.entity.Movie
 import com.education.core_api.dto.UserCredentials
 import io.reactivex.Completable
 import io.reactivex.Single

@@ -1,9 +1,9 @@
 package com.education.movies
 
+import java.net.HttpURLConnection
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
-import java.net.HttpURLConnection
 
 const val avengersResponseBody = """{
   "page": 1,

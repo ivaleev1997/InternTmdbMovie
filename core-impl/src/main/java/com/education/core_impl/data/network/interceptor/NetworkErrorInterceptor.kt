@@ -5,11 +5,11 @@ import com.education.core_api.data.network.entity.StatusResponse
 import com.education.core_api.data.network.exception.ServerException
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import okhttp3.Interceptor
-import okhttp3.Response
 import java.net.HttpURLConnection.HTTP_CREATED
 import java.net.HttpURLConnection.HTTP_OK
 import javax.inject.Inject
+import okhttp3.Interceptor
+import okhttp3.Response
 
 class NetworkErrorInterceptor
     @Inject constructor(

@@ -51,17 +51,17 @@ class LoginRepositoryImpl
     override fun getRequestTokenLifeTime() = requestTokenLife
 
     private fun saveRequestToken(token: String) {
-        //localDataSource.saveRequestToken(token)
+        // localDataSource.saveRequestToken(token)
         requestToken = token
     }
 
     private fun saveSessionId(session: String) {
-        //localDataSource.saveSessionId(session)
+        // localDataSource.saveSessionId(session)
         sessionId = session
     }
 
     private fun saveTokenLifeTime(expiresAt: String) {
-        //localDataSource.saveTokenLifeTime(expiresAt)
+        // localDataSource.saveTokenLifeTime(expiresAt)
         requestTokenLife = expiresAt
     }
 }

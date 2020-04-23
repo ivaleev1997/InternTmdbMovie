@@ -3,9 +3,9 @@ package com.education.movies
 import com.education.movies.data.repository.MoviesRepository
 import com.education.movies.data.repository.MoviesRepositoryImpl
 import com.education.movies.domain.MoviesUseCase
+import com.education.movies.presentation.MoviesViewModel
 import com.education.search.domain.entity.MoviesScreenState
 import com.education.search.domain.entity.MoviesViewState
-import com.education.movies.presentation.MoviesViewModel
 import com.education.testmodule.MockTmdbMovieWebServer
 import com.education.testmodule.TestSchedulersProvider
 import io.reactivex.Flowable

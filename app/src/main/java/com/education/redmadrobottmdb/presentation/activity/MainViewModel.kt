@@ -25,7 +25,7 @@ class MainViewModel @Inject constructor(
     }
 
     val liveState = MutableLiveData(MainActivityViewState())
-    private var state:MainActivityViewState by liveState.delegate()
+    private var state: MainActivityViewState by liveState.delegate()
 
     private var userName: String = ""
     private var isRootedDevice = false
@@ -54,7 +54,7 @@ class MainViewModel @Inject constructor(
     private fun checkRoot(context: Context) {
         val rootBeer = RootBeer(context)
 
-        if ( !BuildConfig.DEBUG && rootBeer.isRooted) {
+        if (!BuildConfig.DEBUG && rootBeer.isRooted) {
             state = state.copy(rootStatus = RootStatus.ROOTED)
             isRootedDevice = true
         } else {

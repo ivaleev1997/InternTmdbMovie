@@ -8,6 +8,7 @@ import com.education.core_api.data.local.dao.MovieDao
 import com.education.core_impl.data.local.LocalDataSourceImpl
 import com.education.core_impl.data.local.Security
 import com.education.core_impl.data.local.database.AppDbImpl
+import com.education.core_impl.data.local.database.AppDbMigration
 import com.education.core_impl.data.local.encryption.Encryption
 import com.education.core_impl.data.local.encryption.EncryptionImpl
 import dagger.Binds
@@ -38,7 +39,9 @@ abstract class LocalDataSourceModule {
         @JvmStatic
         @Singleton
         fun provideAppDb(appContext: Context): AppDb {
-            return Room.databaseBuilder(appContext, AppDbImpl::class.java, APPLICATION_DB).build()
+            return Room.databaseBuilder(appContext, AppDbImpl::class.java, APPLICATION_DB)
+                .addMigrations(AppDbMigration.MIGRATION_1_2, AppDbMigration.MIGRATION_2_3)
+                .build()
         }
 
         @Provides

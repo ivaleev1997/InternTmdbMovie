@@ -1,4 +1,4 @@
-package com.education.core_api.data.local.entuty
+package com.education.core_api.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -16,5 +16,6 @@ data class Movie(
     val title: String,
     val popularity: Double,
     val runTime: Int,
-    val genres: String
+    val genres: String,
+    val isWorthWatching: Boolean
 )

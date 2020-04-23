@@ -13,7 +13,6 @@ import com.education.pin.domain.entity.EnterKeyStatus
 import com.education.pin.presentation.PinViewModel
 import timber.log.Timber
 
-
 class CreatePinViewModel(
     private val useCase: PinUseCase,
     private val schedulersProvider: SchedulersProvider
@@ -51,7 +50,7 @@ class CreatePinViewModel(
                         useCase.saveMasterKeyPin(biometricResult.masterPinKey)
                             .schedulersComputationToMain(schedulersProvider)
                             .subscribe({
-                            },{ error ->
+                            }, { error ->
                                 Timber.e(error)
                                 sendEvent(TryLaterEvent(appContext.resources.getString(R.string.biometric_error)))
                             })
@@ -78,10 +77,9 @@ class CreatePinViewModel(
             .subscribe({
                 Timber.d("Success encryption")
                 sendEvent(NavigateToEvent(CreatePinFragmentDirections.createPinToStartGraph()))
-            },{ error ->
+            }, { error ->
                 Timber.e(error)
                 sendEvent(TryLaterEvent())
-
             }).autoDispose()
     }
 

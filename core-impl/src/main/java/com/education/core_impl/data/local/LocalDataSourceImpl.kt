@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.education.core_api.BLANK_STR
 import com.education.core_api.data.LocalDataSource
-import com.education.core_api.data.local.entuty.Movie
 import com.education.core_api.data.local.dao.MovieDao
+import com.education.core_api.data.local.entity.Movie
 import com.education.core_api.dto.UserCredentials
 import com.education.core_api.extension.clear
 import com.education.core_api.extension.getStringOrBlank
@@ -107,7 +107,6 @@ class LocalDataSourceImpl @Inject constructor(
 
     override fun getUserLogin(): String {
         return security.decrypt(sharedPrefs.getStringOrBlank(PREFS_USER_LOGIN, BLANK_STR))
-
     }
 
     override fun saveUserPassword(userPass: String): Boolean {

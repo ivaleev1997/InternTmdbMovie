@@ -1,5 +1,9 @@
 package com.education.search.domain.entity
 
+import com.education.core_api.data.local.entity.Movie
+import com.education.core_api.toOriginalTitleYear
+import com.education.core_api.toTmdbPosterPath
+
 data class DomainMovie(
     val id: Long,
     val posterPath: String,
@@ -10,6 +14,17 @@ data class DomainMovie(
     val voteCount: Long,
     val runTime: String
 ) {
+    constructor(movie: Movie) : this(
+        movie.id,
+        movie.posterPath.toTmdbPosterPath(),
+        movie.title,
+        movie.originalTitle + movie.releaseDate.toOriginalTitleYear(),
+        movie.genres,
+        movie.voteAverage,
+        movie.voteCount,
+        movie.runTime.toString()
+    )
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

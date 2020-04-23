@@ -1,10 +1,9 @@
 package com.education.favorite.data
 
 import com.education.core_api.data.LocalDataSource
-import com.education.core_api.data.local.entuty.Movie
+import com.education.core_api.data.local.entity.Movie
 import com.education.core_api.data.network.TmdbMovieApi
 import com.education.core_api.data.network.entity.DetailsMovie
-import com.education.core_api.joinGenreArrayToString
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -42,20 +41,6 @@ class FavoriteRepositoryImpl @Inject constructor(
     }
 
     private fun convertDetailsMovieToMovie(detailsMoviesList: List<DetailsMovie>): List<Movie> {
-        return detailsMoviesList.map { detailsMovie ->
-            Movie(
-                detailsMovie.id,
-                detailsMovie.originalTitle,
-                detailsMovie.posterPath,
-                detailsMovie.overview,
-                detailsMovie.releaseDate,
-                detailsMovie.voteCount,
-                detailsMovie.voteAverage,
-                detailsMovie.title,
-                detailsMovie.popularity,
-                detailsMovie.runTime,
-                detailsMovie.genres.joinGenreArrayToString()
-            )
-        }
+        return detailsMoviesList.map { detailsMovie -> detailsMovie.toMovie() }
     }
 }

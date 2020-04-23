@@ -12,7 +12,6 @@ import com.google.crypto.tink.integration.android.AndroidKeysetManager
 import javax.inject.Inject
 import kotlin.text.Charsets.UTF_8
 
-
 class EncryptionImpl @Inject constructor(
     context: Context
 ) : Encryption {

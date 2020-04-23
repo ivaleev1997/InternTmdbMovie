@@ -2,13 +2,14 @@ package com.education.core_impl.data.local.database
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.education.core_api.data.local.AppDb
 
 class AppDbMigration {
     companion object {
         val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL(
-                    """ALTER TABLE Movie ADD COLUMN isWatched INTEGER DEFAULT 0 NOT NULL"""
+                    """ALTER TABLE ${AppDb.APP_DB_TABLE_MOVIE} ADD COLUMN isWatched INTEGER DEFAULT 0 NOT NULL"""
                 )
             }
         }
@@ -18,7 +19,7 @@ class AppDbMigration {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Создаем новую таблицу
                 database.execSQL(
-                    """CREATE TABLE IF NOT EXISTS Movie_new (
+                    """CREATE TABLE IF NOT EXISTS ${AppDb.APP_DB_TABLE_MOVIE}_new (
                                 id INTEGER NOT NULL,
                                 originalTitle TEXT NOT NULL,
                                 posterPath TEXT,
@@ -36,7 +37,7 @@ class AppDbMigration {
 
                 // Переносим данные из старой таблицы
                 database.execSQL(
-                    """INSERT INTO Movie_new (
+                    """INSERT INTO ${AppDb.APP_DB_TABLE_MOVIE}_new (
                         id,
                         originalTitle,
                         posterPath,
@@ -61,17 +62,17 @@ class AppDbMigration {
                         popularity,
                         runTime,
                         genres,
-                        isWatched FROM Movie"""
+                        isWatched FROM ${AppDb.APP_DB_TABLE_MOVIE}"""
                 )
 
                 // Удаляем старую таблицу
                 database.execSQL(
-                    """DROP TABLE Movie"""
+                    """DROP TABLE ${AppDb.APP_DB_TABLE_MOVIE}"""
                 )
 
                 // Меняем на требуемое название (movie_new -> movie)
                 database.execSQL(
-                    """ALTER TABLE Movie_new RENAME TO Movie"""
+                    """ALTER TABLE ${AppDb.APP_DB_TABLE_MOVIE}_new RENAME TO ${AppDb.APP_DB_TABLE_MOVIE}"""
                 )
             }
         }
@@ -81,7 +82,7 @@ class AppDbMigration {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Создаем новую таблицу
                 database.execSQL(
-                    """CREATE TABLE IF NOT EXISTS Movie_new (
+                    """CREATE TABLE IF NOT EXISTS ${AppDb.APP_DB_TABLE_MOVIE}_new (
                                 id INTEGER NOT NULL,
                                 originalTitle TEXT NOT NULL,
                                 posterPath TEXT,
@@ -99,7 +100,7 @@ class AppDbMigration {
 
                 // Переносим данные из старой таблицы
                 database.execSQL(
-                    """INSERT INTO Movie_new (
+                    """INSERT INTO ${AppDb.APP_DB_TABLE_MOVIE}_new (
                         id,
                         originalTitle,
                         posterPath,
@@ -124,17 +125,17 @@ class AppDbMigration {
                         popularity,
                         runTime,
                         genres,
-                        case when voteAverage > 7 then 1 else 0 end as isWorthWatching FROM Movie"""
+                        case when voteAverage > 7 then 1 else 0 end as isWorthWatching FROM ${AppDb.APP_DB_TABLE_MOVIE}"""
                 )
 
                 // Удаляем старую таблицу
                 database.execSQL(
-                    """DROP TABLE Movie"""
+                    """DROP TABLE ${AppDb.APP_DB_TABLE_MOVIE}"""
                 )
 
                 // Меняем на требуемое название (movie_new -> movie)
                 database.execSQL(
-                    """ALTER TABLE Movie_new RENAME TO Movie"""
+                    """ALTER TABLE ${AppDb.APP_DB_TABLE_MOVIE}_new RENAME TO ${AppDb.APP_DB_TABLE_MOVIE}"""
                 )
             }
         }

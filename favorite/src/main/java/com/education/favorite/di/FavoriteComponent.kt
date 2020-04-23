@@ -3,7 +3,7 @@ package com.education.favorite.di
 import com.education.core.CoreProviderFactory
 import com.education.core_api.di.CoreProvider
 import com.education.core_api.presentation.viewmodel.ViewModelsProvider
-import com.education.favorite.FavoriteFragment
+import com.education.favorite.presentation.FavoriteFragment
 import dagger.Component
 import javax.inject.Singleton
 

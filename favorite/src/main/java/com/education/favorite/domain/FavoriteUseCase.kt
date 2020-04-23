@@ -1,8 +1,6 @@
 package com.education.favorite.domain
 
-import com.education.core_api.data.local.entuty.Movie
-import com.education.core_api.toOriginalTitleYear
-import com.education.core_api.toTmdbPosterPath
+import com.education.core_api.data.local.entity.Movie
 import com.education.favorite.data.FavoriteRepository
 import com.education.search.domain.entity.DomainMovie
 import io.reactivex.Single
@@ -17,17 +15,6 @@ class FavoriteUseCase @Inject constructor(
     }
 
     private fun repositoryMoviesToDomainMovies(movies: List<Movie>): List<DomainMovie> {
-        return movies.map { movie ->
-            DomainMovie(
-                movie.id,
-                movie.posterPath.toTmdbPosterPath(),
-                movie.title,
-                movie.originalTitle + movie.releaseDate.toOriginalTitleYear(),
-                movie.genres,
-                movie.voteAverage,
-                movie.voteCount,
-                movie.runTime.toString()
-            )
-        }
+        return movies.map { movie -> DomainMovie(movie) }
     }
 }

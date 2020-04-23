@@ -21,9 +21,9 @@ import com.education.redmadrobottmdb.R
 import com.education.redmadrobottmdb.di.component.MainComponent
 import com.education.redmadrobottmdb.domain.MainActivityViewState
 import com.education.redmadrobottmdb.domain.RootStatus
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), BaseActivity {
 

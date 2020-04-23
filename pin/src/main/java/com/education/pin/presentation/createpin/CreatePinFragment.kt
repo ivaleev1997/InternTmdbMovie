@@ -19,9 +19,9 @@ import com.education.pin.di.PinComponent
 import com.education.pin.domain.entity.EnterKeyStatus
 import com.education.pin.domain.entity.PinViewState
 import com.education.pin.presentation.PinFragment
-import kotlinx.android.synthetic.main.create_pin_fragment.*
 import javax.inject.Inject
 import javax.inject.Named
+import kotlinx.android.synthetic.main.create_pin_fragment.*
 
 class CreatePinFragment : PinFragment(R.layout.create_pin_fragment) {
 
@@ -68,7 +68,7 @@ class CreatePinFragment : PinFragment(R.layout.create_pin_fragment) {
     }
 
     override fun renderViewState(pinViewState: PinViewState) {
-        when(pinViewState.enterKeyStatus) {
+        when (pinViewState.enterKeyStatus) {
             EnterKeyStatus.ENTER -> {
                 hiddenPin.itemPressed()
             }

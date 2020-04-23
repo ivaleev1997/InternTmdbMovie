@@ -6,9 +6,9 @@ import com.education.movies.domain.MoviesUseCase
 import com.education.search.domain.entity.MoviesScreenState
 import com.education.search.presentation.MoviesRecyclerViewModel
 import io.reactivex.Flowable
-import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
+import timber.log.Timber
 
 class MoviesViewModel(
     private val moviesUseCase: MoviesUseCase,
@@ -37,13 +37,11 @@ class MoviesViewModel(
             .doOnError { error -> handleError(error) }
             .retry()
             .subscribe(
-                { queryAndMovies ->
-                    lastFetchedQuery = queryAndMovies.first
-                    handleQueryAndMovies(queryAndMovies)
+                { (query, movies) ->
+                    lastFetchedQuery = query
+                    handleQueryAndMovies(query, movies)
                 },
-                {
-                        error -> Timber.e(error)
-                }
+                { error -> Timber.e(error) }
             ).autoDispose()
     }
 }

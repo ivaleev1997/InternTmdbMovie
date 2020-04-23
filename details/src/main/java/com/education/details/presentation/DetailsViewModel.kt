@@ -14,9 +14,9 @@ import timber.log.Timber
 class DetailsViewModel /*@AssistedInject constructor*/ (
     private val detailsUseCase: DetailsUseCase,
     private val schedulersProvider: SchedulersProvider
-    //@Assisted private val movieId: Int,
-    //@Assisted private val minWord: String,
-    //@Assisted private val voteAverageColor: Int
+    // @Assisted private val movieId: Int,
+    // @Assisted private val minWord: String,
+    // @Assisted private val voteAverageColor: Int
 ) : BaseViewModel() {
 
     val liveState = MutableLiveData(createInitialState())
@@ -51,7 +51,7 @@ class DetailsViewModel /*@AssistedInject constructor*/ (
             )
             detailsUseCase.changeFavorite(movie.id, favoriteFlag)
                 .schedulersIoToMain(schedulersProvider)
-                .subscribe({},{ error ->
+                .subscribe({}, { error ->
                     state = state.copy(
                         movieOverView = movie.copy(isFavorite = !favoriteFlag),
                         favorite = !favoriteFlag

@@ -21,10 +21,10 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import io.reactivex.BackpressureStrategy
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.movies_fragment.*
 import kotlinx.android.synthetic.main.movies_main_content.*
 import timber.log.Timber
-import javax.inject.Inject
 
 class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
 
@@ -88,7 +88,6 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         setOnErrorRepeatListener()
 
         observeLiveDataChanges()
-
     }
 
     private fun observeLiveDataChanges() {
@@ -103,9 +102,9 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
             networkErrorView.makeGone()
             mainContent.makeVisible()
             // TODO retry request
-            //val currentQuery = "${loginTextEdit.text} "
-            //loginTextEdit.setText(currentQuery)
-            //loginTextEdit.setText(loginTextEdit.text?.trim())
+            // val currentQuery = "${loginTextEdit.text} "
+            // loginTextEdit.setText(currentQuery)
+            // loginTextEdit.setText(loginTextEdit.text?.trim())
         }
     }
 

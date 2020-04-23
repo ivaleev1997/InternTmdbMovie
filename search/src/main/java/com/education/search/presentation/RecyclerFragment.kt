@@ -68,5 +68,4 @@ abstract class RecyclerFragment(
         else
             view.setImageResource(R.drawable.ic_to_tile_map)
     }
-
 }

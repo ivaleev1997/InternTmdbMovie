@@ -1,5 +1,8 @@
 package com.education.core_api.data.network.entity
 
+import com.education.core_api.MOVIE_IS_WORTH_WATCHING_CONDITION
+import com.education.core_api.data.local.entity.Movie
+import com.education.core_api.joinGenreArrayToString
 import com.google.gson.annotations.SerializedName
 
 interface BaseMovie {
@@ -36,7 +39,25 @@ data class DetailsMovie(
     val runTime: Int,
     @SerializedName("genres")
     val genres: List<Genre>
-) : BaseMovie
+) : BaseMovie {
+
+    fun toMovie(): Movie {
+        return Movie(
+            this.id,
+            this.originalTitle,
+            this.posterPath,
+            this.overview,
+            this.releaseDate,
+            this.voteCount,
+            this.voteAverage,
+            this.title,
+            this.popularity,
+            this.runTime,
+            this.genres.joinGenreArrayToString(),
+            this.voteAverage > MOVIE_IS_WORTH_WATCHING_CONDITION
+        )
+    }
+}
 
 data class SearchMovie(
     @SerializedName("id")

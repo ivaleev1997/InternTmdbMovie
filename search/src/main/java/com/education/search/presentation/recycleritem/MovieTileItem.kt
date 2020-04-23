@@ -3,6 +3,7 @@ package com.education.search.presentation.recycleritem
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.education.core_api.getColorFromTheme
 import com.education.search.R
 import com.education.search.domain.entity.DomainMovie
 import com.education.search.isShouldBeGreen
@@ -10,11 +11,10 @@ import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.movie_item_tile.view.*
 
-
 data class MovieTileItem(
     private val domainMovie: DomainMovie,
     private val onClickCallBack: (DomainMovie) -> Unit
-): Item() {
+) : Item() {
 
     override fun bind(
         viewHolder: ViewHolder,
@@ -31,8 +31,12 @@ data class MovieTileItem(
             originalTitleTextView.text = domainMovie.originalTitle
             genreTextView.text = domainMovie.genre
             averageTextView.text = domainMovie.voteAverage.toString()
+
             if (isShouldBeGreen(domainMovie.voteAverage))
                 averageTextView.setTextColor(resources.getColor(R.color.green_color))
+            else
+                averageTextView.setTextColor(getColorFromTheme(context, R.attr.colorAccent))
+
             votesCountTextView.text = domainMovie.voteCount.toString()
             movieItemContainer.setOnClickListener {
                 onClickCallBack.invoke(domainMovie)
@@ -47,4 +51,3 @@ data class MovieTileItem(
 
     override fun getId(): Long = domainMovie.hashCode().toLong()
 }
-

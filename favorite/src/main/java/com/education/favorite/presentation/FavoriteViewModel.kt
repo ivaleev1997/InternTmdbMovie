@@ -1,4 +1,4 @@
-package com.education.favorite
+package com.education.favorite.presentation
 
 import androidx.lifecycle.MutableLiveData
 import com.education.core_api.extension.SchedulersProvider
@@ -32,9 +32,9 @@ class FavoriteViewModel(
                 Pair(query, favoriteListDomainMovies.filterMovieByQuery(query))
             }
             .schedulersComputationToMain(schedulersProvider)
-            .subscribe { queryAndMovies ->
-                lastFetchedQuery = queryAndMovies.first
-                handleQueryAndMovies(queryAndMovies)
+            .subscribe { (query, movies) ->
+                lastFetchedQuery = query
+                handleQueryAndMovies(query, movies)
             }.autoDispose()
     }
 
@@ -49,7 +49,7 @@ class FavoriteViewModel(
                 } else {
                     loadState.copy(loadFavoriteStatus = LoadFavoriteStatus.NON_EMPTY)
                 }
-            },{ error ->
+            }, { error ->
                 handleError(error)
             }).autoDispose()
     }

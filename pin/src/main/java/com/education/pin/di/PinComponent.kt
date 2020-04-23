@@ -28,5 +28,4 @@ interface PinComponent {
     fun inject(fragment: CreatePinFragment)
 
     fun inject(fragment: EnterPinFragment)
-
 }
