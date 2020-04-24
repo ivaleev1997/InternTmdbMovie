@@ -38,7 +38,7 @@ class MainFragment : ParentFragment() {
 
     private fun setupBottomNavigationWithNavComponent() {
         val hostFragment =
-            childFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as? NavHostFragment
+            childFragmentManager.findFragmentById(R.id.mainNavHostFragment) as? NavHostFragment
 
         hostFragment?.findNavController()?.let {
             mainFragmentNavView.setupWithNavController(it)
