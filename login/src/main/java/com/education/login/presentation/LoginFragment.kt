@@ -27,13 +27,13 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
     }
 
     @Inject
-    lateinit var appViewModelFactory: ViewModelProvider.Factory
+    internal lateinit var appViewModelFactory: ViewModelProvider.Factory
     private val viewModel: LoginViewModel by viewModels {
         appViewModelFactory
     }
 
     @Inject
-    lateinit var viewModelTrigger: ViewModelTrigger
+    internal lateinit var viewModelTrigger: ViewModelTrigger
 
     override fun onAttach(context: Context) {
         LoginComponent.create((requireActivity().application as AppWithComponent).getComponent())
@@ -90,6 +90,8 @@ class LoginFragment : BaseFragment(R.layout.login_fragment) {
         viewModel.validateButtonStatus.observe(viewLifecycleOwner) { buttonEnabled ->
             if (buttonEnabled)
                 enableEnterButton()
+            else
+                disableEnterButton()
         }
 
         viewModel.validatePasswordStatus.observe(viewLifecycleOwner) { validatePassword ->

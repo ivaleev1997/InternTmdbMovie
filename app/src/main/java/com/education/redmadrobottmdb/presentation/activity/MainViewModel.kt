@@ -12,11 +12,12 @@ import com.education.redmadrobottmdb.BuildConfig
 import com.education.redmadrobottmdb.domain.MainActivityViewState
 import com.education.redmadrobottmdb.domain.RootStatus
 import com.scottyab.rootbeer.RootBeer
-import java.util.*
+import com.education.core_api.util.CurrentTime
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val localDataSource: LocalDataSource
+    private val localDataSource: LocalDataSource,
+    private val currentTime: CurrentTime
 ) : BaseViewModel() {
 
     companion object {
@@ -34,8 +35,7 @@ class MainViewModel @Inject constructor(
         localDataSource.getTokenLifeTime() > getCurrentTimeMills()
 
     private fun getCurrentTimeMills(): Long {
-        val calendar = Calendar.getInstance()
-        return calendar.time.time
+        return currentTime.getCurrentTimeMills()
     }
 
     fun onLogoutClicked() {
