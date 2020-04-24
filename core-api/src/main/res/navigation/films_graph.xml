@@ -11,7 +11,7 @@
         tools:layout="@layout/movies_fragment" >
 
         <action
-            android:id="@+id/action_films_to_details"
+            android:id="@+id/action_to_details"
             app:destination="@id/details">
             <argument
                 android:name="movieTitle"

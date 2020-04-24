@@ -28,6 +28,7 @@ dependencies {
             androidx_core_ktx,
             fragment,
             constraintlayout,
+            lifecycle_ext,
             lifecycle_livedata_ktx,
             material,
             retrofit2,
@@ -41,7 +42,10 @@ dependencies {
             navigation_fragment_ktx,
             dagger2,
             timber,
-            lottie
+            groupie,
+            groupie_ktx,
+            lottie,
+            biometric
     )
 
     kapt dagger2_compiler

@@ -12,13 +12,14 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
-import javax.inject.Named
-import javax.inject.Singleton
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
 class NetworkModule {
@@ -33,7 +34,7 @@ class NetworkModule {
     @Singleton
     fun provideLogHttpInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = HttpLoggingInterceptor.Level.BASIC
         }
     }
 
@@ -55,16 +56,28 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun provideCertificatePinner(): CertificatePinner {
+        return CertificatePinner.Builder()
+            .add(BuildConfig.SSL_SERVER_PATTERN,
+                BuildConfig.SSL_PIN)
+            .build()
+    }
+
+    @Provides
+    @Singleton
     fun provideOkHttpClientBuilder(
         authenticator: TmdbAuthenticator,
         apiKeyInterceptor: ApiKeyInterceptor,
         loggingInterceptor: HttpLoggingInterceptor,
-        networkErrorInterceptor: NetworkErrorInterceptor
+        networkErrorInterceptor: NetworkErrorInterceptor,
+        certificatePinner: CertificatePinner
     ): OkHttpClient.Builder {
         return OkHttpClient.Builder().apply {
             authenticator(authenticator)
             addInterceptor(apiKeyInterceptor)
             addInterceptor(networkErrorInterceptor)
+            certificatePinner(certificatePinner)
+            retryOnConnectionFailure(true)
             if (BuildConfig.DEBUG) addInterceptor(loggingInterceptor)
         }
     }

@@ -7,6 +7,13 @@
         <item name="android:gravity">top</item>
     </style>
 
+    <style name="TextAppearance.MyApp.HeadLine2" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:lineSpacingExtra">4sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+    </style>
+
     <style name="TextAppearance.MyApp.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:lineSpacingExtra">1sp</item>
         <item name="android:textColor">?attr/colorAccent</item>

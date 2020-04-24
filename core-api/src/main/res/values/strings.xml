@@ -7,4 +7,6 @@
     <string name="no_content">"Описание отсутсвует :("</string>
     <string name="repeat">Повторить</string>
     <string name="unexpected_network_error">Непредвиденная ошибка сети..</string>
+    <string name="not_found">По вашему запросу ничего\nне найдено :(</string>
+    <string name="exit">Выйти</string>
 </resources>

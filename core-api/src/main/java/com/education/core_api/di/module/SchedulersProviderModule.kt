@@ -1,14 +1,23 @@
 package com.education.core_api.di.module
 
+import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.SchedulersProviderImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
 @Module
-class SchedulersProviderModule {
+abstract class SchedulersProviderModule {
 
-    @Provides
-    fun provideSchedulersProvider(): SchedulersProviderImpl {
-        return SchedulersProviderImpl
+    @Binds
+    abstract fun bindsSchedulersProvider(schedulersProviderImp: SchedulersProviderImpl): SchedulersProvider
+
+    @Module
+    companion object {
+        @Provides
+        @JvmStatic
+        fun provideSchedulersProvider(): SchedulersProviderImpl {
+            return SchedulersProviderImpl
+        }
     }
 }

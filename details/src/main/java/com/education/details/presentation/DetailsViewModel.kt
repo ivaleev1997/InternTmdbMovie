@@ -9,14 +9,15 @@ import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.details.domain.DetailsUseCase
 import com.education.details.domain.entity.DetailsViewState
 import com.education.details.domain.entity.LoadStatus
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import timber.log.Timber
 
-class DetailsViewModel /*@AssistedInject constructor*/ (
+class DetailsViewModel @AssistedInject constructor (
     private val detailsUseCase: DetailsUseCase,
-    private val schedulersProvider: SchedulersProvider
-    //@Assisted private val movieId: Int,
-    //@Assisted private val minWord: String,
-    //@Assisted private val voteAverageColor: Int
+    private val schedulersProvider: SchedulersProvider,
+    @Assisted private val movieId: Long,
+    @Assisted private val minWord: String
 ) : BaseViewModel() {
 
     val liveState = MutableLiveData(createInitialState())
@@ -25,8 +26,12 @@ class DetailsViewModel /*@AssistedInject constructor*/ (
 
     private fun createInitialState(): DetailsViewState = DetailsViewState()
 
-    fun loadDetails(id: Long, minWord: String) {
-        detailsUseCase.loadDetails(id, minWord)
+    init {
+        loadDetails()
+    }
+
+    private fun loadDetails() {
+        detailsUseCase.loadDetails(movieId, minWord)
             .schedulersIoToMain(schedulersProvider)
             .subscribe({ movieOverView ->
                 state = state.copy(
@@ -62,12 +67,15 @@ class DetailsViewModel /*@AssistedInject constructor*/ (
         }
     }
 
-//    @AssistedInject.Factory
-//    interface Factory {
-//        fun get(
-//            movieId: Int,
-//            minWord: String,
-//            voteAverageColor: Int
-//        ) : DetailsViewModel
-//    }
+    fun onErrorRepeatClicked() {
+        loadDetails()
+    }
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun get(
+            movieId: Long,
+            minWord: String
+        ) : DetailsViewModel
+    }
 }

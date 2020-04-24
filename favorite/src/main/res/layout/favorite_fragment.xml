@@ -4,49 +4,132 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:id="@+id/favoriteConstrainContainer"
     tools:context=".FavoriteFragment">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchInputLayout"
+        style="@style/SearchTextInputLayoutStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_44"
+        android:visibility="invisible"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/search_main_color"
+
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerMap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:startIconDrawable="@drawable/ic_search_24dp"
+        app:startIconTint="@color/search_main_color">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/searchTextEdit"
+            style="@style/SearchEditTextLayout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:imeOptions="actionDone"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/recyclerMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+
+        app:layout_constraintBottom_toBottomOf="@+id/searchInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/searchInputLayout"
+        app:layout_constraintTop_toTopOf="@+id/searchInputLayout"
+        app:srcCompat="@drawable/ic_to_tile_map" />
+
+    <ImageView
+        android:id="@+id/searchIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerMap"
+        app:layout_constraintEnd_toEndOf="@+id/searchInputLayout"
+        app:layout_constraintTop_toTopOf="@+id/recyclerMap"
+        app:srcCompat="@drawable/ic_search_24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
 
     <TextView
         android:id="@+id/favoriteTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16"
-        android:layout_marginTop="@dimen/margin_12"
+        android:layout_marginTop="@dimen/margin_8"
         android:text="@string/favorite_title"
         android:textAppearance="?attr/textAppearanceHeadline1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
 
-    <TextView
-        android:id="@+id/noMoviesTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_44"
-        android:text="@string/no_movies_title"
-        android:textAppearance="?attr/textAppearanceSubtitle1"
+    <include
+        android:id="@+id/emptyContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        layout="@layout/favorite_empty_content"
+        android:visibility="gone"
 
-        app:layout_constraintStart_toStartOf="@+id/favoriteTitle"
-        app:layout_constraintTop_toBottomOf="@+id/favoriteTitle" />
-
-    <TextView
-        android:id="@+id/findMovieTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_12"
-        android:text="@string/find_movies_title"
-        style="@style/ClickableTextView"
-        app:layout_constraintStart_toStartOf="@+id/noMoviesTextView"
-        app:layout_constraintTop_toBottomOf="@+id/noMoviesTextView" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_undraw_movie_night"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/favoriteTitle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/findMovieTextView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <include
+        android:id="@+id/mainContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        layout="@layout/recycler_movies_layout"
+        android:visibility="gone"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/favoriteTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loadAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/purple_load_animation"
+
+        app:layout_constraintTop_toBottomOf="@id/favoriteTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.education.core_api.presentation.view.zeroscreen.ZeroScreenWithAnimation
+        android:id="@+id/networkErrorView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:animationView="@raw/alert_animation"
+        app:retryButton="true"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

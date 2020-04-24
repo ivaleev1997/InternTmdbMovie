@@ -103,10 +103,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textSize="16sp"
-        android:textColor="@color/error_msg"
         android:text="@string/error_login"
+        android:textColor="@color/error_msg"
+        android:textSize="16sp"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/enterButton"
         app:layout_constraintStart_toStartOf="@+id/passwordTextInput"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextInput" />
 
@@ -119,9 +120,29 @@
         android:indeterminate="true"
         android:indeterminateTint="@color/gray"
         android:visibility="gone"
+        android:elevation="1dp"
+
         app:layout_constraintBottom_toTopOf="@+id/enterButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextInput" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/transparentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="1dp"
+        android:clickable="true"
+        android:background="@android:drawable/screen_background_dark_transparent"
+        android:visibility="gone"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:focusable="true" >
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

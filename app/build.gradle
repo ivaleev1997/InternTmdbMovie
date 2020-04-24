@@ -14,7 +14,13 @@ android {
     }
     buildTypes {
         release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,13 +37,18 @@ dependencies {
             material,
             timber,
             fragment,
+            lifecycle_livedata_ktx,
             lifecycle_ext,
             lifecycle_viewmodel,
             navigation_fragment,
             navigation_ui,
             navigation_ui_ktx,
             navigation_fragment_ktx,
-            dagger2
+            dagger2,
+            rxjava2,
+            rxAndroid,
+            lottie,
+            rootbeer
     )
 
     testImplementation junit
@@ -50,6 +61,8 @@ dependencies {
     implementation project(':favorite')
     implementation project(':movies')
     implementation project(':details')
+    implementation project(':pin')
+    implementation project(':util')
 
     kapt dagger2_compiler
 }

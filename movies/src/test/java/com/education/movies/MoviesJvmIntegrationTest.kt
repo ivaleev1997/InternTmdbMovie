@@ -3,8 +3,8 @@ package com.education.movies
 import com.education.movies.data.repository.MoviesRepository
 import com.education.movies.data.repository.MoviesRepositoryImpl
 import com.education.movies.domain.MoviesUseCase
-import com.education.movies.domain.entity.MoviesScreenState
-import com.education.movies.domain.entity.MoviesViewState
+import com.education.search.domain.entity.MoviesScreenState
+import com.education.search.domain.entity.MoviesViewState
 import com.education.movies.presentation.MoviesViewModel
 import com.education.testmodule.MockTmdbMovieWebServer
 import com.education.testmodule.TestSchedulersProvider
@@ -38,11 +38,12 @@ object MoviesJvmIntegrationTest : Spek({
             // endregion Fields
             var query = ""
             val isListRecyclerMap = true
-            val expectedMovieViewState = MoviesViewState(
-                MoviesScreenState.CLEAN,
-                listOf(),
-                isListRecyclerMap
-            )
+            val expectedMovieViewState =
+                MoviesViewState(
+                    MoviesScreenState.CLEAN,
+                    listOf(),
+                    isListRecyclerMap
+                )
             Given("Set query as blank string ") {
                 query = " "
             }

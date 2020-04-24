@@ -3,7 +3,6 @@ package com.education.login.di
 import androidx.lifecycle.ViewModel
 import com.education.core_api.di.module.SchedulersProviderModule
 import com.education.core_api.extension.SchedulersProvider
-import com.education.core_api.extension.SchedulersProviderImpl
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.login.data.repository.LoginRepository
 import com.education.login.data.repository.LoginRepositoryImpl
@@ -19,9 +18,6 @@ abstract class LoginModule {
 
     @Binds
     abstract fun bindsLoginRepository(loginRepositoryImpl: LoginRepositoryImpl): LoginRepository
-
-    @Binds
-    abstract fun bindsSchedulersProvider(schedulersProviderImp: SchedulersProviderImpl): SchedulersProvider
 
     @Module
     companion object {
