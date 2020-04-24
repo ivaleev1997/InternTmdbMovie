@@ -3,7 +3,6 @@ package com.education.movies.di
 import androidx.lifecycle.ViewModel
 import com.education.core_api.di.module.SchedulersProviderModule
 import com.education.core_api.extension.SchedulersProvider
-import com.education.core_api.extension.SchedulersProviderImpl
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.movies.data.repository.MoviesRepository
 import com.education.movies.data.repository.MoviesRepositoryImpl
@@ -19,9 +18,6 @@ abstract class MoviesModule {
 
     @Binds
     abstract fun bindsMoviesRepository(moviesRepositoryImpl: MoviesRepositoryImpl): MoviesRepository
-
-    @Binds
-    abstract fun bindsSchedulersProvider(schedulersProviderImp: SchedulersProviderImpl): SchedulersProvider
 
     @Module
     companion object {

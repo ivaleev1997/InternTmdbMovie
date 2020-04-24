@@ -5,12 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.education.core_api.data.network.exception.UnAuthorizedException
+import com.education.core_api.dto.UserCredentials
 import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.extension.isNetworkException
 import com.education.core_api.extension.schedulersIoToMain
+import com.education.core_api.presentation.uievent.NavigateToEvent
 import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.login.domain.UserUseCase
 import com.education.login.domain.entity.LoginResult
+import com.education.pin.presentation.createpin.CreatePinFragmentDirections
 import timber.log.Timber
 
 class LoginViewModel(
@@ -45,6 +48,14 @@ class LoginViewModel(
                 .schedulersIoToMain(schedulersProvider)
                 .subscribe({
                     _loginStatus.value = LoginResult.SUCCESS
+                    sendEvent(NavigateToEvent(CreatePinFragmentDirections.toCreatePinFragment(
+                        UserCredentials(
+                            login,
+                            password,
+                            userUseCase.getRequestToken(),
+                            userUseCase.getRequestTokenLifeTime(),
+                            userUseCase.getSessionId())
+                    )))
                 }, { error ->
                     logThrow(error)
                     _loginStatus.value =

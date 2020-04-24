@@ -11,8 +11,16 @@ fun Completable.schedulersIoToMain(provider: SchedulersProvider): Completable {
     return subscribeOn(provider.io()).observeOn(provider.mainThread())
 }
 
+fun Completable.schedulersComputationToMain(provider: SchedulersProvider): Completable {
+    return subscribeOn(provider.computation()).observeOn(provider.mainThread())
+}
+
 fun <T> Single<T>.schedulersIoToMain(provider: SchedulersProvider): Single<T> {
     return subscribeOn(provider.io()).observeOn(provider.mainThread())
+}
+
+fun <T> Single<T>.schedulersComputationToMain(provider: SchedulersProvider): Single<T> {
+    return subscribeOn(provider.computation()).observeOn(provider.mainThread())
 }
 
 fun <T> Flowable<T>.schedulersComputationToMain(provider: SchedulersProvider): Flowable<T> {

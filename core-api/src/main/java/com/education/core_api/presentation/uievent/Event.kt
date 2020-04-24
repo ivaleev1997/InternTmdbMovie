@@ -16,7 +16,11 @@ class NoNetworkEvent : Event
 
 class UnAuthorizedEvent : Event
 
-class TryLaterEvent : Event
+class LogoutEvent : Event
+
+class TryLaterEvent(val message: String? = null) : Event
+
+class RootedDeviceEvent: Event
 
 data class NavigateToEvent(
     val navDirections: NavDirections

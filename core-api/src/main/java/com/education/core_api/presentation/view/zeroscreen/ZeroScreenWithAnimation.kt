@@ -22,11 +22,16 @@ class ZeroScreenWithAnimation @JvmOverloads constructor(
 
         try {
             attrsArray = context.obtainStyledAttributes(attrs, R.styleable.ZeroScreenView)
-            with (attrsArray) {
-                stubAnimation = getResourceId(R.styleable.ZeroScreenView_animationView, R.raw.no_internet_connection_animation)
+            with(attrsArray) {
+                stubAnimation = getResourceId(
+                    R.styleable.ZeroScreenView_animationView,
+                    R.raw.no_internet_connection_animation
+                )
                 stubMessage = getString(R.styleable.ZeroScreenView_message) ?: resources.getString(
-                    R.string.unexpected_network_error)
+                    R.string.unexpected_network_error
+                )
                 stubRetryButton = getBoolean(R.styleable.ZeroScreenView_retryButton, false)
+                stubBackground = getColor(R.styleable.ZeroScreenView_backgroundColor, 0)
             }
         } finally {
             attrsArray.recycle()
@@ -44,6 +49,15 @@ class ZeroScreenWithAnimation @JvmOverloads constructor(
             field = value
             if (field) {
                 retryButton.makeVisible()
+            }
+        }
+
+    var stubBackground: Int = 0
+        set(value) {
+            field = value
+            if (field != 0) {
+                // Не получилось получить colorPrimary из темы программно
+                zeroScreenContainer.setBackgroundColor(field)
             }
         }
 

@@ -17,4 +17,14 @@ class UserUseCase
             )
         )
     }
+
+    fun getRequestToken(): String {
+        return loginRepository.getRequestToken()
+    }
+    fun getSessionId(): String {
+        return loginRepository.getSessionId()
+    }
+    fun getRequestTokenLifeTime(): String {
+        return loginRepository.getRequestTokenLifeTime()
+    }
 }

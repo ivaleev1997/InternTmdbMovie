@@ -1,7 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 android {
     compileSdkVersion compile_sdk_version
     buildToolsVersion build_tools_version
@@ -22,6 +23,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    androidExtensions {
+        experimental = true
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -34,8 +43,23 @@ dependencies {
             constraintlayout,
             fragment,
             lifecycle_ext,
-            lifecycle_viewmodel
+            lifecycle_viewmodel,
+            lifecycle_livedata_ktx,
+            dagger2,
+            rxjava2,
+            rxAndroid,
+            timber,
+            navigation_fragment,
+            navigation_fragment_ktx,
+            rxBinding,
+            rxBindng_kotlin,
+            groupie,
+            groupie_ktx,
+            lottie
     )
 
+    kapt dagger2_compiler
+
     implementation project(':core')
+    implementation project(':search')
 }

@@ -2,74 +2,89 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/moviesConstrainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/moviesConstrainContainer"
+    android:animateLayoutChanges="true"
     tools:context=".presentation.MoviesFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/searchInputLayout"
-        android:layout_width="match_parent"
+        style="@style/SearchTextInputLayoutStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
         android:layout_marginStart="@dimen/margin_16"
-        android:layout_marginTop="@dimen/margin_16"
-        android:layout_marginEnd="@dimen/margin_56"
+        android:layout_marginEnd="@dimen/margin_44"
+        android:visibility="invisible"
         app:endIconMode="clear_text"
         app:endIconTint="@color/search_main_color"
-        app:startIconDrawable="@drawable/ic_search_24dp"
-        app:startIconTint="@color/search_main_color"
-        style="@style/SearchTextInputLayoutStyle"
 
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerMap"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:startIconDrawable="@drawable/ic_search_24dp"
+        app:startIconTint="@color/search_main_color">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/loginTextEdit"
+            android:id="@+id/searchTextEdit"
+            style="@style/SearchEditTextLayout"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:inputType="textEmailAddress"
             android:imeOptions="actionDone"
-            style="@style/SearchEditTextLayout"/>
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/recyclerMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_to_tile_map"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
+        android:visibility="invisible"
 
         app:layout_constraintBottom_toBottomOf="@+id/searchInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/searchInputLayout"
-        app:layout_constraintTop_toTopOf="@+id/searchInputLayout" />
+        app:layout_constraintTop_toTopOf="@+id/searchInputLayout"
+        app:srcCompat="@drawable/ic_to_tile_map" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
 
     <include
         android:id="@+id/mainContent"
+        layout="@layout/recycler_movies_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        layout="@layout/movies_main_content"
+        android:layout_marginTop="@dimen/margin_8"
         android:visibility="gone"
 
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchInputLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
 
     <com.education.core_api.presentation.view.zeroscreen.ZeroScreenWithAnimation
         android:id="@+id/networkErrorView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
+        android:layout_marginTop="@dimen/margin_8"
         app:animationView="@raw/alert_animation"
-        app:retryButton="true"
+        app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchInputLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        app:retryButton="true" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -84,5 +99,56 @@
         app:layout_constraintStart_toStartOf="@+id/searchInputLayout"
         app:layout_constraintTop_toBottomOf="@+id/searchInputLayout" />
 
+    <ImageView
+        android:id="@+id/stubSearchImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_start_search_image"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/stubSearchTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:minLines="3"
+        android:text="@string/search_any_movie"
+        android:textAppearance="?attr/textAppearanceHeadline2"
+
+        app:layout_constraintStart_toStartOf="@+id/searchInputLayout"
+        app:layout_constraintTop_toTopOf="@id/guideline" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/stubSearchInput"
+        style="@style/SearchTextInputLayoutStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_44"
+        android:visibility="visible"
+        app:hintEnabled="false"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stubSearchTitleTextView"
+        app:startIconDrawable="@drawable/ic_search_24dp"
+        app:startIconTint="@color/search_main_color">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/stubSearchTextEdit"
+            style="@style/SearchEditTextLayout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:imeOptions="actionDone"
+            android:focusableInTouchMode="false"
+            android:hint="@string/searching_movie_hint"
+            android:textColorHint="?attr/colorOnPrimary"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

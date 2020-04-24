@@ -14,10 +14,14 @@ android {
 
             buildConfigField "String", "SERVER_API_KEY", "\"${tmdb_api_key}\""
             buildConfigField "String", "SERVER_ADDR", "\"${tmdb_url}\""
+            buildConfigField "String", "SSL_PIN", "\"${ssl_pin}\""
+            buildConfigField "String", "SSL_SERVER_PATTERN", "\"${ssl_server_pattern}\""
         }
         debug {
             buildConfigField "String", "SERVER_API_KEY", "\"${tmdb_api_key}\""
             buildConfigField "String", "SERVER_ADDR", "\"${tmdb_url}\""
+            buildConfigField "String", "SSL_PIN", "\"${ssl_pin}\""
+            buildConfigField "String", "SSL_SERVER_PATTERN", "\"${ssl_server_pattern}\""
         }
     }
 }
@@ -29,9 +33,11 @@ dependencies {
             retrofit2,
             retrofit2_converter_gson,
             retrofit2_rxjava2_adapter,
+            okhttp3,
             okhttp3_log,
             lifecycle_viewmodel,
-            dagger2
+            dagger2,
+            tink
     )
 
     api project(':core-api')
@@ -41,4 +47,9 @@ dependencies {
 
     testImplementation(junit_jupiter_api, junit_jupiter_params)
     testRuntimeOnly junit_jupiter_engine
+
+    androidTestImplementation androidx_test_runner
+    androidTestImplementation androidx_junit
+    testImplementation junit
+    testImplementation arch_core_testing
 }

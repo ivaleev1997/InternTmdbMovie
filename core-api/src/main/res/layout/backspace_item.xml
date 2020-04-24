@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/numberCard"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/margin_8"
+    android:backgroundTint="?attr/colorPrimary"
+    app:cardElevation="0dp">
+
+    <ImageView
+        android:id="@+id/backspaceImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:adjustViewBounds="true"
+        style="?android:attr/borderlessButtonStyle"
+        app:srcCompat="@drawable/ic_backspace"
+        />
+</androidx.cardview.widget.CardView>
