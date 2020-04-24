@@ -43,5 +43,6 @@ class MainFragment : ParentFragment() {
         hostFragment?.findNavController()?.let {
             mainFragmentNavView.setupWithNavController(it)
         }
+
     }
 }
