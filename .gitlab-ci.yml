@@ -28,11 +28,15 @@ stages:
   - test
 
 lintDebug:
+  tags:
+    - android
   stage: build
   script:
     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
 assembleDebug:
+  tags:
+    - android
   stage: build
   script:
     - ./gradlew assembleDebug
@@ -41,11 +45,15 @@ assembleDebug:
       - app/build/outputs/
 
 debugTests:
+  tags:
+    - android
   stage: test
   script:
     - ./gradlew -Pci --console=plain :app:testDebug
 
 unitTests:
+  tags:
+    - android
   stage: test
   script:
     - ./gradlew test
