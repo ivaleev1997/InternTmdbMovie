@@ -1,4 +1,4 @@
-image: openjdk:8-jdk
+image: jangrewe/gitlab-ci-android
 
 variables:
   ANDROID_COMPILE_SDK: "29"
@@ -20,6 +20,7 @@ before_script:
   - set +o pipefail
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
   - set -o pipefail
+  - export GRADLE_USER_HOME=$(pwd)/.gradle
 
 cache:
   paths:
