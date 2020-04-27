@@ -100,7 +100,7 @@ abstract class MoviesRecyclerViewModel : BaseViewModel() {
         val movieId = domainMovie.id
         sendEvent(
             NavigateToEvent(
-                MoviesFragmentDirections.actionToDetails(movieId)
+                MoviesFragmentDirections.actionToDetails("")
             )
         )
     }
