@@ -8,11 +8,6 @@ stages:
   - build
   - test
 
-cache:
-  paths:
-    - .gradle/wrapper
-    - .gradle/caches
-
 lintDebug:
   tags:
     - android
@@ -26,6 +21,8 @@ assembleDebug:
   stage: build
   script:
     - ./gradlew assembleDebug
+    - cat core-api/src/main/res/navigation/main_navigation_graph.xml
+    - cat core-api/build/generated/source/navigation-args/debug/com/education/movies/presentation/MoviesFragmentDirections.kt
   artifacts:
     paths:
       - app/build/outputs/
