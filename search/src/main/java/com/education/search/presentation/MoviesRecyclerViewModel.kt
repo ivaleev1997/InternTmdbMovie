@@ -1,6 +1,7 @@
 package com.education.search.presentation
 
 import androidx.lifecycle.MutableLiveData
+import com.education.core_api.BLANK_STR
 import com.education.core_api.extension.delegate
 import com.education.core_api.extension.mapDistinct
 import com.education.core_api.presentation.uievent.NavigateToEvent
@@ -16,7 +17,7 @@ import io.reactivex.Flowable
 
 abstract class MoviesRecyclerViewModel : BaseViewModel() {
     protected var currentListMovies = listOf<DomainMovie>()
-    protected var lastFetchedQuery: String = ""
+    protected var lastFetchedQuery: String = BLANK_STR
 
     val liveState = MutableLiveData(createInitialMoviesViewState())
     protected var state: MoviesViewState by liveState.delegate()
