@@ -36,6 +36,8 @@ lintDebug:
   stage: build
   script:
     - ls -al
+    - uname -a
+    - ls -al ../
     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
 assembleDebug:
