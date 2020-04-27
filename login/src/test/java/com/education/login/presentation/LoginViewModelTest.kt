@@ -1,7 +1,9 @@
 package com.education.login.presentation
 
 import com.education.core_api.extension.SchedulersProvider
+import com.education.login.disableTestMode
 import com.education.login.domain.UserUseCase
+import com.education.login.enableTestMode
 import com.nhaarman.mockitokotlin2.mock
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
@@ -10,6 +12,9 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 object LoginViewModelTest : Spek({
+    beforeGroup { enableTestMode() }
+    afterGroup { disableTestMode() }
+
     Feature("Login: ViewModel only (login and password input only)") {
         val mockUserUseCase = mock<UserUseCase>()
         val mockSchedulersProvider = mock<SchedulersProvider>()

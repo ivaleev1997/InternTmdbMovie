@@ -1,6 +1,5 @@
 package com.education.login.data.reposiory
 
-import com.education.core_api.data.LocalDataSource
 import com.education.core_api.data.network.TmdbAuthApi
 import com.education.core_api.data.network.entity.RequestToken
 import com.education.core_api.data.network.entity.Session
@@ -14,10 +13,10 @@ import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.Single
 import io.reactivex.Single.just
 import io.reactivex.observers.TestObserver
-import java.net.ConnectException
 import org.mockito.Mockito
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
+import java.net.ConnectException
 
 object LoginRepositoryTest : Spek({
     // region Fields
@@ -30,41 +29,15 @@ object LoginRepositoryTest : Spek({
             RequestToken(success = true, expiresAt = com.education.testmodule.expires_at, requestToken = com.education.testmodule.request_token)
         )
     }
-    val mockLocalDataSource: LocalDataSource = Mockito.mock(LocalDataSource::class.java)
 
     var testObserver: TestObserver<Void> = TestObserver()
 
     val loginRepository: LoginRepository by memoized {
-        LoginRepositoryImpl(mockTmdbAuthApi, mockLocalDataSource)
+        LoginRepositoryImpl(mockTmdbAuthApi)
     }
     // endregion Fields
 
     Feature("Check login(user: User) method") {
-
-        Scenario("Check login result if create session true") {
-            Given("Create success data flow from TmdbAuthApi by mocking") {
-                Mockito.`when`(mockTmdbAuthApi.createSessionId(any())).thenReturn(just(
-                    Session(success = true, sessionId = com.education.testmodule.session_id)
-                ))
-            }
-
-            When("Subscribe on login method with User instance object") {
-                testObserver = loginRepository
-                    .login(User("login", "passwd"))
-                    .test()
-            }
-
-            Then("Should complete") {
-                testObserver.assertComplete()
-                testObserver.dispose()
-            }
-
-            And("Verify save request token, session id and token lifetime") {
-                Mockito.verify(mockLocalDataSource).saveRequestToken(com.education.testmodule.request_token)
-                Mockito.verify(mockLocalDataSource).saveSessionId(com.education.testmodule.session_id)
-                Mockito.verify(mockLocalDataSource).saveTokenLifeTime(com.education.testmodule.expires_at)
-            }
-        }
 
         Scenario("Check login result if create session false") {
             Given("Create data flow from TmdbAuthApi by mocking with false session") {

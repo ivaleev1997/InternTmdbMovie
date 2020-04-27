@@ -58,7 +58,7 @@ abstract class MoviesRecyclerViewModel : BaseViewModel() {
 
     protected fun moviesToRecyclerItem(moviesList: List<DomainMovie>): List<Item> {
         currentListMovies = moviesList
-        val isLinearRecyclerMap = recyclerMapState.value as Boolean
+        val isLinearRecyclerMap = liveState.value?.isLinearLayoutRecyclerMap ?: false
         return moviesList.map { movie ->
             if (isLinearRecyclerMap) {
                 MovieListItem(

@@ -1,6 +1,5 @@
 package com.education.login.data.repository
 
-import com.education.core_api.data.LocalDataSource
 import com.education.core_api.data.network.TmdbAuthApi
 import com.education.core_api.data.network.entity.RequestSessionBody
 import com.education.core_api.data.network.entity.RequestToken
@@ -13,8 +12,7 @@ import javax.inject.Inject
 
 class LoginRepositoryImpl
 @Inject constructor(
-    private val tmdbAuthApi: TmdbAuthApi,
-    private val localDataSource: LocalDataSource
+    private val tmdbAuthApi: TmdbAuthApi
 ) : LoginRepository {
 
     private var requestToken: String = ""
@@ -51,17 +49,14 @@ class LoginRepositoryImpl
     override fun getRequestTokenLifeTime() = requestTokenLife
 
     private fun saveRequestToken(token: String) {
-        // localDataSource.saveRequestToken(token)
         requestToken = token
     }
 
     private fun saveSessionId(session: String) {
-        // localDataSource.saveSessionId(session)
         sessionId = session
     }
 
     private fun saveTokenLifeTime(expiresAt: String) {
-        // localDataSource.saveTokenLifeTime(expiresAt)
         requestTokenLife = expiresAt
     }
 }

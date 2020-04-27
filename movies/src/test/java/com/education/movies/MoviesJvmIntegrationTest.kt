@@ -1,5 +1,6 @@
 package com.education.movies
 
+import com.education.core_api.data.LocalDataSource
 import com.education.movies.data.repository.MoviesRepository
 import com.education.movies.data.repository.MoviesRepositoryImpl
 import com.education.movies.domain.MoviesUseCase
@@ -8,6 +9,8 @@ import com.education.search.domain.entity.MoviesScreenState
 import com.education.search.domain.entity.MoviesViewState
 import com.education.testmodule.MockTmdbMovieWebServer
 import com.education.testmodule.TestSchedulersProvider
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.Flowable
 import io.reactivex.schedulers.TestScheduler
 import org.assertj.core.api.Assertions.assertThat
@@ -23,6 +26,9 @@ object MoviesJvmIntegrationTest : Spek({
         // region Fields
         val testScheduler = TestScheduler()
         val schedulersProvider = TestSchedulersProvider(testScheduler)
+        val mockLocalDataSource = mock<LocalDataSource>() {
+            on { getRecyclerMapState() } doReturn false
+        }
 
         var repository: MoviesRepository
         var useCase: MoviesUseCase
@@ -32,7 +38,7 @@ object MoviesJvmIntegrationTest : Spek({
         Scenario("User insert blank query and press done key on keyboard") {
             // region Fields
             mockTmdbMovieWebServer = MockTmdbMovieWebServer()
-            repository = MoviesRepositoryImpl(mockTmdbMovieWebServer.tmdbMovieApi)
+            repository = MoviesRepositoryImpl(mockTmdbMovieWebServer.tmdbMovieApi, mockLocalDataSource)
             useCase = MoviesUseCase(repository)
             moviesViewModel = MoviesViewModel(useCase, schedulersProvider)
             // endregion Fields
@@ -64,7 +70,7 @@ object MoviesJvmIntegrationTest : Spek({
         Scenario("User input right query: 'Avengers'") {
             // region Fields
             mockTmdbMovieWebServer = MockTmdbMovieWebServer()
-            repository = MoviesRepositoryImpl(mockTmdbMovieWebServer.tmdbMovieApi)
+            repository = MoviesRepositoryImpl(mockTmdbMovieWebServer.tmdbMovieApi, mockLocalDataSource)
             useCase = MoviesUseCase(repository)
             moviesViewModel = MoviesViewModel(useCase, schedulersProvider)
             // endregion Fields
@@ -93,7 +99,7 @@ object MoviesJvmIntegrationTest : Spek({
         Scenario("User input query: 'qwertyu' without results") {
             // region Fields
             mockTmdbMovieWebServer = MockTmdbMovieWebServer()
-            repository = MoviesRepositoryImpl(mockTmdbMovieWebServer.tmdbMovieApi)
+            repository = MoviesRepositoryImpl(mockTmdbMovieWebServer.tmdbMovieApi, mockLocalDataSource)
             useCase = MoviesUseCase(repository)
             moviesViewModel = MoviesViewModel(useCase, schedulersProvider)
             // endregion Fields
