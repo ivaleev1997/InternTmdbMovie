@@ -21,6 +21,11 @@ before_script:
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
   - set -o pipefail
 
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
 stages:
   - build
   - test
