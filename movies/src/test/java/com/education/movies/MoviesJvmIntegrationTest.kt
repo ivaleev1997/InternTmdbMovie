@@ -46,7 +46,7 @@ object MoviesJvmIntegrationTest : Spek({
             val isListRecyclerMap = true
             val expectedMovieViewState =
                 MoviesViewState(
-                    MoviesScreenState.CLEAN,
+                    MoviesScreenState.ZERO,
                     listOf(),
                     isListRecyclerMap
                 )
@@ -59,7 +59,7 @@ object MoviesJvmIntegrationTest : Spek({
                 moviesViewModel.initSearchMovies(queryFlowable)
             }
 
-            Then("Empty list and CREATED MoviesListState") {
+            Then("Empty list and ZERO MoviesScreenState") {
                 assertSoftly {
                     assertThat(moviesViewModel.liveState.value?.moviesScreenState).isEqualTo(expectedMovieViewState.moviesScreenState)
                     assertThat(moviesViewModel.liveState.value?.listItems?.size).isEqualTo(expectedMovieViewState.listItems.size)

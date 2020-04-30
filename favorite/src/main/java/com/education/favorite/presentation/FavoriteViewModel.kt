@@ -5,8 +5,8 @@ import com.education.core_api.extension.mapDistinct
 import com.education.core_api.extension.schedulersComputationToMain
 import com.education.core_api.extension.schedulersIoToMain
 import com.education.favorite.domain.FavoriteUseCase
-import com.education.search.domain.entity.LoadFavoriteStatus
 import com.education.search.domain.entity.DomainMovie
+import com.education.search.domain.entity.LoadFavoriteStatus
 import com.education.search.presentation.MoviesRecyclerViewModel
 import io.reactivex.Flowable
 import timber.log.Timber
@@ -20,8 +20,6 @@ class FavoriteViewModel(
     var loadFavoritesStatus = liveState.mapDistinct { it.loadFavoritesStatus }
     var moviesRetryStatus = liveState.mapDistinct { it.moviesScreenState }
     private var favoriteListDomainMovies: List<DomainMovie> = listOf()
-
-    private fun createInitialLoadViewState(): LoadFavoritesViewState = LoadFavoritesViewState(LoadFavoriteStatus.LOAD)
 
     init {
         loadRecyclerMapState()
