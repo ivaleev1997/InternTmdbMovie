@@ -13,16 +13,18 @@
         style="@style/SearchTextInputLayoutStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
         android:layout_marginStart="@dimen/margin_16"
-        android:layout_marginEnd="@dimen/margin_24"
-        android:visibility="gone"
+        android:layout_marginEnd="@dimen/margin_44"
+        android:visibility="invisible"
         app:endIconMode="clear_text"
         app:endIconTint="@color/search_main_color"
 
         app:layout_constraintBottom_toBottomOf="@+id/recyclerMap"
-        app:layout_constraintEnd_toStartOf="@id/recyclerMap"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recyclerMap"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
         app:startIconDrawable="@drawable/ic_search_24dp"
         app:startIconTint="@color/search_main_color">
 
@@ -39,28 +41,34 @@
         android:id="@+id/recyclerMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_16"
-        android:layout_marginTop="@dimen/margin_24"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        app:srcCompat="@drawable/ic_to_tile_map"
 
+        app:layout_constraintBottom_toBottomOf="@+id/searchInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/searchInputLayout"
+        app:layout_constraintTop_toTopOf="@+id/searchInputLayout"
+        app:srcCompat="@drawable/ic_to_tile_map" />
 
     <ImageView
         android:id="@+id/searchIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_24"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerMap"
-        app:layout_constraintEnd_toStartOf="@+id/recyclerMap"
+        app:layout_constraintEnd_toEndOf="@+id/searchInputLayout"
         app:layout_constraintTop_toTopOf="@+id/recyclerMap"
         app:srcCompat="@drawable/ic_search_24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
 
     <TextView
         android:id="@+id/favoriteTitle"
@@ -71,7 +79,7 @@
         android:text="@string/favorite_title"
         android:textAppearance="?attr/textAppearanceHeadline1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchInputLayout" />
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
 
     <include
         android:id="@+id/emptyContent"

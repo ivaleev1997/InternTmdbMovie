@@ -29,6 +29,8 @@
         <item name="textAppearanceHeadline1">@style/TextAppearance.MyApp.HeadLine1</item>
         <item name="textAppearanceHeadline2">@style/TextAppearance.MyApp.HeadLine2</item>
         <item name="textAppearanceSubtitle1">@style/TextAppearance.MyApp.Subtitle1</item>
+
+        <item name="materialAlertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
     <style name="Base.Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar">

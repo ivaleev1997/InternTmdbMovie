@@ -26,6 +26,7 @@ fun <T> Single<T>.schedulersComputationToMain(provider: SchedulersProvider): Sin
 fun <T> Flowable<T>.schedulersComputationToMain(provider: SchedulersProvider): Flowable<T> {
     return subscribeOn(provider.computation()).observeOn(provider.mainThread())
 }
+
 fun <T : Any> Single<T>.flatMapCompletableAction(action: (T) -> Unit): Completable {
     return flatMapCompletable { param -> Completable.fromAction { action.invoke(param) } }
 }

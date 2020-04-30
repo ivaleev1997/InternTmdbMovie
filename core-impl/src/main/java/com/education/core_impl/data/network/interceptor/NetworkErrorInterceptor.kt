@@ -20,7 +20,7 @@ class NetworkErrorInterceptor
         val request = chain.request()
         val response = chain.proceed(request)
 
-        return when (response.code()) {
+        return when (response.code) {
             HTTP_OK -> response
             HTTP_CREATED -> response
             else -> throw ServerException(getStatusMessage(response))
@@ -28,7 +28,7 @@ class NetworkErrorInterceptor
     }
 
     private fun getStatusMessage(response: Response): String {
-        val body = response.body()
+        val body = response.body
 
         return if (body != null) {
             try {

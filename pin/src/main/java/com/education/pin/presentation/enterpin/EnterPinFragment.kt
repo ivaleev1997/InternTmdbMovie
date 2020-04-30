@@ -18,13 +18,12 @@ import com.education.pin.di.PinComponent
 import com.education.pin.domain.entity.EnterKeyStatus
 import com.education.pin.domain.entity.PinViewState
 import com.education.pin.presentation.PinFragment
-import javax.inject.Inject
-import javax.inject.Named
 import kotlinx.android.synthetic.main.create_pin_fragment.*
 import kotlinx.android.synthetic.main.create_pin_fragment.wrongEnterTextView
 import kotlinx.android.synthetic.main.enter_pin_fragment.*
 import kotlinx.android.synthetic.main.enter_pin_fragment.hiddenPin
 import kotlinx.android.synthetic.main.enter_pin_fragment.pinKeyboard
+import javax.inject.Inject
 
 class EnterPinFragment : PinFragment(R.layout.enter_pin_fragment) {
 
@@ -36,7 +35,6 @@ class EnterPinFragment : PinFragment(R.layout.enter_pin_fragment) {
     internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    @Named("EnterPinViewModel")
     internal lateinit var viewModelTrigger: ViewModelTrigger
 
     private val viewModel: EnterPinViewModel by viewModels {

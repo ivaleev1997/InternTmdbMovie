@@ -11,15 +11,16 @@ import com.education.pin.biometric.BiometricAuthStatus
 import com.education.pin.domain.PinUseCase
 import com.education.pin.domain.entity.EnterKeyStatus
 import com.education.pin.presentation.PinViewModel
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import timber.log.Timber
 
-class CreatePinViewModel(
+class CreatePinViewModel @AssistedInject constructor(
     private val useCase: PinUseCase,
-    private val schedulersProvider: SchedulersProvider
+    private val schedulersProvider: SchedulersProvider,
+    @Assisted private val appContext: Context,
+    @Assisted private val userCredentials: UserCredentials
 ) : PinViewModel() {
-
-    lateinit var appContext: Context
-    lateinit var userCredentials: UserCredentials
 
     override fun onBackPressed() {
         if (!isSecondDeque)
@@ -111,5 +112,13 @@ class CreatePinViewModel(
                 clearDeques(secondDeque)
             }
         }
+    }
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun get(
+            appContext: Context,
+            userCredentials: UserCredentials
+        ) : CreatePinViewModel
     }
 }

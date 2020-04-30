@@ -36,7 +36,6 @@ object LoginRepositoryTest : Spek({
         LoginRepositoryImpl(mockTmdbAuthApi)
     }
     // endregion Fields
-
     Feature("Check login(user: User) method") {
 
         Scenario("Check login result if create session false") {

@@ -1,6 +1,8 @@
 package com.education.redmadrobottmdb.presentation.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -21,18 +23,20 @@ import com.education.redmadrobottmdb.R
 import com.education.redmadrobottmdb.di.component.MainComponent
 import com.education.redmadrobottmdb.domain.MainActivityViewState
 import com.education.redmadrobottmdb.domain.RootStatus
-import javax.inject.Inject
+import com.education.util.WifiSecurityChecker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), BaseActivity {
 
     @Inject
-    lateinit var viewModelTrigger: ViewModelTrigger
+    internal lateinit var viewModelTrigger: ViewModelTrigger
     @Inject
-    lateinit var appViewModelFactory: ViewModelProvider.Factory
+    internal lateinit var appViewModelFactory: ViewModelProvider.Factory
     @Inject
-    lateinit var loginMediator: LoginMediator
+    internal lateinit var loginMediator: LoginMediator
 
     lateinit var rootNavController: NavController
 
@@ -93,13 +97,28 @@ class MainActivity : AppCompatActivity(), BaseActivity {
 
     override fun onStop() {
         super.onStop()
-        Timber.d("onStop")
         viewModel.onStop()
     }
 
     override fun onStart() {
         super.onStart()
-        Timber.d("onStart")
         viewModel.onStart()
+        setupWifiConnectivityListener()
+    }
+
+    private fun setupWifiConnectivityListener() {
+        WifiSecurityChecker.setupListener(applicationContext) {
+            Timber.d("wifi triggered")
+            MaterialAlertDialogBuilder(this)
+                .setTitle(resources.getString(R.string.attention_wifi))
+                .setMessage(resources.getString(R.string.wifi_alert_describe))
+                .setPositiveButton(resources.getString(R.string.wifi_alert_positive_button)) { dialog, which ->
+                    dialog.dismiss()
+                }
+                .setNegativeButton(resources.getString(R.string.wifi_alert_settings_button)) { dialog, which ->
+                    startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+                }
+                .show()
+        }
     }
 }

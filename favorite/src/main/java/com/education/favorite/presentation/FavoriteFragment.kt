@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.education.core_api.di.AppWithComponent
@@ -17,8 +16,8 @@ import com.education.core_api.presentation.uievent.NoNetworkEvent
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.favorite.R
 import com.education.favorite.di.FavoriteComponent
-import com.education.favorite.domain.entity.LoadFavoriteStatus
-import com.education.favorite.domain.entity.LoadFavoritesViewState
+import com.education.search.domain.entity.LoadFavoriteStatus
+import com.education.search.domain.entity.MoviesScreenState
 import com.education.search.presentation.RecyclerFragment
 import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.BackpressureStrategy
@@ -47,6 +46,7 @@ class FavoriteFragment : RecyclerFragment(R.layout.favorite_fragment) {
         super.onAttach(context)
     }
 
+
     override fun initViewElements(view: View) {
         viewModel.loadFavorites()
 
@@ -60,10 +60,18 @@ class FavoriteFragment : RecyclerFragment(R.layout.favorite_fragment) {
 
         setRecyclerChangeMapListener(recyclerMap, viewModel)
 
+        setOnErrorRepeatListener()
+
         observeLiveDataChanges()
     }
 
-    private fun setupSearchInput() {
+    override fun setOnErrorRepeatListener() {
+        networkErrorView.setOnRepeatClickListener {
+            viewModel.onErrorRepeatClicked()
+        }
+    }
+
+    override fun setupSearchInput() {
         viewModel.initSearchMovies(
             searchTextEdit.textChanges()
             .map { it.toString() }
@@ -81,10 +89,23 @@ class FavoriteFragment : RecyclerFragment(R.layout.favorite_fragment) {
     }
 
     private fun observeLiveDataChanges() {
-        observe(viewModel.loadLiveState, ::renderLoadFavorites)
+        observe(viewModel.loadFavoritesStatus, ::renderLoadFavorites)
+        observe(viewModel.moviesRetryStatus, ::renderAfterErrorRetryState)
         observe(viewModel.recyclerMapState, ::renderRecyclerMapState)
         observe(viewModel.adapterItemsState, ::updateAdapter)
         observe(viewModel.eventsQueue, ::onEvent)
+    }
+
+    private fun renderAfterErrorRetryState(moviesScreenState: MoviesScreenState) {
+        when (moviesScreenState) {
+            MoviesScreenState.RETRY -> {
+                Timber.d("RETRY")
+                mainContent.makeVisible()
+                networkErrorView.makeGone()
+                loadAnimation.makeVisible()
+                hideKeyboard()
+            }
+        }
     }
 
     private fun renderRecyclerMapState(flag: Boolean) {
@@ -107,30 +128,26 @@ class FavoriteFragment : RecyclerFragment(R.layout.favorite_fragment) {
             searchIcon.makeGone()
             searchInputLayout.makeVisible()
 
-            // Установка курсора на searchInputLayout.editText
-            searchInputLayout.editText?.isFocusableInTouchMode = true
-            searchInputLayout.editText?.requestFocus()
-
-            // Показать клавиатуру keyboard
-            val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.showSoftInput(searchInputLayout.editText, InputMethodManager.SHOW_IMPLICIT)
-        }
+            setFocusableEditText(searchInputLayout.editText)
+            showKeyboard(searchInputLayout.editText)
+            }
     }
 
-    private fun renderLoadFavorites(loadFavoritesViewState: LoadFavoritesViewState) {
-        Timber.d("loadFavorites: ${loadFavoritesViewState.loadFavoriteStatus}")
-        when (loadFavoritesViewState.loadFavoriteStatus) {
+    private fun renderLoadFavorites(loadFavoritesViewState: LoadFavoriteStatus) {
+        when (loadFavoritesViewState) {
             LoadFavoriteStatus.LOAD -> {
+                Timber.d("LOAD")
                 loadAnimation.makeVisible()
             }
             LoadFavoriteStatus.NON_EMPTY -> {
-                // visible recycler
-                makeRecyclerVisible()
+                Timber.d("NON_EMPTY")
+                moviesRecycler.makeVisible()
                 loadAnimation.makeGone()
                 mainContent.makeVisible()
             }
             LoadFavoriteStatus.EMPTY -> {
-                makeRecyclerGone()
+                Timber.d("EMPTY")
+                moviesRecycler.makeGone()
                 loadAnimation.makeGone()
                 emptyContent.makeVisible()
             }

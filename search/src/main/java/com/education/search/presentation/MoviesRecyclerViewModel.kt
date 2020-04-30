@@ -13,6 +13,7 @@ import com.education.search.presentation.recycleritem.MovieListItem
 import com.education.search.presentation.recycleritem.MovieTileItem
 import com.xwray.groupie.kotlinandroidextensions.Item
 import io.reactivex.Flowable
+import timber.log.Timber
 
 abstract class MoviesRecyclerViewModel : BaseViewModel() {
     protected var currentListMovies = listOf<DomainMovie>()
@@ -28,7 +29,7 @@ abstract class MoviesRecyclerViewModel : BaseViewModel() {
     abstract fun initSearchMovies(observableQuery: Flowable<String>)
 
     fun onClearTextIconClick() {
-        state = createInitialMoviesViewState()
+        state = state.copy(moviesScreenState = MoviesScreenState.CLEAN, listItems = listOf())
     }
 
     fun onReMapRecyclerClick() {
@@ -74,11 +75,7 @@ abstract class MoviesRecyclerViewModel : BaseViewModel() {
         }
     }
 
-    private fun createInitialMoviesViewState() =
-        MoviesViewState(
-            MoviesScreenState.CLEAN,
-            listOf()
-        )
+    private fun createInitialMoviesViewState(): MoviesViewState = MoviesViewState()
 
     protected fun setMoviesToScreenState(listDomainMovies: List<DomainMovie>) {
         state = state.copy(listItems = moviesToRecyclerItem(listDomainMovies))
@@ -107,4 +104,9 @@ abstract class MoviesRecyclerViewModel : BaseViewModel() {
     protected abstract fun saveRecyclerMapState(isLinearLayout: Boolean)
 
     protected abstract fun loadRecyclerMapState()
+
+    open fun onErrorRepeatClicked() {
+        state = state.copy(moviesScreenState = MoviesScreenState.CLEAN)
+        state = state.copy(moviesScreenState = MoviesScreenState.RETRY)
+    }
 }
