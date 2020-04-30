@@ -5,7 +5,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
-
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 android {
     compileSdkVersion compile_sdk_version
     buildToolsVersion build_tools_version
@@ -27,6 +28,7 @@ android {
         debug {
             minifyEnabled false
             shrinkResources false
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -63,7 +65,9 @@ dependencies {
             rxjava2,
             rxAndroid,
             lottie,
-            rootbeer
+            rootbeer,
+            firebase_analytics,
+            firebase_crashlytics
     )
 
     testImplementation junit

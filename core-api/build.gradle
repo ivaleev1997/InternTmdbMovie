@@ -84,7 +84,9 @@ dependencies {
             lottie,
             biometric,
             room,
-            room_rxjava2
+            room_rxjava2,
+            firebase_analytics,
+            firebase_crashlytics
     )
 
     kapt dagger2_compiler

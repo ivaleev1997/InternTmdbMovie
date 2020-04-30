@@ -106,6 +106,6 @@ class LoginViewModel(
     }
 
     private fun logThrow(error: Throwable) {
-        Timber.d(error)
+        Timber.e(error)
     }
 }

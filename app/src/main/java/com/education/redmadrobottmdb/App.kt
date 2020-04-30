@@ -1,6 +1,7 @@
 package com.education.redmadrobottmdb
 
 import android.app.Application
+import com.education.core_api.crashlytics.FirebaseCrashlyticsTree
 import com.education.core_api.di.AppWithComponent
 import com.education.core_api.di.CoreProvider
 import com.education.redmadrobottmdb.di.component.CoreComponent
@@ -26,5 +27,8 @@ class App : Application(), AppWithComponent {
     private fun initLogger() {
         if (BuildConfig.DEBUG)
             Timber.plant(Timber.DebugTree())
+        else {
+            Timber.plant(FirebaseCrashlyticsTree())
+        }
     }
 }
