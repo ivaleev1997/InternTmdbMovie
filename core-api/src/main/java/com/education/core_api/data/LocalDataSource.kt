@@ -1,7 +1,10 @@
 package com.education.core_api.data
 
 import android.content.Context
+import com.education.core_api.data.local.entity.Movie
 import com.education.core_api.dto.UserCredentials
+import io.reactivex.Completable
+import io.reactivex.Single
 
 interface LocalDataSource {
 
@@ -44,4 +47,14 @@ interface LocalDataSource {
     fun getOnStopTime(): Long
 
     fun clearLastOnStopTime()
+
+    fun saveMovies(listMovies: List<Movie>): Completable
+
+    fun getMovies(): Single<List<Movie>>
+
+    fun saveRecyclerMapState(flag: Boolean)
+
+    fun getRecyclerMapState(): Boolean
+
+    fun deleteMovie(movieId: Long)
 }

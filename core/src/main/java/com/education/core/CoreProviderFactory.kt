@@ -12,7 +12,7 @@ object CoreProviderFactory {
 
     private var viewModelsProvider: ViewModelsProvider? = null
     private var networkProvider: NetworkProvider? = null
-    private var localDataSourceProvider:LocalDataSourceProvider? = null
+    private var localDataSourceProvider: LocalDataSourceProvider? = null
 
     fun createNetworkProvider(localDataSourceProvider: LocalDataSourceProvider): NetworkProvider {
         return networkProvider ?: DaggerNetworkComponent

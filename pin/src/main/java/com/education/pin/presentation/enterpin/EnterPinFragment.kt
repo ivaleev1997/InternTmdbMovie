@@ -72,14 +72,13 @@ class EnterPinFragment : PinFragment(R.layout.enter_pin_fragment) {
     }
 
     override fun renderViewState(pinViewState: PinViewState) {
-        when(pinViewState.enterKeyStatus) {
+        when (pinViewState.enterKeyStatus) {
             EnterKeyStatus.ENTER -> {
                 hiddenPin.itemPressed()
             }
             EnterKeyStatus.BACKSPACE -> {
                 hiddenPin.backspacePressed()
                 wrongEnterTextView.makeInvisible()
-
             }
             EnterKeyStatus.CLEAN -> {
                 hiddenPin.clear()

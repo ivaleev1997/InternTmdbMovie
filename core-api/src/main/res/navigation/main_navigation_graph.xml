@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigation_favorite"
-        android:name="com.education.favorite.FavoriteFragment"
+        android:name="com.education.favorite.presentation.FavoriteFragment"
         tools:layout="@layout/favorite_fragment" >
 
         <action

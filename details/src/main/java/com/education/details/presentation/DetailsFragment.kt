@@ -34,7 +34,7 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
     }
 
     @Inject
-    lateinit var viewModelFactory: DetailsViewModel.Factory
+    internal lateinit var viewModelFactory: DetailsViewModel.Factory
 
     private lateinit var favoriteItem: MenuItem
 

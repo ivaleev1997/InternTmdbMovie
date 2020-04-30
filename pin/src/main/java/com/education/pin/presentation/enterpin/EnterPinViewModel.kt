@@ -70,7 +70,7 @@ class EnterPinViewModel(
     private fun getUserLoginAsCheckValidPin(pin: String) {
         useCase.getUserLogin(pin)
             .schedulersComputationToMain(schedulersProvider)
-            .subscribe({userLogin ->
+            .subscribe({ userLogin ->
                 if (userLogin.isNotEmpty())
                     sendEvent(NavigateToEvent(EnterPinFragmentDirections.enterPinToStartGraph()))
                 else {

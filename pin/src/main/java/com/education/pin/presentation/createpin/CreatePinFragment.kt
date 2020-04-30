@@ -69,7 +69,7 @@ class CreatePinFragment : PinFragment(R.layout.create_pin_fragment) {
     }
 
     override fun renderViewState(pinViewState: PinViewState) {
-        when(pinViewState.enterKeyStatus) {
+        when (pinViewState.enterKeyStatus) {
             EnterKeyStatus.ENTER -> {
                 hiddenPin.itemPressed()
             }

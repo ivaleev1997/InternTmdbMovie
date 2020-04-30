@@ -56,7 +56,6 @@ class ZeroScreenWithAnimation @JvmOverloads constructor(
         set(value) {
             field = value
             if (field != 0) {
-                // Не получилось получить colorPrimary из темы программно
                 zeroScreenContainer.setBackgroundColor(field)
             }
         }

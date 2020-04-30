@@ -45,10 +45,13 @@ dependencies {
             groupie,
             groupie_ktx,
             lottie,
-            biometric
+            biometric,
+            room,
+            room_rxjava2
     )
 
     kapt dagger2_compiler
+    kapt room_compiler
 
     testImplementation junit
     androidTestImplementation(androidx_junit, androidx_espresso)

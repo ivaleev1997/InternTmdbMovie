@@ -15,7 +15,6 @@ import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import timber.log.Timber
 
-
 class CreatePinViewModel @AssistedInject constructor(
     private val useCase: PinUseCase,
     private val schedulersProvider: SchedulersProvider,
@@ -52,7 +51,7 @@ class CreatePinViewModel @AssistedInject constructor(
                         useCase.saveMasterKeyPin(biometricResult.masterPinKey)
                             .schedulersComputationToMain(schedulersProvider)
                             .subscribe({
-                            },{ error ->
+                            }, { error ->
                                 Timber.e(error)
                                 sendEvent(TryLaterEvent(appContext.resources.getString(R.string.biometric_error)))
                             })
@@ -79,10 +78,9 @@ class CreatePinViewModel @AssistedInject constructor(
             .subscribe({
                 Timber.d("Success encryption")
                 sendEvent(NavigateToEvent(CreatePinFragmentDirections.createPinToStartGraph()))
-            },{ error ->
+            }, { error ->
                 Timber.e(error)
                 sendEvent(TryLaterEvent())
-
             }).autoDispose()
     }
 

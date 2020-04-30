@@ -1,4 +1,4 @@
-package com.education.favorite
+package com.education.favorite.presentation
 
 import android.content.Context
 import android.os.Bundle
@@ -14,20 +14,22 @@ import com.education.core_api.extension.observe
 import com.education.core_api.presentation.uievent.Event
 import com.education.core_api.presentation.uievent.NoNetworkEvent
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
+import com.education.favorite.R
 import com.education.favorite.di.FavoriteComponent
 import com.education.search.domain.entity.LoadFavoriteStatus
 import com.education.search.domain.entity.MoviesScreenState
 import com.education.search.presentation.RecyclerFragment
 import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.BackpressureStrategy
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.favorite_fragment.*
 import timber.log.Timber
-import javax.inject.Inject
 
 class FavoriteFragment : RecyclerFragment(R.layout.favorite_fragment) {
 
     companion object {
-        fun newInstance() = FavoriteFragment()
+        fun newInstance() =
+            FavoriteFragment()
     }
 
     @Inject
@@ -61,7 +63,6 @@ class FavoriteFragment : RecyclerFragment(R.layout.favorite_fragment) {
         setOnErrorRepeatListener()
 
         observeLiveDataChanges()
-
     }
 
     override fun setOnErrorRepeatListener() {

@@ -24,6 +24,11 @@ android {
             buildConfigField "String", "SSL_SERVER_PATTERN", "\"${ssl_server_pattern}\""
         }
     }
+
+    sourceSets {
+        // Adds exported schema location as test app assets.
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+    }
 }
 
 dependencies {
@@ -37,11 +42,14 @@ dependencies {
             okhttp3_log,
             lifecycle_viewmodel,
             dagger2,
-            tink
+            tink,
+            room,
+            room_rxjava2
     )
 
     api project(':core-api')
     kapt dagger2_compiler
+    kapt room_compiler
 
     testImplementation assertj
 
@@ -52,4 +60,5 @@ dependencies {
     androidTestImplementation androidx_junit
     testImplementation junit
     testImplementation arch_core_testing
+    androidTestImplementation room_testing
 }

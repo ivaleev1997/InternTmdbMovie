@@ -10,4 +10,4 @@ data class UserCredentials(
     val requestToken: String,
     val requestTokenLife: String,
     val sessionId: String
-): Parcelable
+) : Parcelable

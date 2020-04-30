@@ -4,7 +4,6 @@ import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 
-
 fun View.makeVisible() {
     if (!this.isVisible)
         this.visibility = View.VISIBLE

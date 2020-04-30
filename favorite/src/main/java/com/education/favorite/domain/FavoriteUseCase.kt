@@ -1,19 +1,29 @@
 package com.education.favorite.domain
 
+import com.education.core_api.data.local.entity.Movie
 import com.education.favorite.data.FavoriteRepository
-import com.education.search.domain.entity.Movie
-import com.education.search.domain.MoviesRecyclerUseCase
+import com.education.search.domain.entity.DomainMovie
+import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
 class FavoriteUseCase @Inject constructor(
     private val favoriteRepository: FavoriteRepository
-) : MoviesRecyclerUseCase() {
-    fun loadFavorites(): Single<List<Movie>> {
+) {
+    fun loadFavorites(): Single<List<DomainMovie>> {
         return favoriteRepository.loadFavorite()
-            .flattenAsObservable { moviesApiResponse -> moviesApiResponse.movies }
-            .flatMapSingle { searchMovie -> favoriteRepository.loadDetails(searchMovie.id) }
-            .toList()
-            .map { detailsListMovie -> detailsMovieMapToMovie(detailsListMovie) }
+            .map { movies -> repositoryMoviesToDomainMovies(movies) }
+    }
+
+    private fun repositoryMoviesToDomainMovies(movies: List<Movie>): List<DomainMovie> {
+        return movies.map { movie -> DomainMovie(movie) }
+    }
+
+    fun getRecyclerMapState(): Single<Boolean> {
+        return favoriteRepository.getRecyclerMapState()
+    }
+
+    fun saveRecyclerMapState(isLinearLayout: Boolean): Completable {
+        return favoriteRepository.saveRecyclerMapState(isLinearLayout)
     }
 }

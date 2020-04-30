@@ -9,7 +9,6 @@ import com.education.core_api.BLANK_STR
 import com.education.core_api.extension.base64DecodeFromString
 import com.education.core_api.extension.base64EncodeToString
 import com.education.pin.R
-import timber.log.Timber
 import java.security.KeyStore
 import java.security.SecureRandom
 import java.util.concurrent.Executor
@@ -18,12 +17,13 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 import kotlin.text.Charsets.UTF_8
+import timber.log.Timber
 
 @TargetApi(23)
 class BiometricSecurity(
-                        private val isFirstSetup: Boolean,
-                        fragment: Fragment,
-                        executor: Executor
+    private val isFirstSetup: Boolean,
+    fragment: Fragment,
+    executor: Executor
 ) {
     companion object {
         private const val FINGERPRINT_KEY_ALIAS = "fingerprint_master_key_alias"
@@ -121,8 +121,7 @@ class BiometricSecurity(
             if (isFirstSetup) {
                 val iv = createIv()
                 cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv)
-            }
-            else {
+            } else {
                 cipher.init(Cipher.DECRYPT_MODE, secretKey, getIvFromMasterPinKey(masterPinKey))
             }
             biometricPrompt.authenticate(promptInfo,
@@ -148,9 +147,9 @@ class BiometricSecurity(
     }
 
     private fun getCipher(): Cipher {
-        return Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
-                + KeyProperties.BLOCK_MODE_CBC + "/"
-                + KeyProperties.ENCRYPTION_PADDING_PKCS7)
+        return Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/" +
+                KeyProperties.BLOCK_MODE_CBC + "/" +
+                KeyProperties.ENCRYPTION_PADDING_PKCS7)
     }
 
     private fun createIv(): IvParameterSpec {

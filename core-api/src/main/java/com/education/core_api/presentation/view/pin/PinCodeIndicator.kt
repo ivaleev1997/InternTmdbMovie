@@ -12,7 +12,6 @@ import java.util.*
 import kotlin.collections.HashMap
 import kotlin.math.roundToInt
 
-
 class PinCodeIndicator @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -66,7 +65,7 @@ class PinCodeIndicator @JvmOverloads constructor(
     private var stubIndicatorsCount: Int = MIN_INDICATORS_COUNT_4
         set(value) {
             field = value
-            for(i in (FIRST_INDEX_0 until field)) {
+            for (i in (FIRST_INDEX_0 until field)) {
                 mapImageValues[i] = ImageView(context).apply {
                     val imageViewLayoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
                     if (i > FIRST_INDEX_0) {

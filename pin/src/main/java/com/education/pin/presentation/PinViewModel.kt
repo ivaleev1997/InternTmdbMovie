@@ -10,8 +10,8 @@ import com.education.core_api.presentation.viewmodel.BaseViewModel
 import com.education.pin.biometric.BiometricSecurity
 import com.education.pin.domain.entity.EnterKeyStatus
 import com.education.pin.domain.entity.PinViewState
-import timber.log.Timber
 import java.util.*
+import timber.log.Timber
 
 abstract class PinViewModel : BaseViewModel() {
     companion object {
@@ -50,7 +50,7 @@ abstract class PinViewModel : BaseViewModel() {
             val biometricManager = BiometricManager.from(context)
             when (biometricManager.canAuthenticate()) {
                 BiometricManager.BIOMETRIC_SUCCESS -> {
-                    Timber.d( "App can authenticate using biometrics.")
+                    Timber.d("App can authenticate using biometrics.")
                     isBiometricEnable = true
                 }
                 BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE ->
@@ -63,7 +63,7 @@ abstract class PinViewModel : BaseViewModel() {
         }
     }
 
-    fun clearDeques(vararg deques: Deque<Int> ) {
+    fun clearDeques(vararg deques: Deque<Int>) {
         wasError = false
         state = state.copy(enterKeyStatus = EnterKeyStatus.CLEAN)
         deques.forEach { deque ->
@@ -96,5 +96,4 @@ abstract class PinViewModel : BaseViewModel() {
     abstract fun onBackSpaceClicked()
 
     protected abstract fun checkPins()
-
 }

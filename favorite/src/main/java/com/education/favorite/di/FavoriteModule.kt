@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.education.core_api.di.module.SchedulersProviderModule
 import com.education.core_api.extension.SchedulersProvider
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
-import com.education.favorite.FavoriteViewModel
 import com.education.favorite.data.FavoriteRepository
 import com.education.favorite.data.FavoriteRepositoryImpl
 import com.education.favorite.domain.FavoriteUseCase
+import com.education.favorite.presentation.FavoriteViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

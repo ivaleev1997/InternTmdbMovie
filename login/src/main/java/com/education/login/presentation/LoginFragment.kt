@@ -17,8 +17,8 @@ import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.login.R
 import com.education.login.di.LoginComponent
 import com.education.login.domain.entity.LoginResult
-import kotlinx.android.synthetic.main.login_fragment.*
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.login_fragment.*
 
 class LoginFragment : BaseFragment(R.layout.login_fragment) {
 

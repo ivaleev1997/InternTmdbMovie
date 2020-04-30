@@ -4,15 +4,20 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.education.core_api.BLANK_STR
 import com.education.core_api.data.LocalDataSource
+import com.education.core_api.data.local.dao.MovieDao
+import com.education.core_api.data.local.entity.Movie
 import com.education.core_api.dto.UserCredentials
 import com.education.core_api.extension.clear
 import com.education.core_api.extension.getStringOrBlank
 import com.education.core_api.extension.putString
+import io.reactivex.Completable
+import io.reactivex.Single
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(
+    private val movieDao: MovieDao,
     private val sharedPrefs: SharedPreferences,
     private val security: Security
 ) : LocalDataSource {
@@ -26,6 +31,7 @@ class LocalDataSourceImpl @Inject constructor(
         const val PREFS_USER_PASSWORD = "userPassword"
         const val PREFS_ON_STOP_TIME = "onStopTime"
         const val PREFS_MASTER_KEY_PIN = "masterPinKey"
+        const val PREFS_MAP_RECYCLER_STATE = "recyclerMapState"
 
         fun convertTime(timeString: String): Long {
             val timeFormat = "yyyy-MM-dd HH:mm:ss"
@@ -102,7 +108,6 @@ class LocalDataSourceImpl @Inject constructor(
 
     override fun getUserLogin(): String {
         return security.decrypt(sharedPrefs.getStringOrBlank(PREFS_USER_LOGIN, BLANK_STR))
-
     }
 
     override fun saveUserPassword(userPass: String): Boolean {
@@ -147,5 +152,30 @@ class LocalDataSourceImpl @Inject constructor(
 
     override fun clearLastOnStopTime() {
         sharedPrefs.putString(PREFS_ON_STOP_TIME, BLANK_STR)
+    }
+
+    override fun saveMovies(listMovies: List<Movie>): Completable {
+        return movieDao.insertMovies(listMovies)
+    }
+
+    override fun getMovies(): Single<List<Movie>> {
+        return movieDao.getMovies()
+    }
+
+    override fun saveRecyclerMapState(flag: Boolean) {
+        sharedPrefs.putString(PREFS_MAP_RECYCLER_STATE, security.encrypt(flag.toString()))
+    }
+
+    override fun getRecyclerMapState(): Boolean {
+        val decrypted =
+            security.decrypt(sharedPrefs.getStringOrBlank(PREFS_MAP_RECYCLER_STATE, BLANK_STR))
+
+        return if (decrypted.isNotBlank())
+                    decrypted.toBoolean()
+                else false
+    }
+
+    override fun deleteMovie(movieId: Long) {
+        movieDao.deleteMovie(movieId)
     }
 }

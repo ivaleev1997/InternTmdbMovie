@@ -51,10 +51,6 @@ class UserProfileFragment : BaseFragment(R.layout.user_profile_fragment) {
     }
 
     private fun renderState(state: UserProfileViewState) {
-        if (state.userName.isBlank()) {
-            userName.visibility = View.GONE
-        }
         userName.text = state.userName
-        userEmail.text = state.userEmail
     }
 }

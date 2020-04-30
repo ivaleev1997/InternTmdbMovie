@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:id="@+id/favoriteConstrainContainer"
-    tools:context=".FavoriteFragment">
+    tools:context=".presentation.FavoriteFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/searchInputLayout"
