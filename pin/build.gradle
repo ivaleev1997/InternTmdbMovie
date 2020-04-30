@@ -63,8 +63,9 @@ dependencies {
 
     implementation project(':core')
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     kapt dagger2_compiler
+
+    // Assisted inject
+    compileOnly assisted_inject_annotations_dagger2
+    kapt assisted_inject_inject_processor_dagger2
 }

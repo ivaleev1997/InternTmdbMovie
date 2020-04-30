@@ -17,4 +17,7 @@ interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovies(movies: List<Movie>): Completable
+
+    @Query("DELETE FROM ${AppDb.APP_DB_TABLE_MOVIE} WHERE id = :movieId")
+    fun deleteMovie(movieId: Long)
 }

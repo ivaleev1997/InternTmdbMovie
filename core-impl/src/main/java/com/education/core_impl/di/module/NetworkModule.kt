@@ -58,7 +58,7 @@ class NetworkModule {
     @Singleton
     fun provideCertificatePinner(): CertificatePinner {
         return CertificatePinner.Builder()
-            .add(BuildConfig.SERVER_ADDR,
+            .add(BuildConfig.SSL_SERVER_PATTERN,
                 BuildConfig.SSL_PIN)
             .build()
     }
@@ -77,6 +77,7 @@ class NetworkModule {
             addInterceptor(apiKeyInterceptor)
             addInterceptor(networkErrorInterceptor)
             certificatePinner(certificatePinner)
+            retryOnConnectionFailure(true)
             if (BuildConfig.DEBUG) addInterceptor(loggingInterceptor)
         }
     }

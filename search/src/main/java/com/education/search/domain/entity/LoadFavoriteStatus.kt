@@ -1,4 +1,4 @@
-package com.education.favorite.domain.entity
+package com.education.search.domain.entity
 
 enum class LoadFavoriteStatus {
     LOAD,

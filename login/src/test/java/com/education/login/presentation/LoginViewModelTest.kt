@@ -14,12 +14,12 @@ import org.spekframework.spek2.style.gherkin.Feature
 object LoginViewModelTest : Spek({
     beforeGroup { enableTestMode() }
     afterGroup { disableTestMode() }
-
     Feature("Login: ViewModel only (login and password input only)") {
+        // region Fields
         val mockUserUseCase = mock<UserUseCase>()
         val mockSchedulersProvider = mock<SchedulersProvider>()
         val loginViewModel = LoginViewModel(mockUserUseCase, mockSchedulersProvider)
-
+        // endregion Fields
         Scenario("User insert wrong password") {
             var password = ""
             val expectedValidateStatus = false

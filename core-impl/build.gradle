@@ -2,26 +2,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply from: "$project.rootDir/common_build.gradle"
+
 apply plugin: "de.mannodermaus.android-junit5"
 android {
-    compileSdkVersion compile_sdk_version
-    buildToolsVersion build_tools_version
-
-    defaultConfig {
-        minSdkVersion min_sdk_version
-        targetSdkVersion target_sdk_version
-        versionCode version_code
-        versionName version_name
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
-            }
-        }
-    }
 
     buildTypes {
         release {
@@ -31,11 +15,13 @@ android {
             buildConfigField "String", "SERVER_API_KEY", "\"${tmdb_api_key}\""
             buildConfigField "String", "SERVER_ADDR", "\"${tmdb_url}\""
             buildConfigField "String", "SSL_PIN", "\"${ssl_pin}\""
+            buildConfigField "String", "SSL_SERVER_PATTERN", "\"${ssl_server_pattern}\""
         }
         debug {
             buildConfigField "String", "SERVER_API_KEY", "\"${tmdb_api_key}\""
             buildConfigField "String", "SERVER_ADDR", "\"${tmdb_url}\""
             buildConfigField "String", "SSL_PIN", "\"${ssl_pin}\""
+            buildConfigField "String", "SSL_SERVER_PATTERN", "\"${ssl_server_pattern}\""
         }
     }
 
@@ -52,6 +38,7 @@ dependencies {
             retrofit2,
             retrofit2_converter_gson,
             retrofit2_rxjava2_adapter,
+            okhttp3,
             okhttp3_log,
             lifecycle_viewmodel,
             dagger2,

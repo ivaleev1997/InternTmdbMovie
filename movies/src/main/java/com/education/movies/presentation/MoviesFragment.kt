@@ -4,29 +4,25 @@ import android.content.Context
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
+import com.education.core_api.BLANK_STR
 import com.education.core_api.di.AppWithComponent
 import com.education.core_api.extension.makeGone
 import com.education.core_api.extension.makeVisible
 import com.education.core_api.extension.observe
-import com.education.core_api.presentation.fragment.BaseFragment
 import com.education.core_api.presentation.uievent.Event
 import com.education.core_api.presentation.uievent.NoNetworkEvent
 import com.education.core_api.presentation.viewmodel.ViewModelTrigger
 import com.education.movies.R
 import com.education.movies.di.MoviesComponent
 import com.education.search.domain.entity.MoviesScreenState
+import com.education.search.presentation.RecyclerFragment
 import com.jakewharton.rxbinding2.widget.textChanges
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.ViewHolder
-import com.xwray.groupie.kotlinandroidextensions.Item
 import io.reactivex.BackpressureStrategy
-import javax.inject.Inject
 import kotlinx.android.synthetic.main.movies_fragment.*
-import kotlinx.android.synthetic.main.movies_main_content.*
 import timber.log.Timber
+import javax.inject.Inject
 
-class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
+class MoviesFragment : RecyclerFragment(R.layout.movies_fragment) {
 
     companion object {
         fun newInstance() = MoviesFragment()
@@ -41,8 +37,6 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         viewModelFactory
     }
 
-    private var groupAdapter: GroupAdapter<ViewHolder> = GroupAdapter()
-
     override fun onAttach(context: Context) {
         MoviesComponent.create((requireActivity().application as AppWithComponent).getComponent())
             .inject(this)
@@ -50,34 +44,13 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
     }
 
     override fun initViewElements(view: View) {
-        viewModel.initSearchMovies(
-            searchTextEdit.textChanges()
-                .map { it.toString() }
-                .toFlowable(
-                    BackpressureStrategy.LATEST
-                )
-        )
+        setupSearchInput()
 
-        searchInputLayout.setEndIconOnClickListener {
-            searchInputLayout.editText?.setText("")
-            viewModel.onClearTextIconClick()
-            progressBar.makeGone()
-        }
+        setupMoviesRecycler(viewModel.recyclerMapState.value == true)
 
-        moviesRecyclerView.apply {
-            layoutManager = if (viewModel.recyclerMapState.value == true)
-                linearLayoutManager
-            else
-                gridLayoutManager
-            adapter = groupAdapter
-        }
+        setupOnScrollRecyclerHideKeyboard()
 
-        moviesRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                hideKeyboard()
-            }
-        })
+        searchInputEndIconListener()
 
         moviesConstrainContainer.setOnClickListener {
             hideKeyboard()
@@ -88,6 +61,35 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         setOnErrorRepeatListener()
 
         observeLiveDataChanges()
+
+    }
+
+    override fun setupSearchInput() {
+        viewModel.initSearchMovies(
+            searchTextEdit.textChanges()
+                .map { it.toString() }
+                .toFlowable(
+                    BackpressureStrategy.LATEST
+                )
+        )
+    }
+
+    override fun setOnErrorRepeatListener() {
+        networkErrorView.setOnRepeatClickListener {
+            val currentQuery = "${searchTextEdit.text}"
+            searchTextEdit.setText(BLANK_STR)
+            searchTextEdit.setText(currentQuery)
+
+            viewModel.onErrorRepeatClicked()
+        }
+    }
+
+    private fun searchInputEndIconListener() {
+        searchInputLayout.setEndIconOnClickListener {
+            searchInputLayout.editText?.setText("")
+            viewModel.onClearTextIconClick()
+            progressBar.makeGone()
+        }
     }
 
     private fun observeLiveDataChanges() {
@@ -97,72 +99,112 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         observe(viewModel.eventsQueue, ::onEvent)
     }
 
-    private fun setOnErrorRepeatListener() {
-        networkErrorView.setOnRepeatClickListener {
-            networkErrorView.makeGone()
-            mainContent.makeVisible()
-            // TODO retry request
-            // val currentQuery = "${loginTextEdit.text} "
-            // loginTextEdit.setText(currentQuery)
-            // loginTextEdit.setText(loginTextEdit.text?.trim())
-        }
-    }
-
     private fun onEvent(event: Event) {
         Timber.d("onEvent")
         if (event is NoNetworkEvent) {
+            fromZeroToCleanState()
             progressBar.makeGone()
             mainContent.makeGone()
             cleanState()
             networkErrorView.makeVisible()
             hideKeyboard()
-        } else
+        } else {
+            fromZeroToCleanState()
             onFragmentEvent(event, moviesConstrainContainer)
+        }
     }
 
     private fun renderView(moviesScreenState: MoviesScreenState) {
         when (moviesScreenState) {
             MoviesScreenState.EMPTY -> {
                 Timber.d("EMPTY")
+
+                fromZeroToCleanState()
                 renderNotFoundScreen()
             }
             MoviesScreenState.NONE_EMPTY -> {
                 Timber.d("NONE_EMPTY")
+
+                fromZeroToCleanState()
                 renderRecyclerView()
             }
             MoviesScreenState.CLEAN -> {
                 Timber.d("CLEAN")
+
+                fromZeroToCleanState()
                 cleanState()
             }
             MoviesScreenState.ON_SEARCH -> {
                 Timber.d("ON_SEARCH")
+                fromZeroToCleanState()
                 progressBar.makeVisible()
             }
+            MoviesScreenState.ZERO -> {
+                Timber.d("ZERO")
+                renderZeroState()
+            }
+            MoviesScreenState.RETRY -> {
+                Timber.d("RETRY")
+                renderRetryState()
+            }
         }
+    }
+
+    private fun renderZeroState() {
+        mainContent.makeGone()
+        progressBar.makeGone()
+        moviesRecycler.makeGone()
+        notfoundImage.makeGone()
+        notfoundText.makeGone()
+
+        stubSearchInput.makeVisible()
+        stubSearchTextEdit.makeVisible()
+
+        stubSearchTextEdit.setOnClickListener {
+            fromZeroToCleanState()
+            setFocusableEditText(searchInputLayout.editText)
+            showKeyboard(searchInputLayout.editText)
+        }
+    }
+
+    private fun renderRetryState() {
+        progressBar.makeVisible()
+        networkErrorView.makeGone()
+        mainContent.makeVisible()
+    }
+
+    private fun fromZeroToCleanState() {
+        stubSearchImageView.makeGone()
+        stubSearchInput.makeGone()
+        stubSearchTitleTextView.makeGone()
+
+        cleanState()
     }
 
     private fun renderRecyclerView() {
         mainContent.makeVisible()
         progressBar.makeGone()
-        notfoundImageView.makeGone()
-        notfoundTextView.makeGone()
-        moviesRecyclerView.makeVisible()
+        notfoundImage.makeGone()
+        notfoundText.makeGone()
+        moviesRecycler.makeVisible()
     }
 
     private fun renderNotFoundScreen() {
         mainContent.makeVisible()
         progressBar.makeGone()
-        moviesRecyclerView.makeGone()
-        notfoundImageView.makeVisible()
-        notfoundTextView.makeVisible()
+        moviesRecycler.makeGone()
+        notfoundImage.makeVisible()
+        notfoundText.makeVisible()
     }
 
     private fun cleanState() {
+        searchInputLayout.makeVisible()
+        recyclerMap.makeVisible()
         mainContent.makeVisible()
         progressBar.makeGone()
-        moviesRecyclerView.makeGone()
-        notfoundImageView.makeGone()
-        notfoundTextView.makeGone()
+        moviesRecycler.makeGone()
+        notfoundImage.makeGone()
+        notfoundText.makeGone()
     }
 
     private fun setRecyclerChangeMapListener() {
@@ -171,13 +213,9 @@ class MoviesFragment : BaseFragment(R.layout.movies_fragment) {
         }
     }
 
-    private fun updateAdapter(listItems: List<Item>) {
-        groupAdapter.update(listItems)
-    }
-
     private fun renderRecyclerMapState(isLineLayoutManager: Boolean) {
         changeRecyclerMapIcon(isLineLayoutManager)
-        moviesRecyclerView.changeLayoutManager(isLineLayoutManager)
+        moviesRecycler.changeLayoutManager(isLineLayoutManager)
     }
 
     private fun changeRecyclerMapIcon(isLineLayoutManager: Boolean) {

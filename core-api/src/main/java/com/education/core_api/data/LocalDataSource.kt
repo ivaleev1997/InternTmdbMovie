@@ -55,4 +55,6 @@ interface LocalDataSource {
     fun saveRecyclerMapState(flag: Boolean)
 
     fun getRecyclerMapState(): Boolean
+
+    fun deleteMovie(movieId: Long)
 }

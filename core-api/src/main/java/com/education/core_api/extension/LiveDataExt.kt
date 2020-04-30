@@ -1,5 +1,6 @@
 package com.education.core_api.extension
 
+import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
@@ -57,4 +58,23 @@ fun AppCompatActivity.observe(eventsQueue: EventsQueue, eventHandler: (Event) ->
 /** Последовательныйвызов[map]и[distinctUntilChanged], воднойфункции. */
 inline fun <X, Y> LiveData<X>.mapDistinct(crossinline transform: (X) -> Y): LiveData<Y> {
     return map(transform).distinctUntilChanged()
+}
+
+
+@MainThread
+inline fun <reified VM : ViewModel> Fragment.viewModels(
+    noinline viewModelProducer: () -> VM
+): Lazy<VM> {
+    return lazy(LazyThreadSafetyMode.NONE) { createViewModel(viewModelProducer) }
+}
+
+@MainThread
+inline fun <reified VM : ViewModel> Fragment.createViewModel(
+    noinline viewModelProducer: () -> VM
+): VM {
+    val factory = object : ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
+        override fun <VM : ViewModel> create(modelClass: Class<VM>) = viewModelProducer() as VM
+    }
+    return ViewModelProviders.of(this, factory).get(VM::class.java)
 }

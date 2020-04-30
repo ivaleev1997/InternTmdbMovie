@@ -174,4 +174,8 @@ class LocalDataSourceImpl @Inject constructor(
                     decrypted.toBoolean()
                 else false
     }
+
+    override fun deleteMovie(movieId: Long) {
+        movieDao.deleteMovie(movieId)
+    }
 }

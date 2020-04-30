@@ -3,4 +3,5 @@ ext {
     tmdb_api_key = "aa7b2f0df06cb6ccf1cbcf705bcf9892"
     tmdb_image_url = "https://image.tmdb.org/t/p/w500"
     ssl_pin = "sha256/HkCBucsA3Tgiby96X7vjb/ojHaE1BrjvZ2+LRdJJd0E="
+    ssl_server_pattern = "api.themoviedb.org"
 }
