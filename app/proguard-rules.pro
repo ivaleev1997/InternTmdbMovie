@@ -33,3 +33,6 @@
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.education.core_api.data.network.entity.* { <fields>; }
 -keep class com.education.core_api.dto.UserCredentials* { <fields>; }
+
+#-keepclassmembers class com.google.crypto.tink.proto.RegistryConfig { private *; }
+-keepclassmembers class com.google.crypto.tink.proto.* { private *; }

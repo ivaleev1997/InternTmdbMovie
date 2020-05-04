@@ -31,6 +31,11 @@ Run lint for release build
 fastlane android assemble_release
 ```
 Assemble release
+### android distribute
+```
+fastlane android distribute
+```
+Distribute app to firebase
 ### android assemble_debug
 ```
 fastlane android assemble_debug

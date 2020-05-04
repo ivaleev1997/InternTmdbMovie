@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RedMadRobotTMDB</string>
+    <string name="app_name">TmdbMovie</string>
 
     <string name="title_films">Фильмы</string>
     <string name="title_favorite">Избранное</string>

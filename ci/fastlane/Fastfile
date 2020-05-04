@@ -43,6 +43,9 @@ platform :android do
             UI.message "Running lint for release build"
             gradle(task: ‘lintRelease’)
 
+            UI.message "Runs all the tests"
+            gradle(task: "test")
+
             UI.message "Running assemble release build"
             gradle(
             task: "assemble",
@@ -56,6 +59,22 @@ platform :android do
               }
             )
         end
+    end
+
+    desc "Distribute app to firebase"
+    lane :distribute do
+        UI.message "Start assemble release app"
+        assemble_release
+
+        UI.message "Start distribute app to firebase"
+
+        firebase_app_distribution(
+                    app: ENV["FIREBASE_APP_ID"],
+                    groups: "first",
+                    release_notes: "Lots of amazing new features to test out!",
+                    firebase_cli_path: ENV["FIREBASE_CLI_PATH"],
+                    firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"]
+                )
     end
 
     desc "Assemble debug"
