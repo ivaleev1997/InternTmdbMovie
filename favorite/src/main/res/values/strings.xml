@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="favorite_title">Избранное</string>
+    <string name="no_movies_title">Вы не добавили ни одного фильма</string>
+    <string name="find_movies_title">Найти любимые фильмы</string>
+    <string name="search_menu_title">поиск</string>
+    <string name="change_display">Изменить отображение</string>
+</resources>

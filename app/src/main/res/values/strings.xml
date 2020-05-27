@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TmdbMovie</string>
+
+    <string name="title_films">Фильмы</string>
+    <string name="title_favorite">Избранное</string>
+    <string name="title_profile">Профиль</string>
+    <string name="root_alert">Обнаружен root! Приложение не предназначено для использования на телефонах с root :(</string>
+    <string name="attention_wifi">Внимание!</string>
+    <string name="wifi_alert_describe">Вы используете незащищенное wifi соединение. Это может скомпроментировать ваши данные</string>
+    <string name="wifi_alert_positive_button">Продолжить</string>
+    <string name="wifi_alert_settings_button">Настройки</string>
+</resources>

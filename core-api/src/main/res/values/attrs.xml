@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ZeroScreenView" >
+        <attr name="animationView" format="reference"/>
+        <attr name="message" format="string"/>
+        <attr name="retryButton" format="boolean" />
+        <attr name="backgroundColor" format="color" />
+    </declare-styleable>
+</resources>

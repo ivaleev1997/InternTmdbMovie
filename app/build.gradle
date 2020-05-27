@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+
+apply from: "$project.rootDir/common_build.gradle"
+android {
+    compileSdkVersion compile_sdk_version
+    buildToolsVersion build_tools_version
+
+    defaultConfig {
+        applicationId application_id
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(
+            kotlin_std_lib,
+            androidx_appcompat,
+            androidx_core_ktx,
+            constraintlayout,
+            activity_ktx,
+            material,
+            timber,
+            fragment,
+            lifecycle_livedata_ktx,
+            lifecycle_ext,
+            lifecycle_viewmodel,
+            navigation_fragment,
+            navigation_ui,
+            navigation_ui_ktx,
+            navigation_fragment_ktx,
+            dagger2,
+            rxjava2,
+            rxAndroid,
+            lottie,
+            rootbeer,
+            firebase_analytics,
+            firebase_crashlytics
+    )
+
+    testImplementation junit
+    androidTestImplementation androidx_junit
+    androidTestImplementation androidx_espresso
+
+    implementation project(':core')
+    implementation project(':login')
+    implementation project(':user-profile')
+    implementation project(':favorite')
+    implementation project(':movies')
+    implementation project(':details')
+    implementation project(':pin')
+    implementation project(':util')
+
+    kapt dagger2_compiler
+
+    debugImplementation debug_database
+}

@@ -1,0 +1,66 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+apply from: "$project.rootDir/spek_and_junit5.gradle"
+apply from: "$project.rootDir/common_build.gradle"
+
+android {
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        test.java.srcDirs += ["${project(':core').projectDir}/src/test/java"]
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(
+            kotlin_std_lib,
+            androidx_appcompat,
+            androidx_core_ktx,
+            dagger2,
+
+            material,
+            constraintlayout,
+            fragment,
+            lifecycle_ext,
+            lifecycle_viewmodel,
+            rxjava2,
+            rxAndroid,
+            timber,
+            navigation_fragment,
+            navigation_fragment_ktx
+    )
+
+    implementation project(':core')
+    kapt dagger2_compiler
+
+    androidTestImplementation(androidx_junit, androidx_espresso)
+
+    testImplementation(
+            retrofit2_converter_gson,
+            retrofit2,
+            retrofit2_rxjava2_adapter,
+            okhttp3,
+            androidx_core,
+            junit,
+            okhttp_mockwebserver,
+            mockito_kotlin2,
+            assertj,
+            junit_jupiter_api
+    )
+
+    testRuntimeOnly junit_jupiter_engine
+
+    // spek
+    testImplementation(spek_dsl_jvm, spek_runner_junit5)
+
+    testImplementation project(':testmodule')
+}

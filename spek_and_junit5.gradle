@@ -1,0 +1,29 @@
+apply plugin: "de.mannodermaus.android-junit5"
+
+android {
+    testOptions {
+        junitPlatform {
+            filters {
+                engines {
+                    include 'spek2'
+                }
+            }
+        }
+        unitTests.all {
+            testLogging.events = ["passed", "skipped", "failed"]
+        }
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+}
+
+dependencies {
+    testImplementation junit_jupiter_api
+    testRuntimeOnly junit_jupiter_engine
+    testImplementation junit_jupiter_params
+
+    // spek
+    testImplementation spek_dsl_jvm
+    testImplementation spek_runner_junit5
+}

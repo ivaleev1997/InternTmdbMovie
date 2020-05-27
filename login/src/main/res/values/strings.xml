@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">login</string>
+
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="insert">Укажите логин и пароль, которые  вы использовали для входа</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="enter">Войти</string>
+
+    <string name="error_login">Неверный логин или пароль</string>
+    <string name="error_later">Что-то пошло не так,\nпопробуйте войти позже</string>
+    <string name="incorrect_login">Некорректный логин</string>
+    <string name="incorrect_passwd">Минимальная длина пароля 4 символа</string>
+
+</resources>

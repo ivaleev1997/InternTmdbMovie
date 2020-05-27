@@ -1,0 +1,95 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+fastlane_require 'dotenv'
+
+default_platform(:android)
+platform :android do
+
+    desc "Run lint for debug build"
+    lane :lint_debug do
+        Dir.chdir ".." do
+           UI.message "Running lint for debug build"
+           gradle(task: ‘lintDebug’)
+        end
+    end
+
+    desc "Run lint for release build"
+    lane :lint_release do
+        Dir.chdir ".." do
+           UI.message "Running lint for release build"
+           gradle(task: ‘lintRelease’)
+        end
+    end
+
+    desc "Assemble release"
+    lane :assemble_release do
+        Dir.chdir ".." do
+            UI.message "Clean and assemble release"
+            gradle(task: "clean")
+
+            UI.message "Running lint for release build"
+            gradle(task: ‘lintRelease’)
+
+            UI.message "Runs all the tests"
+            gradle(task: "test")
+
+            UI.message "Running assemble release build"
+            gradle(
+            task: "assemble",
+            build_type: "Release",
+              print_command: false,
+              properties: {
+                "android.injected.signing.store.file" => ENV["KEYSTORE_PATH"],
+                "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
+                "android.injected.signing.key.alias" => ENV["KEY_ALIAS"],
+                "android.injected.signing.key.password" => ENV["KEY_ALIAS_PASSWORD"],
+              }
+            )
+        end
+    end
+
+    desc "Distribute app to firebase"
+    lane :distribute do
+        UI.message "Start assemble release app"
+        assemble_release
+
+        UI.message "Start distribute app to firebase"
+
+        firebase_app_distribution(
+                    app: ENV["FIREBASE_APP_ID"],
+                    groups: "first",
+                    release_notes: "Lots of amazing new features to test out!",
+                    firebase_cli_path: ENV["FIREBASE_CLI_PATH"],
+                    firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"]
+                )
+    end
+
+    desc "Assemble debug"
+    lane :assemble_debug do
+        Dir.chdir ".." do
+            UI.message "Clean and assemble debug"
+            gradle(task: "clean assembleDebug")
+        end
+    end
+
+    desc "Runs all the tests"
+    lane :tests do
+        Dir.chdir ".." do
+            UI.message "Runs all the tests"
+            gradle(task: "test")
+        end
+    end
+end

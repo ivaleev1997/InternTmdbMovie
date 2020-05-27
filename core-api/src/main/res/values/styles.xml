@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DisabledButtonStyle" parent="@style/ThemeOverlay.MaterialComponents.Light">
+        <item name="android:colorPrimary">@color/disabled_fill_button_color</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:textSize">16sp</item>
+        <item name="backgroundTint">@color/disabled_fill_button_color</item>
+    </style>
+
+    <style name="ThemeOverlay.MyApp.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextColor">?attr/colorPrimaryVariant</item>
+        <item name="boxStrokeColor">?attr/colorPrimaryVariant</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="android:textColorHint">?attr/colorOnSurface</item>
+        <item name="passwordToggleTint">?attr/colorOnSurface</item>
+        <item name="colorPrimary">?attr/colorAccent</item>
+    </style>
+
+    <style name="TextInputEditStyle" >
+        <item name="colorPrimary">?attr/colorAccent</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textCursorDrawable">@null</item>
+    </style>
+
+    <style name="SearchTextInputLayoutStyle" parent="ThemeOverlay.MyApp.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">?attr/colorOnSecondary</item>
+        <item name="boxBackgroundColor">?attr/colorOnSecondary</item>
+    </style>
+
+    <style name="SearchEditTextLayout">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textCursorDrawable">@null</item>
+    </style>
+
+    <style name="LogoutButton" parent="DisabledButtonStyle">
+        <item name="android:textColor">?attr/colorPrimaryVariant</item>
+        <item name="backgroundTint">?attr/colorSecondaryVariant</item>
+    </style>
+
+    <style name="TitleTextViewStyle">
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="OriginalTitleTextViewStyle">
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="GenresTextViewStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="ClickableTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">?attr/colorPrimaryVariant</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">?android:selectableItemBackground</item>
+    </style>
+
+    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/AlertDialogTitleStyle</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="AlertDialogTitleStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">?attr/colorAccent</item>
+    </style>
+
+</resources>

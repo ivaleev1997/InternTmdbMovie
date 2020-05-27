@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PinCodeIndicator" >
+        <attr name="countIndicators" format="integer"/>
+        <attr name="defaultIndicatorDrawableResource" format="integer"/>
+        <attr name="enterIndicatorDrawableResource" format="integer" />
+        <attr name="errorIndicatorDrawableResource" format="integer" />
+    </declare-styleable>
+</resources>

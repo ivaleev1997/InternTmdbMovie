@@ -1,0 +1,42 @@
+image: jangrewe/gitlab-ci-android
+
+before_script:
+  - export GRADLE_USER_HOME=$(pwd)/.gradle
+  - chmod +x ./gradlew
+  
+stages:
+  - build
+  - test
+
+lintDebug:
+  tags:
+    - android
+  stage: build
+  script:
+    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+
+assembleDebug:
+  tags:
+    - android
+  stage: build
+  script:
+    - ./gradlew assembleDebug
+    - cat core-api/src/main/res/navigation/main_navigation_graph.xml
+    - cat core-api/build/generated/source/navigation-args/debug/com/education/movies/presentation/MoviesFragmentDirections.kt
+  artifacts:
+    paths:
+      - app/build/outputs/
+
+debugTests:
+  tags:
+    - android
+  stage: test
+  script:
+    - ./gradlew -Pci --console=plain :app:testDebug
+
+unitTests:
+  tags:
+    - android
+  stage: test
+  script:
+    - ./gradlew test
