@@ -76,7 +76,7 @@ class NetworkModule {
             authenticator(authenticator)
             addInterceptor(apiKeyInterceptor)
             addInterceptor(networkErrorInterceptor)
-            certificatePinner(certificatePinner)
+            //certificatePinner(certificatePinner)
             retryOnConnectionFailure(true)
             if (BuildConfig.DEBUG) addInterceptor(loggingInterceptor)
         }

@@ -26,7 +26,7 @@ ext {
 	rxjava2_version = '2.1.1'
 	rxAndroid_version = '2.1.1'
 	rxBinding_version = '2.2.0'
-	room_version = '2.2.5'
+	room_version = '2.4.0'
 	rootbeer_version = '0.0.8'
 	timber_version = '4.7.1'
 	tink_version = '1.4.0-rc1'
